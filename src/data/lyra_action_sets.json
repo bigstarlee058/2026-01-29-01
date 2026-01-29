@@ -1,0 +1,887 @@
+[
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f001"
+    },
+    "name": "Gallery Management",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Open gallery and manage images",
+    "category": "Media",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc01"
+        },
+        "logical_action": "open_gallery",
+        "name": "Open Gallery",
+        "description": "Opens the image gallery for browsing and selection",
+        "examples_of_user_requests": [
+          "Open the gallery",
+          "Show me images",
+          "I need to find pictures"
+        ],
+        "outcome_of_action": "Gallery panel opens with available images",
+        "module": "Gallery"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc02"
+        },
+        "logical_action": "close_gallery",
+        "name": "Close Gallery",
+        "description": "Closes the gallery panel",
+        "examples_of_user_requests": [
+          "Close gallery",
+          "Hide images",
+          "Go back to editor"
+        ],
+        "outcome_of_action": "Gallery panel closes, returns to main editor",
+        "module": "Gallery"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc03"
+        },
+        "logical_action": "open_filters",
+        "name": "Open Filters",
+        "description": "Opens gallery with filtering options",
+        "examples_of_user_requests": [
+          "Open image filters",
+          "Show filter options",
+          "I want to filter images"
+        ],
+        "outcome_of_action": "Gallery opens with filter sidebar active",
+        "module": "Gallery"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f002"
+    },
+    "name": "Image Search & Discovery",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Search and find images",
+    "category": "Media",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc04"
+        },
+        "logical_action": "find_a_picture",
+        "name": "Find Picture",
+        "description": "Searches for images with preset 'cat' query",
+        "examples_of_user_requests": [
+          "Find a picture",
+          "Search for images",
+          "Show me some pictures"
+        ],
+        "outcome_of_action": "Gallery opens with 'cat' search results",
+        "module": "Gallery"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc05"
+        },
+        "logical_action": "put_search_text",
+        "name": "Custom Search",
+        "description": "Sets custom search text in gallery",
+        "examples_of_user_requests": [
+          "Search for nature images",
+          "Find pictures of dogs",
+          "Look for landscape photos"
+        ],
+        "outcome_of_action": "Gallery searches with specified text",
+        "module": "Gallery"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc06"
+        },
+        "logical_action": "filter_images_by_provider",
+        "name": "Filter by Provider",
+        "description": "Filters images by Leonardo provider",
+        "examples_of_user_requests": [
+          "Show only Leonardo images",
+          "Filter by provider",
+          "Use specific image source"
+        ],
+        "outcome_of_action": "Gallery shows filtered results",
+        "module": "Gallery"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f003"
+    },
+    "name": "Image Downloads",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Download images",
+    "category": "Media",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc07"
+        },
+        "logical_action": "download_a_picture",
+        "name": "Download Single Image",
+        "description": "Downloads a specific image by URL",
+        "examples_of_user_requests": [
+          "Download this image",
+          "Save this picture",
+          "Get this photo"
+        ],
+        "outcome_of_action": "Image is prepared for download",
+        "module": "Gallery"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc08"
+        },
+        "logical_action": "download_selected_images_from_gallery",
+        "name": "Download Multiple Images",
+        "description": "Downloads all selected images as ZIP",
+        "examples_of_user_requests": [
+          "Download selected images",
+          "Get all chosen pictures",
+          "Save my selections"
+        ],
+        "outcome_of_action": "Selected images downloaded as ZIP file",
+        "module": "Gallery"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f004"
+    },
+    "name": "Main Navigation",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Navigate between main sections",
+    "category": "Navigation",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc09"
+        },
+        "logical_action": "open_storyboard",
+        "name": "Open Storyboard",
+        "description": "Opens the storyboard panel",
+        "examples_of_user_requests": [
+          "Show storyboard",
+          "Open story timeline",
+          "I want to see my scenes"
+        ],
+        "outcome_of_action": "Storyboard panel becomes visible",
+        "module": "Navigation"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc10"
+        },
+        "logical_action": "close_storyboard",
+        "name": "Close Storyboard",
+        "description": "Closes the storyboard panel",
+        "examples_of_user_requests": [
+          "Hide storyboard",
+          "Close story view",
+          "Go back to editor"
+        ],
+        "outcome_of_action": "Storyboard panel is hidden",
+        "module": "Navigation"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc11"
+        },
+        "logical_action": "open_generate_ai",
+        "name": "Open AI Generation",
+        "description": "Opens AI content generation panel",
+        "examples_of_user_requests": [
+          "Generate with AI",
+          "Create AI content",
+          "Use AI tools"
+        ],
+        "outcome_of_action": "AI generation panel opens",
+        "module": "AI Tools"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc12"
+        },
+        "logical_action": "close_generate_ai",
+        "name": "Close AI Generation",
+        "description": "Closes AI generation panel",
+        "examples_of_user_requests": [
+          "Close AI tools",
+          "Hide generation panel",
+          "Exit AI mode"
+        ],
+        "outcome_of_action": "AI generation panel closes",
+        "module": "AI Tools"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f005"
+    },
+    "name": "Settings & User Content",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Access settings and personal content",
+    "category": "Navigation",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc13"
+        },
+        "logical_action": "open_my_items",
+        "name": "Open My Items",
+        "description": "Opens personal content library",
+        "examples_of_user_requests": [
+          "Show my items",
+          "Open my content",
+          "See my uploads"
+        ],
+        "outcome_of_action": "Personal items panel opens",
+        "module": "Library"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc14"
+        },
+        "logical_action": "close_my_items",
+        "name": "Close My Items",
+        "description": "Closes personal content library",
+        "examples_of_user_requests": [
+          "Close my items",
+          "Hide personal content",
+          "Exit library"
+        ],
+        "outcome_of_action": "Personal items panel closes",
+        "module": "Library"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc15"
+        },
+        "logical_action": "open_settings",
+        "name": "Open Settings",
+        "description": "Opens application settings panel",
+        "examples_of_user_requests": [
+          "Open settings",
+          "Show preferences",
+          "Configure app"
+        ],
+        "outcome_of_action": "Settings panel opens",
+        "module": "Settings"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc16"
+        },
+        "logical_action": "close_settings",
+        "name": "Close Settings",
+        "description": "Closes settings panel",
+        "examples_of_user_requests": [
+          "Close settings",
+          "Exit preferences",
+          "Save and close"
+        ],
+        "outcome_of_action": "Settings panel closes",
+        "module": "Settings"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f006"
+    },
+    "name": "Chat Interface",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Control Lyra chat",
+    "category": "Interface",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc17"
+        },
+        "logical_action": "open_lyra_chat",
+        "name": "Open Lyra Chat",
+        "description": "Opens Lyra AI assistant chat",
+        "examples_of_user_requests": [
+          "Open chat",
+          "Talk to Lyra",
+          "Show assistant"
+        ],
+        "outcome_of_action": "Lyra chat panel becomes visible",
+        "module": "Chat"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc18"
+        },
+        "logical_action": "close_lyra_chat",
+        "name": "Close Lyra Chat",
+        "description": "Closes Lyra chat panel",
+        "examples_of_user_requests": [
+          "Close chat",
+          "Hide assistant",
+          "Minimize Lyra"
+        ],
+        "outcome_of_action": "Lyra chat panel is hidden",
+        "module": "Chat"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f007"
+    },
+    "name": "Content Editing Panels",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Open editing tools",
+    "category": "Editing",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc19"
+        },
+        "logical_action": "open_image_editing",
+        "name": "Open Image Editor",
+        "description": "Opens image editing tools",
+        "examples_of_user_requests": [
+          "Edit this image",
+          "Open image editor",
+          "Modify picture"
+        ],
+        "outcome_of_action": "Image editing panel opens",
+        "module": "Image Editor"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc20"
+        },
+        "logical_action": "close_image_editing",
+        "name": "Close Image Editor",
+        "description": "Closes image editing panel",
+        "examples_of_user_requests": [
+          "Close image editor",
+          "Finish editing",
+          "Exit image tools"
+        ],
+        "outcome_of_action": "Image editing panel closes",
+        "module": "Image Editor"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc21"
+        },
+        "logical_action": "open_typography",
+        "name": "Open Typography",
+        "description": "Opens text styling and typography tools",
+        "examples_of_user_requests": [
+          "Edit text style",
+          "Open typography",
+          "Change font settings"
+        ],
+        "outcome_of_action": "Typography panel opens",
+        "module": "Typography"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc22"
+        },
+        "logical_action": "close_typography",
+        "name": "Close Typography",
+        "description": "Closes typography panel",
+        "examples_of_user_requests": [
+          "Close typography",
+          "Finish text editing",
+          "Exit font tools"
+        ],
+        "outcome_of_action": "Typography panel closes",
+        "module": "Typography"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f008"
+    },
+    "name": "Animation & Transitions",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Work with animations and transitions",
+    "category": "Animation",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc23"
+        },
+        "logical_action": "open_animation",
+        "name": "Open Animation Panel",
+        "description": "Opens animation editing tools",
+        "examples_of_user_requests": [
+          "Add animations",
+          "Open animation tools",
+          "Create motion effects"
+        ],
+        "outcome_of_action": "Animation panel opens",
+        "module": "Animation"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc24"
+        },
+        "logical_action": "close_animation",
+        "name": "Close Animation Panel",
+        "description": "Closes animation panel",
+        "examples_of_user_requests": [
+          "Close animations",
+          "Finish animation work",
+          "Exit motion tools"
+        ],
+        "outcome_of_action": "Animation panel closes",
+        "module": "Animation"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc25"
+        },
+        "logical_action": "open_transitions",
+        "name": "Open Transitions",
+        "description": "Opens transition effects panel in 'in' mode",
+        "examples_of_user_requests": [
+          "Add transitions",
+          "Show transition effects",
+          "Open transition panel"
+        ],
+        "outcome_of_action": "Transition panel opens with 'in' effects",
+        "module": "Transitions"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc26"
+        },
+        "logical_action": "open_in_transitions",
+        "name": "Open In Transitions",
+        "description": "Opens transition panel specifically for 'in' effects",
+        "examples_of_user_requests": [
+          "Show in transitions",
+          "Add entrance effects",
+          "Open in animations"
+        ],
+        "outcome_of_action": "Transition panel opens on 'in' tab",
+        "module": "Transitions"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc27"
+        },
+        "logical_action": "open_out_transitions",
+        "name": "Open Out Transitions",
+        "description": "Opens transition panel for 'out' effects",
+        "examples_of_user_requests": [
+          "Show out transitions",
+          "Add exit effects",
+          "Open out animations"
+        ],
+        "outcome_of_action": "Transition panel opens on 'out' tab",
+        "module": "Transitions"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc28"
+        },
+        "logical_action": "open_effect",
+        "name": "Open Effects",
+        "description": "Opens effect transitions panel",
+        "examples_of_user_requests": [
+          "Show effects",
+          "Add special effects",
+          "Open effect panel"
+        ],
+        "outcome_of_action": "Transition panel opens on 'effect' tab",
+        "module": "Transitions"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc29"
+        },
+        "logical_action": "set_specific_transition_effect",
+        "name": "Set Specific Effect",
+        "description": "Sets a specific transition effect type",
+        "examples_of_user_requests": [
+          "Use fade transition",
+          "Apply zoom effect",
+          "Set slide animation"
+        ],
+        "outcome_of_action": "Specific transition effect is queued for selection",
+        "module": "Transitions"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f009"
+    },
+    "name": "Subtitle Management",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Work with subtitles",
+    "category": "Subtitles",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc30"
+        },
+        "logical_action": "open_subtitles",
+        "name": "Open Subtitles Panel",
+        "description": "Opens subtitle editing interface",
+        "examples_of_user_requests": [
+          "Edit subtitles",
+          "Open subtitle editor",
+          "Add captions"
+        ],
+        "outcome_of_action": "Subtitle editing panel opens",
+        "module": "Subtitles"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc31"
+        },
+        "logical_action": "close_subtitles",
+        "name": "Close Subtitles Panel",
+        "description": "Closes subtitle editing panel",
+        "examples_of_user_requests": [
+          "Close subtitles",
+          "Finish subtitle editing",
+          "Exit caption editor"
+        ],
+        "outcome_of_action": "Subtitle panel closes",
+        "module": "Subtitles"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f010"
+    },
+    "name": "Subtitle Generation",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Generate subtitles from audio",
+    "category": "Subtitles",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc32"
+        },
+        "logical_action": "generate_subtitles",
+        "name": "Generate Subtitles",
+        "description": "Automatically generates subtitles from audio",
+        "examples_of_user_requests": [
+          "Generate subtitles",
+          "Create captions from audio",
+          "Auto-generate text"
+        ],
+        "outcome_of_action": "Subtitles are generated from audio tracks",
+        "module": "Subtitles"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc33"
+        },
+        "logical_action": "regenerate_subtitles",
+        "name": "Regenerate Subtitles",
+        "description": "Regenerates existing subtitles",
+        "examples_of_user_requests": [
+          "Regenerate subtitles",
+          "Update captions",
+          "Refresh subtitle text"
+        ],
+        "outcome_of_action": "Existing subtitles are regenerated",
+        "module": "Subtitles"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f011"
+    },
+    "name": "Subtitle Editing",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Edit and manage subtitle content",
+    "category": "Subtitles",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc34"
+        },
+        "logical_action": "delete_all_subtitles",
+        "name": "Delete All Subtitles",
+        "description": "Removes all subtitle content",
+        "examples_of_user_requests": [
+          "Delete all subtitles",
+          "Clear all captions",
+          "Remove subtitle text"
+        ],
+        "outcome_of_action": "All subtitles are removed from the project",
+        "module": "Subtitles"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc35"
+        },
+        "logical_action": "hide_subtitle_timings",
+        "name": "Hide Subtitle Timings",
+        "description": "Hides timing displays for subtitles",
+        "examples_of_user_requests": [
+          "Hide subtitle timings",
+          "Hide time codes",
+          "Remove timing display"
+        ],
+        "outcome_of_action": "Subtitle timing information is hidden",
+        "module": "Subtitles"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc36"
+        },
+        "logical_action": "show_subtitle_timings",
+        "name": "Show Subtitle Timings",
+        "description": "Shows timing displays for subtitles",
+        "examples_of_user_requests": [
+          "Show subtitle timings",
+          "Display time codes",
+          "Show timing information"
+        ],
+        "outcome_of_action": "Subtitle timing information becomes visible",
+        "module": "Subtitles"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f012"
+    },
+    "name": "Subtitle Styling",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Style and design subtitles",
+    "category": "Subtitles",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc37"
+        },
+        "logical_action": "open_subtitles_styles",
+        "name": "Open Subtitle Styles",
+        "description": "Opens subtitle styling panel",
+        "examples_of_user_requests": [
+          "Style subtitles",
+          "Change subtitle appearance",
+          "Open subtitle styles"
+        ],
+        "outcome_of_action": "Subtitle styling panel opens",
+        "module": "Subtitles"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc38"
+        },
+        "logical_action": "close_subtitles_styles",
+        "name": "Close Subtitle Styles",
+        "description": "Closes subtitle styling panel",
+        "examples_of_user_requests": [
+          "Close subtitle styles",
+          "Finish styling",
+          "Exit style editor"
+        ],
+        "outcome_of_action": "Subtitle styling panel closes",
+        "module": "Subtitles"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc39"
+        },
+        "logical_action": "open_subtitle_design",
+        "name": "Open Subtitle Design",
+        "description": "Opens subtitle design interface",
+        "examples_of_user_requests": [
+          "Design subtitles",
+          "Customize subtitle look",
+          "Open design tools"
+        ],
+        "outcome_of_action": "Subtitle design interface becomes active",
+        "module": "Subtitles"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc40"
+        },
+        "logical_action": "close_subtitle_design",
+        "name": "Close Subtitle Design",
+        "description": "Closes subtitle design interface",
+        "examples_of_user_requests": [
+          "Close subtitle design",
+          "Finish customizing",
+          "Exit design mode"
+        ],
+        "outcome_of_action": "Subtitle design interface closes",
+        "module": "Subtitles"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f013"
+    },
+    "name": "Player Controls",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Control video player",
+    "category": "Player",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc41"
+        },
+        "logical_action": "open_player",
+        "name": "Open Player",
+        "description": "Opens the video player interface",
+        "examples_of_user_requests": [
+          "Open player",
+          "Show video player",
+          "Start playback view"
+        ],
+        "outcome_of_action": "Video player interface becomes visible",
+        "module": "Player"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc42"
+        },
+        "logical_action": "hide_player",
+        "name": "Hide Player",
+        "description": "Hides the video player interface",
+        "examples_of_user_requests": [
+          "Hide player",
+          "Close video player",
+          "Exit playback view"
+        ],
+        "outcome_of_action": "Video player interface is hidden",
+        "module": "Player"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc43"
+        },
+        "logical_action": "switch_to_playback",
+        "name": "Switch to Playback",
+        "description": "Switches interface to playback mode",
+        "examples_of_user_requests": [
+          "Switch to playback",
+          "Go to player mode",
+          "Enter playback view"
+        ],
+        "outcome_of_action": "Interface switches to playback mode",
+        "module": "Player"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc44"
+        },
+        "logical_action": "open_story_details",
+        "name": "Open Story Details",
+        "description": "Opens story information and settings",
+        "examples_of_user_requests": [
+          "Show story details",
+          "Open story info",
+          "View project details"
+        ],
+        "outcome_of_action": "Story details panel opens",
+        "module": "Story"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f014"
+    },
+    "name": "Canvas & Frame Management",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Change video format and dimensions",
+    "category": "Canvas",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc45"
+        },
+        "logical_action": "change_frame_size_from_storyboard",
+        "name": "Change Frame Size",
+        "description": "Changes video aspect ratio and canvas dimensions",
+        "examples_of_user_requests": [
+          "Change to portrait mode",
+          "Make it 9:16",
+          "Switch to landscape",
+          "Change frame size to square"
+        ],
+        "outcome_of_action": "Video canvas changes to specified aspect ratio",
+        "module": "Canvas"
+      }
+    ]
+  },
+
+  {
+    "_id": {
+      "$oid": "67dc71bc7f57a391e162f015"
+    },
+    "name": "Panel Management",
+    "position": ["storyboard", "playback"],
+    "searchRequest": "Close multiple panels at once",
+    "category": "Interface",
+    "actions": [
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc46"
+        },
+        "logical_action": "close_all_panels",
+        "name": "Close All Panels",
+        "description": "Closes all open panels simultaneously",
+        "examples_of_user_requests": [
+          "Close all panels",
+          "Clear interface",
+          "Hide everything"
+        ],
+        "outcome_of_action": "All panels are closed, clean interface",
+        "module": "Interface"
+      },
+      {
+        "_id": {
+          "$oid": "67f3902f7d4c4bfa7358dc47"
+        },
+        "logical_action": "close_all_editing_panels",
+        "name": "Close All Editing Panels",
+        "description": "Closes all editing-related panels",
+        "examples_of_user_requests": [
+          "Close editing panels",
+          "Finish editing",
+          "Clear editing tools"
+        ],
+        "outcome_of_action": "All editing panels (image, typography, subtitles, animation) are closed",
+        "module": "Interface"
+      }
+    ]
+  }
+]

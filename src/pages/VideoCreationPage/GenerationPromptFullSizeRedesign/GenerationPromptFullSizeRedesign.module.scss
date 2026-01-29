@@ -1,0 +1,116 @@
+@import '../../../Variables.scss';
+
+.prompts_container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.input_wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  label {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: 0.0048em;
+    color: $primary-gray-text-color;
+    position: absolute;
+    left: 16px;
+    top: 0%;
+    transform: translateY(-50%);
+    background-color: #071C26;
+    transition: all 0.15s ease-out;
+  }
+
+  .floating_label_group {
+    position: relative;
+    width: 100%;
+  }
+
+  .prompt {
+    width: 100%;
+    padding: 16px;
+    padding-right: 48px;
+    border-radius: 4px;
+    font-size: 16px;
+    background: transparent;
+    display: block;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 16px;
+    color: $secondary-white-text-color;
+    height: 100%;
+    min-height: 150px;
+    max-height: calc(100vh - 300px);
+    outline: none;
+    resize: none;
+    border-radius: 8px;
+    border: 1px solid #2A414A;
+    cursor: text;
+    box-shadow: none;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+    &:focus+.label {
+      left: 8px;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 15.6px;
+      letter-spacing: -0.02em;
+    }
+  }
+}
+
+.floating_label {
+  position: absolute;
+  pointer-events: none;
+  left: 16px;
+  top: 16px;
+  transition: 0.2s ease all;
+  padding: 0 4px;
+  color: $primary-gray-text-color;
+}
+
+.floating_label.has_value,
+.prompt:focus+.floating_label {
+  top: -0px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13px;
+  color: $primary-gray-text-color;
+  background-color: #071C26;
+}
+
+.icon {
+  position: absolute;
+  right: 16px;
+  bottom: 11px;
+  cursor: pointer;
+  background-color: transparent;
+  z-index: 2;
+
+  .generateBtn {
+    width: 32px;
+    height: 32px;
+    align-items: center;
+  }
+}
+
+.generate_btn_prompt {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  
+  &:hover, &:focus, &:active {
+    background-color: transparent !important;
+    outline: none !important;
+  }
+}

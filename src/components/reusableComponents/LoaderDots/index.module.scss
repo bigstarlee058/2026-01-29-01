@@ -1,0 +1,39 @@
+@import "../../../Variables.scss";
+
+.loader {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.loader::before,
+.loader::after,
+.loader div {
+  content: '';
+  width: var(--loader-size, 5px);
+  height: var(--loader-size, 5px);
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  animation: dotPulse 1s infinite ease-in-out both;
+}
+.loader::before {
+  animation-delay: 0.2s;
+}
+.loader div {
+  animation-delay: 0.4s;
+}
+.loader::after {
+  animation-delay: 0.6s;
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    transform: scale(0); 
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+

@@ -1,0 +1,13 @@
+@import '../../../Variables.scss';
+
+.delete_btn {
+  background-color: transparent;
+  width: 36px;
+  height: 28px;
+  border-radius: 8px;
+  padding: 4px 8px;
+  &:hover,
+  &:focus {
+    background-color: $secondary-bg-color;
+  }
+}

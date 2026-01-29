@@ -1,0 +1,123 @@
+@import '../../Variables.scss';
+
+.container {
+  width: 100%;
+  height: max-content;
+  text-align: center;
+  padding-right: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+  h1 {
+    height: 24px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    margin-bottom: 0px;
+  }
+}
+.sizeList {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+}
+
+.sizeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: max-content;
+  height: max-content;
+  padding: 4px 16px;
+  gap: 4px;
+  opacity: 1;
+  border-radius: 8px;
+  border: 0.8px solid;
+  border-color: transparent;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: rgba(211, 248, 90, 0.04);
+    &::after {
+      content: '';
+      position: absolute;
+      top: -1;
+      left: -1px;
+      height: 102%;
+      width: 105%;
+      border-radius: 9.14px;
+      background-image: linear-gradient(to bottom left, #b7eb0959, rgba(211, 248, 90, 0));
+      z-index: -1;
+    }
+  }
+  p {
+    font-size: 16px;
+    line-height: 20.8px;
+    letter-spacing: -0.02em;
+  }
+  &.gorizontal {
+    width: 98.54px;
+    height: 73px;
+  }
+  &.active {
+    background-color: rgba(211, 248, 90, 0.04);
+  }
+}
+
+.switchBtn {
+  background-color: transparent;
+  border-radius: 50%;
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: $primary-box-shadow;
+  }
+}
+
+.sizeImageVertical {
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+
+// // ... существующий код ...
+
+// .sizeItem {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   width: max-content;
+//   height: max-content;
+//   padding: 10px;
+
+//   &.gorizontal {
+//     img {
+//       transform: rotate(90deg);
+//     }
+//   }
+// }
+
+// .sizeImage {
+//   width: 100px; // или другой фиксированный размер
+//   height: auto;
+//   transition: transform 0.3s ease;
+// }
+
+// .sizeImageVertical {
+//   width: 100px; // или другой фиксированный размер
+//   height: auto;
+//   transform: rotate(90deg);
+//   transition: transform 0.3s ease;
+// }
+
+// // ... существующий код ...

@@ -1,0 +1,55 @@
+@import '../../Variables.scss';
+.btns {
+  display: flex;
+  z-index: 9999;
+  flex-direction: column;
+  width: 192px;
+  max-height: 400px;
+  padding: 8px;
+
+  border-radius: 8px;
+
+  overflow-y: auto;
+
+     background-color: $input-bg-color;
+}
+
+.button {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 14px;
+
+  cursor: pointer;
+      height: 36px;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 36px;
+    color: $primary-white-text-color;
+    display: flex;
+    align-items: center;
+}
+
+.button input[type='radio'] {
+  display: none;
+}
+
+.button label {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 8px;
+
+  transition: background-color 200ms linear;
+
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: #1a1a1a;
+  }
+}

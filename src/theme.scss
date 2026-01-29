@@ -1,0 +1,18 @@
+// Defalt Green Theme
+:root {
+  --background-color: #ffffff;
+  --text-color: #222;
+  --button-bg: #007bff;
+  --border-color: #ccc;
+}
+
+[data-theme="dark"] {
+  --background-color: #222222;
+  --text-color: #ffffff;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

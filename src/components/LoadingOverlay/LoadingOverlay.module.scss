@@ -1,0 +1,115 @@
+@import '../../Variables.scss';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 32px;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.lottieAnimation {
+  width: 600px;
+  height: 600px;
+}
+
+.progressInfo {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  border-radius: 12px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+
+  p {
+    font-size: 16px;
+    color: transparent;
+    background: linear-gradient(
+      90deg,
+      rgba(2, 2, 2, 0.4) 25%,
+      rgba(139, 139, 139, 0.8) 50%,
+      rgba(29, 29, 29, 0.4) 75%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: shimmerText 3s linear infinite;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 360px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--accent-color, #4CAF50);
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.timeInfo {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  text-align: center;
+  font-family: monospace;
+  margin-top: 4px;
+}
+
+.errorMessage {
+  color: #ff5252;
+  font-size: 16px;
+  text-align: center;
+  max-width: 400px;
+  background-color: rgba(255, 82, 82, 0.1);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+@keyframes shimmerText {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}

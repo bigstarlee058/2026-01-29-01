@@ -1,0 +1,269 @@
+@import '../../../Variables.scss';
+
+.img_item {
+  position: relative;
+  width: 182px;
+  height: 215px;
+  border-radius: 0;
+  background-color: $popUp-background-color;
+  border: 1px solid transparent;
+  transition: all 500ms ease;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  justify-self: center;
+
+  &.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+  }
+
+  @media screen and (min-width: 480px) {
+    width: 160px;
+    height: 215px;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 162px;
+    height: 215px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 182px;
+    height: 215px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 182px;
+    height: 215px;
+  }
+
+  &.landscape {
+    width: 400px;
+    grid-column: span 2;
+
+    @media screen and (min-width: 480px) {
+      width: 320px;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: 360px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 400px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      width: 400px;
+    }
+
+    .card_container {
+      width: 100%;
+    }
+  }
+
+  &.selected {
+    width: 100%;
+    @media screen and (min-width: 480px) {
+      width: 160px;
+      height: 215px;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: 162px;
+      height: 215px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      width: 182px;
+      height: 215px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      width: 182px;
+      height: 215px;
+    }
+
+    &.landscape {
+      width: 400px;
+      grid-column: span 2;
+
+      @media screen and (min-width: 480px) {
+        width: 320px;
+      }
+
+      @media screen and (min-width: 768px) {
+        width: 360px;
+      }
+
+      @media screen and (min-width: 1024px) {
+        width: 400px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        width: 400px;
+      }
+
+      .card_container {
+        width: 100%;
+      }
+    }
+    .checkBox {
+      opacity: 1;
+    }
+  }
+}
+
+.checkBox,
+.checkBox_chosen {
+  padding: 8px;
+  border-radius: 50%;
+  z-index: 3;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkBox_container {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+// Show checkbox on hover or when assigned to scene
+.card_container:hover .checkBox,
+.img_item.selected .checkBox {
+  opacity: 1;
+}
+
+.checkBox_chosen {
+  background-color: var(--accent-color);
+  opacity: 1;
+}
+
+.card_container {
+  height: 215px;
+  width: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+
+  @media screen and (min-width: 480px) {
+    height: 215px;
+  }
+
+  @media screen and (min-width: 768px) {
+    height: 215px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    height: 215px;
+  }
+
+  &:hover {
+    .checkBox {
+      opacity: 1;
+    }
+
+    .btn_container {
+      opacity: 1;
+    }
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+}
+
+.btn_container {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  height: 100%;
+  width: 100%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  background: linear-gradient(
+    80deg,
+    rgba(0, 0, 0, 0) 12.92%,
+    rgba(0, 0, 0, 0.69) 100%
+  );
+
+  .generated_icons_box {
+    top: 39%;
+  }
+
+  &:has(.icon.selected) {
+    opacity: 1;
+  }
+}
+
+.icon_assign {
+  width: 100%;
+  height: 28px;
+  background: $popUp-background-color;
+  border-radius: 40px;
+  font-family: 'Inter';
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  transition: all 500ms ease-in-out;
+  &:hover,
+  &:focus {
+    background: linear-gradient(
+        rgba(188, 188, 188, 0.2),
+        rgba(188, 188, 188, 0.2)
+      ),
+      $popUp-background-color;
+  }
+  .selected {
+    background-color: var(--accent-color);
+  }
+}
+
+.preview_wrapper {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  border-radius: 8px;
+  overflow: hidden;
+
+  // Portrait (height > width)
+  width: 60px;
+  height: 90px;
+
+  &.landscape {
+    // Landscape (width > height)
+    width: 90px;
+    height: 60px;
+  }
+
+  &.square {
+    // Square (width = height)
+    width: 90px;
+    height: 90px;
+  }
+}
+
+.preview_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

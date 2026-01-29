@@ -1,0 +1,5 @@
+/*
+  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; font-src 'self' https: data: https://livespro.github.io; img-src 'self' https: data: blob:; connect-src 'self' https: wss: blob:; media-src 'self' https: data: blob:;
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin 

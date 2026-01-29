@@ -1,0 +1,13 @@
+.portalMenu {
+  // Default styles for portal menu
+  // These can be overridden by passing className prop
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+
+  // Ensure the menu is visible and properly positioned
+  pointer-events: auto;
+  user-select: none;
+}

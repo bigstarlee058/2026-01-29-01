@@ -1,0 +1,43 @@
+@import  '../../Variables.scss';
+
+.project_sort {
+  position: relative;
+}
+
+.sort_btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background-color: #ffffff14;
+  backdrop-filter: blur(24px);
+  position: relative;
+}
+
+.sortMenu {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  z-index: 10;
+  background-color: #081823;
+  border-radius: 12px;
+  width: 283px;
+  padding: 16px 0;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 42px;
+    justify-content: flex-start;
+    padding: 9px 16px;
+    cursor: pointer;
+    color: var(--primary-white-text-color);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0em;
+
+    &:hover {
+      background-color: #ffffff0a;
+    }
+  }
+}

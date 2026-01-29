@@ -1,0 +1,120 @@
+@import '../../../Variables.scss';
+
+.search_container_wrapper {
+  position: sticky;
+  z-index: 15;
+  margin-bottom: 5px;
+}
+
+.search_container {
+  padding: 0px 16px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 8px;
+  width: 100%;
+  backdrop-filter: blur(24px);
+  transition: all 0.3s ease;
+}
+
+.search_form {
+  height: 34px;
+  position: relative;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.search_input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 0;
+  font-size: 14px;
+  padding-right: 40px;
+  box-shadow: none;
+  border-radius: 0px;
+  font-family: $primary-font;
+  letter-spacing: 0em;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.search_btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.search_icon {
+  width: 14px;
+  height: 14px;
+}
+
+.clear_btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-left: auto;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.search_filters {
+  display: flex;
+  gap: 4px;
+  margin-left: 4px;
+  flex-wrap: wrap;
+
+  &_item {
+    height: 20px;
+    padding: 0 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.4);
+    font-family: $primary-font;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 10px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    &.active {
+      color: var(--accent-color);
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+} 

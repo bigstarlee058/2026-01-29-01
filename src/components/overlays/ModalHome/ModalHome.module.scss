@@ -1,0 +1,165 @@
+@import '../../../Variables.scss';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00000099;
+  z-index: 9999;
+}
+
+.modal {
+  position: relative;
+  width: 480px;
+  max-width: 90vw;
+  padding: 32px;
+  // background-color: #ffffff1f;
+  backdrop-filter: blur(80px);
+  border-radius: 16px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.stain {
+  position: fixed;
+  right: 36px;
+  top: 38px;
+  z-index: -1;
+  width: 230px;
+  height: 400px;
+  transform: translate(50%, -50%) rotate(13deg);
+  background: var(--main-background-color);
+  opacity: 0.6;
+  filter: blur(190px);
+  border-radius: 50%;
+}
+
+.stainBottom {
+  position: fixed;
+  left: -43%;
+  top: 410px;
+  bottom: -100%;
+  z-index: -1;
+  width: 364px;
+  height: 300px;
+  transform: translate(50%, -50%) rotate(13deg);
+  background: var(--main-background-color);
+  opacity: 0.6;
+  filter: blur(190px);
+  border-radius: 50%;
+}
+
+.closeButton {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover,
+  &:focus {
+    color: white;
+  }
+  &:active {
+    color: var(--accent-color);
+  }
+}
+
+.iconContainer {
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  height: 32px;
+  color: #f1f1f1;
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0em;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.description {
+  color: #f1f1f1;
+  margin-bottom: 40px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.contentContainer {
+  margin-bottom: 40px;
+  color: #f1f1f1;
+  width: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cancelButton,
+.confirmButton {
+  width: 131px;
+  height: 48px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  line-height: 24px;
+  letter-spacing: -0.02em;
+}
+
+.cancelButton {
+  background-color: #ffffff0a;
+  color: #fff;
+  border: none;
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+  }
+  &:active {
+    background-color: var(--accent-color);
+    color: #000;
+    opacity: 0.8;
+  }
+}
+
+.confirmButton {
+  background-color: var(--accent-color);
+  color: #000;
+  border: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: var(--accent-color);
+    color: #000;
+    opacity: 0.8;
+  }
+}

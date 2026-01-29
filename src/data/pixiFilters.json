@@ -1,0 +1,391 @@
+{
+  "adjustmentFilter": {
+    "name": "Adjustment",
+    "type": "pixi-adjustment",
+    "properties": {
+      "gamma": 1,
+      "saturation": 1,
+      "contrast": 1,
+      "brightness": 1,
+      "red": 1,
+      "green": 1,
+      "blue": 1,
+      "alpha": 1
+    }
+  },
+  "advancedBloomFilter": {
+    "name": "Advanced Bloom",
+    "type": "pixi-advancedBloom",
+    "properties": {
+      "threshold": 0.5,
+      "bloomScale": 1,
+      "brightness": 1,
+      "blur": 8,
+      "quality": 4
+    }
+  },
+  "asciiFilter": {
+    "name": "ASCII",
+    "type": "pixi-ascii",
+    "properties": {
+      "size": 8
+    }
+  },
+  "backdropBlurFilter": {
+    "name": "Backdrop Blur",
+    "type": "pixi-backdropBlur",
+    "properties": {
+      "strength": 8,
+      "quality": 4,
+      "kernelSize": 5
+    }
+  },
+  "bevelFilter": {
+    "name": "Bevel",
+    "type": "pixi-bevel",
+    "properties": {
+      "rotation": 45,
+      "thickness": 2,
+      "lightColor": 16777215,
+      "lightAlpha": 0.7,
+      "shadowColor": 0,
+      "shadowAlpha": 0.7
+    }
+  },
+  "bloomFilter": {
+    "name": "Bloom",
+    "type": "pixi-bloom",
+    "properties": {
+      "blur": 2,
+      "quality": 4,
+      "resolution": 1,
+      "kernelSize": 5
+    }
+  },
+  "bulgePinchFilter": {
+    "name": "Bulge Pinch",
+    "type": "pixi-bulgePinch",
+    "properties": {
+      "center": [0.5, 0.5],
+      "radius": 100,
+      "strength": 1
+    }
+  },
+  "colorGradientFilter": {
+    "name": "Color Gradient",
+    "type": "pixi-colorGradient",
+    "properties": {
+      "type": 0,
+      "stops": [
+        {"offset": 0, "color": [1, 0, 0, 1]},
+        {"offset": 1, "color": [0, 1, 0, 1]}
+      ]
+    }
+  },
+  "colorMapFilter": {
+    "name": "Color Map",
+    "type": "pixi-colorMap",
+    "properties": {
+      "colorMap": null,
+      "nearest": false,
+      "mix": 1
+    }
+  },
+  "colorOverlayFilter": {
+    "name": "Color Overlay",
+    "type": "pixi-colorOverlay",
+    "properties": {
+      "color": [1, 0, 0],
+      "alpha": 1
+    }
+  },
+  "colorReplaceFilter": {
+    "name": "Color Replace",
+    "type": "pixi-colorReplace",
+    "properties": {
+      "originalColor": 16711680,
+      "newColor": 65280,
+      "epsilon": 0.4
+    }
+  },
+  "convolutionFilter": {
+    "name": "Convolution",
+    "type": "pixi-convolution",
+    "properties": {
+      "matrix": [0, -1, 0, -1, 5, -1, 0, -1, 0],
+      "width": 200,
+      "height": 200
+    }
+  },
+  "crossHatchFilter": {
+    "name": "Cross Hatch",
+    "type": "pixi-crossHatch",
+    "properties": {}
+  },
+  "crtFilter": {
+    "name": "CRT",
+    "type": "pixi-crt",
+    "properties": {
+      "curvature": 1,
+      "lineWidth": 1,
+      "lineContrast": 0.25,
+      "verticalLine": false,
+      "noise": 0.3,
+      "noiseSize": 1,
+      "seed": 0,
+      "vignetting": 0.3,
+      "vignettingAlpha": 1,
+      "vignettingBlur": 0.3,
+      "time": 0
+    }
+  },
+  "dotFilter": {
+    "name": "Dot",
+    "type": "pixi-dot",
+    "properties": {
+      "scale": 1,
+      "angle": 5
+    }
+  },
+  "dropShadowFilter": {
+    "name": "Drop Shadow",
+    "type": "pixi-dropShadow",
+    "properties": {
+      "rotation": 45,
+      "distance": 5,
+      "color": 0,
+      "alpha": 0.5,
+      "shadowOnly": false,
+      "blur": 2,
+      "quality": 3,
+      "kernelSize": 5,
+      "resolution": 1
+    }
+  },
+  "embossFilter": {
+    "name": "Emboss",
+    "type": "pixi-emboss",
+    "properties": {
+      "strength": 5
+    }
+  },
+  "glitchFilter": {
+    "name": "Glitch",
+    "type": "pixi-glitch",
+    "properties": {
+      "slices": 5,
+      "offset": 100,
+      "direction": 0,
+      "fillMode": 0,
+      "seed": 0,
+      "average": false,
+      "minSize": 8,
+      "sampleSize": 512,
+      "red": {"x": 0, "y": 0},
+      "green": {"x": 0, "y": 0},
+      "blue": {"x": 0, "y": 0}
+    }
+  },
+  "glowFilter": {
+    "name": "Glow",
+    "type": "pixi-glow",
+    "properties": {
+      "distance": 10,
+      "outerStrength": 4,
+      "innerStrength": 0,
+      "color": 16777215,
+      "quality": 0.1,
+      "knockout": false
+    }
+  },
+  "godrayFilter": {
+    "name": "Godray",
+    "type": "pixi-godray",
+    "properties": {
+      "angle": 30,
+      "gain": 0.5,
+      "lacunarity": 2.5,
+      "parallel": true,
+      "time": 0,
+      "center": [0, 0]
+    }
+  },
+  "grayscaleFilter": {
+    "name": "Grayscale",
+    "type": "pixi-grayscale",
+    "properties": {}
+  },
+  "hslAdjustmentFilter": {
+    "name": "HSL Adjustment",
+    "type": "pixi-hslAdjustment",
+    "properties": {
+      "hue": 0,
+      "saturation": 0,
+      "lightness": 0,
+      "colorize": false,
+      "alpha": 1
+    }
+  },
+  "kawaseBlurFilter": {
+    "name": "Kawase Blur",
+    "type": "pixi-kawaseBlur",
+    "properties": {
+      "blur": 4,
+      "quality": 3,
+      "clamp": false,
+      "kernelSize": 5
+    }
+  },
+  "motionBlurFilter": {
+    "name": "Motion Blur",
+    "type": "pixi-motionBlur",
+    "properties": {
+      "velocity": {"x": 0, "y": 0},
+      "kernelSize": 5,
+      "offset": 0
+    }
+  },
+  "multiColorReplaceFilter": {
+    "name": "Multi Color Replace",
+    "type": "pixi-multiColorReplace",
+    "properties": {
+      "replacements": [
+        [16711680, 65280, 0.05],
+        [255, 16776960, 0.05]
+      ],
+      "epsilon": 0.05,
+      "maxColors": 0
+    }
+  },
+  "oldFilmFilter": {
+    "name": "Old Film",
+    "type": "pixi-oldFilm",
+    "properties": {
+      "sepia": 0.3,
+      "noise": 0.3,
+      "noiseSize": 1,
+      "scratch": 0.5,
+      "scratchDensity": 0.3,
+      "scratchWidth": 1,
+      "vignetting": 0.3,
+      "vignettingAlpha": 1,
+      "vignettingBlur": 0.3,
+      "seed": 0
+    }
+  },
+  "outlineFilter": {
+    "name": "Outline",
+    "type": "pixi-outline",
+    "properties": {
+      "thickness": 1,
+      "color": 0,
+      "quality": 0.1,
+      "alpha": 1,
+      "knockout": false
+    }
+  },
+  "pixelateFilter": {
+    "name": "Pixelate",
+    "type": "pixi-pixelate",
+    "properties": {
+      "size": {"x": 10, "y": 10}
+    }
+  },
+  "radialBlurFilter": {
+    "name": "Radial Blur",
+    "type": "pixi-radialBlur",
+    "properties": {
+      "angle": 0,
+      "center": {"x": 0, "y": 0},
+      "kernelSize": 5,
+      "radius": -1
+    }
+  },
+  "reflectionFilter": {
+    "name": "Reflection",
+    "type": "pixi-reflection",
+    "properties": {
+      "mirror": true,
+      "boundary": 0.5,
+      "amplitude": [0, 20],
+      "waveLength": [30, 100],
+      "alpha": [1, 0],
+      "time": 0
+    }
+  },
+  "rgbSplitFilter": {
+    "name": "RGB Split",
+    "type": "pixi-rgbSplit",
+    "properties": {
+      "red": {"x": -10, "y": 0},
+      "green": {"x": 0, "y": 0},
+      "blue": {"x": 10, "y": 0}
+    }
+  },
+  "shockwaveFilter": {
+    "name": "Shockwave",
+    "type": "pixi-shockwave",
+    "properties": {
+      "center": {"x": 0.5, "y": 0.5},
+      "params": {"amplitude": 30, "wavelength": 160, "brightness": 1, "speed": 500, "radius": -1},
+      "time": 0
+    }
+  },
+  "simpleLightmapFilter": {
+    "name": "Simple Lightmap",
+    "type": "pixi-simpleLightmap",
+    "properties": {
+      "texture": null,
+      "color": [1, 1, 1],
+      "alpha": 1
+    }
+  },
+  "simplexNoiseFilter": {
+    "name": "Simplex Noise",
+    "type": "pixi-simplexNoise",
+    "properties": {
+      "scale": 1,
+      "animationSpeed": 1
+    }
+  },
+  "tiltShiftAxisFilter": {
+    "name": "Tilt Shift Axis",
+    "type": "pixi-tiltShiftAxis",
+    "properties": {
+      "blur": 100,
+      "gradientBlur": 600,
+      "start": {"x": 0, "y": 0},
+      "end": {"x": 600, "y": 0}
+    }
+  },
+  "tiltShiftFilter": {
+    "name": "Tilt Shift",
+    "type": "pixi-tiltShift",
+    "properties": {
+      "blur": 100,
+      "gradientBlur": 600,
+      "start": {"x": 0, "y": 0},
+      "end": {"x": 600, "y": 0}
+    }
+  },
+  "twistFilter": {
+    "name": "Twist",
+    "type": "pixi-twist",
+    "properties": {
+      "radius": 0.5,
+      "angle": 5,
+      "padding": 20,
+      "offset": {"x": 0, "y": 0}
+    }
+  },
+  "zoomBlurFilter": {
+    "name": "Zoom Blur",
+    "type": "pixi-zoomBlur",
+    "properties": {
+      "strength": 0.1,
+      "center": [0, 0],
+      "innerRadius": 0,
+      "radius": -1
+    }
+  }
+}

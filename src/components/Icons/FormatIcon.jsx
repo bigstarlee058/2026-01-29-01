@@ -1,0 +1,24 @@
+import ICON_SIZE from 'components/Icons/IconSize';
+import PropTypes from 'prop-types';
+
+const FormatIcon = ({ size = ICON_SIZE.LARGE, color = '#F1F1F1' }) => {
+  return (
+    <svg
+      width="8"
+      height="6"
+      viewBox="0 0 8 6"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0.400241 0.00528049H7.60045C7.67334 0.00550938 7.7448 0.0256152 7.80712 0.0634336C7.86944 0.101252 7.92027 0.155351 7.95413 0.219908C7.988 0.284464 8.00361 0.357035 7.9993 0.429806C7.99498 0.502577 7.97091 0.572794 7.92965 0.632899L4.32955 5.83305C4.18035 6.04865 3.82114 6.04865 3.67153 5.83305L0.0714315 0.632899C0.0297603 0.572919 0.00532331 0.502667 0.000775592 0.429775C-0.00377212 0.356882 0.0117434 0.284137 0.0456364 0.219444C0.0795294 0.15475 0.130504 0.100582 0.193021 0.0628247C0.255538 0.0250673 0.327207 0.00516558 0.400241 0.00528049Z"
+        fill={color}
+      />
+    </svg>
+  );
+};
+FormatIcon.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  color: PropTypes.string,
+};
+export default FormatIcon;

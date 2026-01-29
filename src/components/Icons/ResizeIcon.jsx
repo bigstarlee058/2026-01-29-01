@@ -1,0 +1,27 @@
+import ICON_SIZE from 'components/Icons/IconSize';
+import PropTypes from 'prop-types';
+
+const ResizeIcon = ({ size = ICON_SIZE.REGULAR_LARGE, color = 'white' }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M17.2727 24.9091V17.2727H24.9091M17.9682 17.9702L26 26M10.7273 3.09091V10.7273H3.09091M10.0318 10.0298L2 2M24.9091 10.7273H17.2727V3.09091M17.9702 10.0318L26 2M3.09091 17.2727H10.7273V24.9091M10.0298 17.9682L2 26"
+        stroke={color}
+        strokeOpacity="0.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+ResizeIcon.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  color: PropTypes.string,
+};
+export default ResizeIcon;

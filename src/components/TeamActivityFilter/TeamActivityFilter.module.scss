@@ -1,0 +1,67 @@
+@import '../../Variables.scss';
+
+.filter_List {
+  .filter_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: $secondary-white-text-color;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 12px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+  }
+  .check_input {
+    width: 0px;
+    height: 0px;
+  }
+  .filter_checked {
+    @include checked;
+    width: 18px;
+    height: 18px;
+  }
+  .filter_label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+  }
+  .filter_item_title {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+
+    color: $primary-gray-text-color;
+    margin-right: 8px;
+  }
+  .filter_item_search {
+    display: block;
+    position: relative;
+    .search_icon {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      background-color: transparent;
+    }
+    .close_icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: transparent;
+    }
+    input {
+      border-radius: 16px;
+      padding: 7px;
+      padding-left: 38px;
+      height: 32px;
+      margin-bottom: 12px;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,119 @@
+@import '../../Variables.scss';
+
+.vertical_gallery {
+  position: fixed;
+  top: 0;
+  right: 0px;
+  min-width: 128px;
+  width: 136px;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  border-radius: 0px;
+  list-style: none;
+  z-index: 9999;
+  transition: linear 0.4s;
+
+}
+
+.gallery_item {
+  cursor: pointer;
+  transition: all 0.4s linear;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0; // Prevent items from shrinking
+  will-change: transform;
+
+  img {
+    width: 80px;
+    height: auto;
+    border-radius: 1px;
+    transition: all 0.4s linear;
+    opacity: 0.5;
+    will-change: width, transform, opacity;
+    border-radius: 4px;
+  }
+
+  .video_container {
+    position: relative;
+    width: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+    
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      transition: all 0.4s linear;
+      opacity: 0.5;
+    }
+    
+    .play_overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      backdrop-filter: blur(4px);
+      pointer-events: none;
+    }
+  }
+
+  &:hover {
+    img {
+      opacity: 1;
+    }
+    
+    .video_container video {
+      opacity: 1;
+    }
+  }
+
+  &.selected {
+    border-radius: 4px;
+    transform: translateX(-2px);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+    }
+
+    img {
+      width: 108px;
+      height: auto;
+      border-radius: 1px;
+      transition: all 0.2s linear;
+      opacity: 1;
+      border-radius: 4px;
+    }
+    
+    .video_container {
+      width: 108px;
+      
+      video {
+        width: 100%;
+        opacity: 1;
+        transition: all 0.2s linear;
+      }
+    }
+  }
+}
+
+.loading_dots {
+  margin-left: 20px;
+}

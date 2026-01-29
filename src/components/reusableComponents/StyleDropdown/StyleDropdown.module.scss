@@ -1,0 +1,64 @@
+@import '../../../Variables.scss';
+
+.sizePopup {
+  position: absolute;
+  top: 40px;
+  left: 55%;
+  transform: translateX(-50%);
+  width: 128px;
+  height: max-content;
+  max-height: 157px;
+  overflow: hidden;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 8px 0;
+  background-color: #0818238f;
+  backdrop-filter: blur(24px);
+  z-index: 99999;
+  pointer-events: auto;
+}
+
+.sizePopupItem {
+  width: 100%;
+  height: 24px;
+  padding: 4px 12px;
+  color: #ffffff99;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    background-color: #ffffff1a;
+    color: #ffffff;
+  }
+}
+
+.dropdownContent {
+  height: calc(100% - 24px);
+  max-height: 133px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 2.77px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      rgba(211, 248, 90, 0) 0%,
+      #07a3b791 50%,
+      rgba(211, 248, 90, 0) 100%
+    );
+
+    border-radius: 100px;
+  }
+}

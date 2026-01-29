@@ -1,0 +1,51 @@
+@import '../../../Variables.scss';
+
+.toggle_container {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+}
+
+.toggle_input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  &:focus + .toggle_switch {
+    box-shadow: none;
+  }
+}
+
+.toggle_switch {
+  display: flex;
+  width: 24px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.toggle_handle {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.toggle_switch_active {
+  background-color: var(--accent-color);
+  border: none;
+
+  .toggle_handle {
+    transform: translateX(12px);
+    background-color: #11252f;
+  }
+}

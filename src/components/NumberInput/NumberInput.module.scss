@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff66;
+  margin-bottom: 4px;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ffffff14;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  &:hover:not(.disabled) {
+    border-color: #ffffff20;
+  }
+
+  &:focus-within:not(.disabled) {
+    border-color: var(--accent-color);
+
+    & ~ .iconContainer {
+      svg {
+        stroke: #ffffff;
+      }
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.input {
+  width: 16px;
+  padding: 7px 2px;
+  background: transparent;
+  border: none;
+  color: #ffffff99;
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  outline: none;
+  min-width: 0;
+  box-shadow: none;
+
+  &::placeholder {
+    color: #ffffff33;
+  }
+
+  &:focus {
+    color: #ffffff;
+  }
+
+  /* Hide number input arrows */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.decrementBtn,
+.incrementBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: #ffffff66;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--accent-color);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 8px;
+  color: #ffffff66;
+  margin-right: 8px;
+}

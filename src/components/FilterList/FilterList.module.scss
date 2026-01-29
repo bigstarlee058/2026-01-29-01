@@ -1,0 +1,81 @@
+@import '../../Variables.scss';
+
+.filter_box {
+  margin-bottom: 24px;
+  h2 {
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.001em;
+    margin-bottom: 16px;
+    
+  }
+  .filter_item_all {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: $primary-gray-text-color;
+    width: 177px;
+    border-bottom: 1px solid #383633;
+    padding-bottom: 12px;
+    .all {
+      color: $secondary-white-text-color;
+    }
+  }
+}
+.filter_label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+      font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+}
+.filter_checked {
+@include checked
+}
+.check_input {
+  width: 0px;
+  height: 0px;
+
+}
+
+.filter_item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  color: $primary-gray-text-color;
+}
+.show_btn_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15.6px;
+  color: $primary-gray-text-color;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: transparent;
+  &:hover,
+  &:focus {
+    color: $secondary-white-text-color;
+  }
+}
+.show_btn {
+  margin-left: 8px;
+  background-color: transparent;
+  transition: transform 300ms ease;
+  cursor: pointer;
+  transform-origin: center 50%;
+
+  &.rotated {
+    transform: rotateX(180deg);
+  }
+}
+
+.filter_item {
+
+ 
+}

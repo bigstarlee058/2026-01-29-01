@@ -1,0 +1,70 @@
+@import '../../Variables.scss';
+
+.scenesSyncWarning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  user-select: none;
+  color: rgba(251, 191, 36, 0.9); // Amber/yellow warning color
+  background-color: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  margin-right: 8px;
+  gap: 4px;
+
+  &:hover {
+    background-color: rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.4);
+    color: rgba(251, 191, 36, 1);
+  }
+}
+
+.warningIcon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(251, 191, 36, 0.2);
+  }
+
+  svg {
+    transition: all 0.2s ease;
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+.dismissIcon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+
+  &:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: rgba(239, 68, 68, 0.9);
+    opacity: 1;
+  }
+
+  svg {
+    transition: all 0.2s ease;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

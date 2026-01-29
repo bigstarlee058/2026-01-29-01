@@ -1,0 +1,68 @@
+@import '../../Variables.scss';
+
+.syncIndicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+  color: white;
+
+  svg {
+    transition: all 0.2s ease;
+  }
+
+  .unsaved {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    margin-left: 2px;
+  }
+}
+
+.synced {
+  color: rgba(34, 197, 94, 0.9);
+}
+
+.pending {
+  color: var(--accent-color);
+}
+
+.syncing {
+  color: rgba(59, 130, 246, 0.9);
+
+  svg {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+.error {
+  color: rgba(239, 68, 68, 0.9);
+}
+
+.unknown {
+  color: rgba(156, 163, 175, 0.9);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

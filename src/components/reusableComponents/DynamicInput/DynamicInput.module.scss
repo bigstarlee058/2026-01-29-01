@@ -1,0 +1,60 @@
+@import '../../../Variables.scss';
+
+.inputContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  color: var(--primary-white-text-color);
+  font-size: 14px;
+  line-height: 1.2;
+  display: inline-block;
+  padding: 4px;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: none;
+  cursor: default;
+
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0em;
+  color: #ffffff99;
+
+  &:not(:read-only):focus {
+    background-color: rgba(255, 255, 255, 0.08);
+    outline: none;
+    cursor: text;
+  }
+
+  &::placeholder {
+    color: #ffffff;
+  }
+
+  &.maxLength {
+    border: 1px solid $warning-color;
+    color: $warning-color;
+  }
+
+  &.highlighted {
+    background-color: rgba(255, 255, 255, 0.08);
+    outline: none;
+    cursor: text;
+  }
+}
+
+.hiddenSpan {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  padding: 0 6px;
+}
