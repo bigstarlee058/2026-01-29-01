@@ -125,7 +125,7 @@ export const createCleanStateCopy = (editorElements, animations, subtitles) => {
           }
           return animation.targetId === element.id;
         });
-        
+
         if (hasActiveAnimations && element.initialState) {
           // Use initialState for placement to prevent saving animated positions
           return {
@@ -136,7 +136,7 @@ export const createCleanStateCopy = (editorElements, animations, subtitles) => {
               y: element.initialState.top,
               scaleX: element.initialState.scaleX,
               scaleY: element.initialState.scaleY,
-            }
+            },
           };
         }
       }
@@ -203,9 +203,15 @@ const timelineSlice = createSlice({
       };
 
       const snapshot = {
-        editorElements: JSON.parse(JSON.stringify(cleanState.editorElements || [], replacer)),
-        animations: JSON.parse(JSON.stringify(cleanState.animations || [], replacer)),
-        subtitles: JSON.parse(JSON.stringify(cleanState.subtitles || {}, replacer)),
+        editorElements: JSON.parse(
+          JSON.stringify(cleanState.editorElements || [], replacer)
+        ),
+        animations: JSON.parse(
+          JSON.stringify(cleanState.animations || [], replacer)
+        ),
+        subtitles: JSON.parse(
+          JSON.stringify(cleanState.subtitles || {}, replacer)
+        ),
         maxTime: state.maxTime,
         backgroundColor: state.backgroundColor,
         fps: state.fps,
@@ -269,19 +275,22 @@ const timelineSlice = createSlice({
         (cleanState.editorElements?.length || 0) !==
         (state.editorElements?.length || 0);
 
-      const hasContentChanged = cleanState.editorElements.some((newEl, index) => {
-        const oldEl = state.editorElements[index];
-        if (!oldEl) return true;
+      const hasContentChanged = cleanState.editorElements.some(
+        (newEl, index) => {
+          const oldEl = state.editorElements[index];
+          if (!oldEl) return true;
 
-        // Compare only properties needed for backend sync
-        return (
-          newEl.id !== oldEl.id ||
-          newEl.type !== oldEl.type ||
-          newEl.timeFrame.start !== oldEl.timeFrame.start ||
-          newEl.timeFrame.end !== oldEl.timeFrame.end ||
-          JSON.stringify(newEl.properties) !== JSON.stringify(oldEl.properties)
-        );
-      });
+          // Compare only properties needed for backend sync
+          return (
+            newEl.id !== oldEl.id ||
+            newEl.type !== oldEl.type ||
+            newEl.timeFrame.start !== oldEl.timeFrame.start ||
+            newEl.timeFrame.end !== oldEl.timeFrame.end ||
+            JSON.stringify(newEl.properties) !==
+              JSON.stringify(oldEl.properties)
+          );
+        }
+      );
 
       const hasChanges = hasLengthChanged || hasContentChanged;
 
@@ -532,8 +541,148 @@ const timelineSlice = createSlice({
       // It's only purpose is to be intercepted by the fullSyncMiddleware
       // to initiate the sync process with the backend
     },
+
+    // Media Management Reducers for Task 1: Add Media to Timeline
+    addMediaClip: (state, action) => {
+      const {
+        type, // 'video' | 'audio' | 'image'
+        source, // File object or blob URL
+        startTime = 0,
+        duration = 0,
+        linkedAudioClipId = null,
+        fileName = 'media',
+      } = action.payload;
+
+      // Generate unique clip ID
+      const clipId = `clip-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+      // Determine element type and property key based on file type
+      let elementType = type;
+      let propertyKey = 'src';
+      let targetRow = 0;
+
+      if (type === 'image') {
+        elementType = 'imageUrl';
+        propertyKey = 'imageUrl';
+        targetRow = state.editorElements.filter(
+          el => el.type === 'imageUrl'
+        ).length;
+      } else if (type === 'video') {
+        elementType = 'video';
+        propertyKey = 'src';
+        targetRow = state.editorElements.filter(
+          el => el.type === 'video'
+        ).length;
+      } else if (type === 'audio') {
+        elementType = 'audio';
+        propertyKey = 'src';
+        targetRow = state.editorElements.filter(
+          el => el.type === 'audio'
+        ).length;
+      }
+
+      // Create new media clip in timeline-compatible format
+      const newClip = {
+        id: clipId,
+        type: elementType,
+        row: targetRow,
+        fileName,
+        timeFrame: {
+          start: startTime,
+          end: startTime + duration,
+        },
+        from: startTime,
+        to: startTime + duration,
+        duration,
+        properties: {
+          [propertyKey]: source, // Store blob URL in the appropriate property
+          volume: type === 'audio' ? 1.0 : undefined,
+          opacity: type === 'image' ? 1.0 : undefined,
+        },
+        linkedAudioClipId, // For video clips with audio
+        createdAt: new Date().toISOString(),
+      };
+
+      // Remove undefined properties
+      Object.keys(newClip.properties).forEach(key => {
+        if (newClip.properties[key] === undefined) {
+          delete newClip.properties[key];
+        }
+      });
+
+      state.editorElements.push(newClip);
+
+      // Update maxTime if this clip extends the timeline
+      const clipEnd = startTime + duration;
+      if (clipEnd > state.maxTime) {
+        state.maxTime = clipEnd;
+      }
+
+      // Save to history
+      if (!state.isUndoRedoOperation) {
+        timelineSlice.caseReducers.saveToHistory(state);
+      }
+    },
+
+    removeMediaClip: (state, action) => {
+      const { clipId } = action.payload;
+
+      // Find and remove the clip
+      const index = state.editorElements.findIndex(el => el.id === clipId);
+      if (index !== -1) {
+        const removedClip = state.editorElements[index];
+        state.editorElements.splice(index, 1);
+
+        // If this was a video with linked audio, remove audio too
+        if (removedClip.linkedAudioClipId) {
+          const audioIndex = state.editorElements.findIndex(
+            el => el.id === removedClip.linkedAudioClipId
+          );
+          if (audioIndex !== -1) {
+            state.editorElements.splice(audioIndex, 1);
+          }
+        }
+
+        // Recalculate maxTime
+        if (state.editorElements.length > 0) {
+          state.maxTime = Math.max(
+            ...state.editorElements.map(el => el.timeFrame.end || 0)
+          );
+        } else {
+          state.maxTime = 0;
+        }
+
+        // Save to history
+        if (!state.isUndoRedoOperation) {
+          timelineSlice.caseReducers.saveToHistory(state);
+        }
+      }
+    },
+
+    updateMediaClipTimeFrame: (state, action) => {
+      const { clipId, start, end } = action.payload;
+
+      const clip = state.editorElements.find(el => el.id === clipId);
+      if (clip) {
+        clip.timeFrame.start = start;
+        clip.timeFrame.end = end;
+
+        // Update maxTime if needed
+        if (end > state.maxTime) {
+          state.maxTime = end;
+        }
+
+        // Save to history
+        if (!state.isUndoRedoOperation) {
+          timelineSlice.caseReducers.saveToHistory(state);
+        }
+      }
+    },
+
+    setSelectedClip: (state, action) => {
+      state.selectedClipId = action.payload;
+    },
   },
-  
 });
 
 export const {
@@ -549,6 +698,10 @@ export const {
   resetState,
   saveTimelineStateAction,
   saveTimelineData,
+  addMediaClip,
+  removeMediaClip,
+  updateMediaClipTimeFrame,
+  setSelectedClip,
 } = timelineSlice.actions;
 
 // Add new action creator for safely copying and setting editor elements
@@ -573,50 +726,58 @@ export const saveTimelineState = store => dispatch => {
       let plainEditorElements = cleanState.editorElements;
       let plainAnimations = cleanState.animations;
       try {
-        plainEditorElements = JSON.parse(JSON.stringify(cleanState.editorElements || []));
+        plainEditorElements = JSON.parse(
+          JSON.stringify(cleanState.editorElements || [])
+        );
       } catch (_) {
         // Fallback to safeSerialize result
       }
       try {
-        plainAnimations = JSON.parse(JSON.stringify(cleanState.animations || []));
+        plainAnimations = JSON.parse(
+          JSON.stringify(cleanState.animations || [])
+        );
       } catch (_) {
         // Fallback to safeSerialize result
       }
 
       // Use the same replacer again when dispatching to ensure payload is plain
       const payload = {
-        editorElements: JSON.parse(JSON.stringify(plainEditorElements || [], (k, v) => {
-          if (
-            k === 'fabricObject' ||
-            k === 'canvas' ||
-            k === 'freeDrawingBrush' ||
-            k === 'ctx' ||
-            k === 'context' ||
-            k === 'renderer' ||
-            k === 'originalAnimation' ||
-            k === 'actualAnimation' ||
-            k === 'targetElement'
-          ) {
-            return undefined;
-          }
-          return v;
-        })),
-        animations: JSON.parse(JSON.stringify(plainAnimations || [], (k, v) => {
-          if (
-            k === 'fabricObject' ||
-            k === 'canvas' ||
-            k === 'freeDrawingBrush' ||
-            k === 'ctx' ||
-            k === 'context' ||
-            k === 'renderer' ||
-            k === 'originalAnimation' ||
-            k === 'actualAnimation' ||
-            k === 'targetElement'
-          ) {
-            return undefined;
-          }
-          return v;
-        })),
+        editorElements: JSON.parse(
+          JSON.stringify(plainEditorElements || [], (k, v) => {
+            if (
+              k === 'fabricObject' ||
+              k === 'canvas' ||
+              k === 'freeDrawingBrush' ||
+              k === 'ctx' ||
+              k === 'context' ||
+              k === 'renderer' ||
+              k === 'originalAnimation' ||
+              k === 'actualAnimation' ||
+              k === 'targetElement'
+            ) {
+              return undefined;
+            }
+            return v;
+          })
+        ),
+        animations: JSON.parse(
+          JSON.stringify(plainAnimations || [], (k, v) => {
+            if (
+              k === 'fabricObject' ||
+              k === 'canvas' ||
+              k === 'freeDrawingBrush' ||
+              k === 'ctx' ||
+              k === 'context' ||
+              k === 'renderer' ||
+              k === 'originalAnimation' ||
+              k === 'actualAnimation' ||
+              k === 'targetElement'
+            ) {
+              return undefined;
+            }
+            return v;
+          })
+        ),
         isInitialization: store.isInitializationInProgress || false,
       };
       dispatch(saveTimelineStateAction(payload));

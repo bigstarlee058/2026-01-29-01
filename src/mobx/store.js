@@ -5183,9 +5183,12 @@ export class Store {
     return new Promise((resolve, reject) => {
       const imageElement = new Image();
       imageElement.crossOrigin = 'Anonymous';
-      // Add cache busting parameter to force fresh CORS load
-      const cacheBustUrl =
-        url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+
+      // Don't add cache busting to blob URLs - they don't support query parameters
+      const cacheBustUrl = url.startsWith('blob:')
+        ? url
+        : url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+
       imageElement.src = cacheBustUrl;
 
       imageElement.onload = () => {
@@ -5287,6 +5290,17 @@ export class Store {
               // Force a refresh to ensure proper z-indexing
               this.refreshElements();
 
+              // Debug: log element added (helps verify blob/remote URL presence)
+              try {
+                // eslint-disable-next-line no-console
+                console.debug('addImageLocal: added image element', {
+                  id: newElement.id,
+                  row: newElement.row,
+                  src: newElement.properties?.src,
+                  minUrl: newElement.properties?.minUrl,
+                });
+              } catch (e) {}
+
               resolve();
             },
             {
@@ -5300,8 +5314,12 @@ export class Store {
       };
 
       imageElement.onerror = error => {
-        console.error('Image failed to load:', error);
-        reject(error);
+        console.error('Image failed to load from URL:', url, error);
+        console.error(
+          'URL type:',
+          url.startsWith('blob:') ? 'blob URL' : 'regular URL'
+        );
+        reject(new Error(`Failed to load image from ${url}`));
       };
     });
   }
@@ -5347,6 +5365,7 @@ export class Store {
       // Add cache busting parameter to force fresh CORS load
       const cacheBustUrl =
         url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now();
+      console.log(cacheBustUrl);
       imageElement.src = cacheBustUrl;
 
       imageElement.onload = () => {
@@ -9820,8 +9839,7 @@ export class Store {
         mediaRecorder.stop();
       }
 
-      // Restore audio elements after error
-      await restoreAudioElements(audioElements);
+      // Reset to initial state after error
       this.updateTimeTo(0);
       this.refreshElements();
 
@@ -9843,6 +9861,7 @@ export class Store {
 
       const durationSeconds = Math.ceil(this.maxTime / 1000) || 5;
       const fps = 30;
+      const filename = `video-${Date.now()}.${this.selectedVideoFormat === 'mp4' ? 'mp4' : 'webm'}`;
 
       this.setPlaying(false);
       this.updateTimeTo(0);
@@ -13805,410 +13824,6 @@ export class Store {
 
     this.refreshElements?.();
   });
-
-  /**
-   * Add media from local file to timeline
-   * Handles video (with audio track sync), audio, and image files
-   * @param {Object} preparedMedia - Prepared media data from mediaUpload.js
-   * @param {number} dropTime - Time position in ms where to add media
-   * @param {number} targetRow - Optional target row
-   */
-  async addMediaToTimeline(preparedMedia, dropTime = 0, targetRow = null) {
-    const { file, objectUrl, category, metadata, name } = preparedMedia;
-
-    try {
-      if (category === 'Video') {
-        await this.addVideoFromFile(
-          file,
-          objectUrl,
-          metadata,
-          dropTime,
-          targetRow
-        );
-      } else if (category === 'Audio') {
-        await this.addAudioFromFile(
-          file,
-          objectUrl,
-          metadata,
-          dropTime,
-          targetRow
-        );
-      } else if (category === 'Image' || category === 'Animation') {
-        await this.addImageFromFile(
-          file,
-          objectUrl,
-          metadata,
-          dropTime,
-          targetRow
-        );
-      }
-
-      // Save to history for undo/redo
-      if (window.dispatchSaveTimelineState && !this.isUndoRedoOperation) {
-        window.dispatchSaveTimelineState(this);
-      }
-    } catch (error) {
-      console.error('Failed to add media to timeline:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Add video file to timeline with synchronized audio track
-   */
-  async addVideoFromFile(
-    file,
-    objectUrl,
-    metadata,
-    dropTime = 0,
-    targetRow = null
-  ) {
-    const { duration, width, height, hasAudio } = metadata;
-
-    // Create video element
-    const videoElement = document.createElement('video');
-    videoElement.src = objectUrl;
-    videoElement.preload = 'auto';
-    videoElement.playsInline = true;
-    videoElement.muted = false;
-    videoElement.crossOrigin = 'anonymous';
-
-    const videoId = `video-${Math.random().toString(36).substr(2, 9)}`;
-    videoElement.id = videoId;
-
-    // Wait for video to be ready
-    await new Promise((resolve, reject) => {
-      videoElement.onloadedmetadata = resolve;
-      videoElement.onerror = reject;
-    });
-
-    // Generate thumbnails for timeline
-    const thumbnails = await this.generateThumbnailsForVideo(videoElement);
-
-    // Calculate canvas positioning
-    const canvasWidth = this.canvas?.width || 1920;
-    const canvasHeight = this.canvas?.height || 1080;
-    const scale = Math.min(canvasWidth / width, canvasHeight / height);
-    const xPos = (canvasWidth - width * scale) / 2;
-    const yPos = (canvasHeight - height * scale) / 2;
-
-    // Find appropriate row for video
-    const videoRow =
-      targetRow !== null
-        ? targetRow
-        : this.findBestMediaPosition(duration, dropTime, 'video');
-
-    // Add video resource to store
-    this.addVideoResource(videoElement);
-
-    // Create video clip element
-    const videoClipElement = {
-      id: getUid(),
-      name: file.name,
-      type: 'video',
-      placement: {
-        x: xPos,
-        y: yPos,
-        width: width * scale,
-        height: height * scale,
-        scaleX: scale,
-        scaleY: scale,
-        rotation: 0,
-      },
-      timeFrame: {
-        start: dropTime,
-        end: dropTime + duration,
-      },
-      properties: {
-        elementId: videoId,
-        src: objectUrl,
-        imageObject: videoElement,
-        thumbnails,
-        effect: {},
-      },
-      row: videoRow,
-    };
-
-    this.editorElements.push(videoClipElement);
-
-    // If video has audio, create synchronized audio track
-    if (hasAudio) {
-      const audioRow = this.findBestMediaPosition(duration, dropTime, 'audio');
-
-      const audioClipElement = {
-        id: getUid(),
-        name: `${file.name} (audio)`,
-        type: 'audio',
-        placement: {
-          x: 0,
-          y: 0,
-          width: 100,
-          height: 100,
-        },
-        timeFrame: {
-          start: dropTime, // Same start time as video
-          end: dropTime + duration, // Same duration as video
-        },
-        properties: {
-          elementId: videoId,
-          src: objectUrl,
-          audioObject: videoElement, // Reference same video element for audio
-          effect: {},
-        },
-        row: audioRow,
-      };
-
-      this.editorElements.push(audioClipElement);
-    }
-
-    // Update max time if needed
-    if (dropTime + duration > this.maxTime) {
-      this.setMaxTime(dropTime + duration);
-    }
-
-    // Refresh canvas
-    this.refreshElements();
-  }
-
-  /**
-   * Add audio file to timeline
-   */
-  async addAudioFromFile(
-    file,
-    objectUrl,
-    metadata,
-    dropTime = 0,
-    targetRow = null
-  ) {
-    const { duration } = metadata;
-
-    // Create audio element
-    const audioElement = new Audio();
-    audioElement.src = objectUrl;
-    audioElement.preload = 'auto';
-
-    const audioId = `audio-${Math.random().toString(36).substr(2, 9)}`;
-    audioElement.id = audioId;
-
-    // Wait for audio to be ready
-    await new Promise((resolve, reject) => {
-      audioElement.onloadedmetadata = resolve;
-      audioElement.onerror = reject;
-    });
-
-    // Add audio resource to store
-    this.addAudioResource(audioElement);
-
-    // Find appropriate row for audio
-    const audioRow =
-      targetRow !== null
-        ? targetRow
-        : this.findBestMediaPosition(duration, dropTime, 'audio');
-
-    // Create audio clip element
-    const audioClipElement = {
-      id: getUid(),
-      name: file.name,
-      type: 'audio',
-      placement: {
-        x: 0,
-        y: 0,
-        width: 100,
-        height: 100,
-      },
-      timeFrame: {
-        start: dropTime,
-        end: dropTime + duration,
-      },
-      properties: {
-        elementId: audioId,
-        src: objectUrl,
-        audioObject: audioElement,
-        effect: {},
-      },
-      row: audioRow,
-    };
-
-    this.editorElements.push(audioClipElement);
-
-    // Update max time if needed
-    if (dropTime + duration > this.maxTime) {
-      this.setMaxTime(dropTime + duration);
-    }
-
-    // Refresh elements
-    this.refreshElements();
-  }
-
-  /**
-   * Add image file to timeline
-   */
-  async addImageFromFile(
-    file,
-    objectUrl,
-    metadata,
-    dropTime = 0,
-    targetRow = null
-  ) {
-    const { width, height } = metadata;
-
-    // Create image element
-    const imgElement = new Image();
-    imgElement.src = objectUrl;
-    imgElement.crossOrigin = 'anonymous';
-
-    // Wait for image to load
-    await new Promise((resolve, reject) => {
-      imgElement.onload = resolve;
-      imgElement.onerror = reject;
-    });
-
-    // Calculate canvas positioning
-    const canvasWidth = this.canvas?.width || 1920;
-    const canvasHeight = this.canvas?.height || 1080;
-    const scale = Math.min(canvasWidth / width, canvasHeight / height);
-    const xPos = (canvasWidth - width * scale) / 2;
-    const yPos = (canvasHeight - height * scale) / 2;
-
-    // Default duration for images (5 seconds)
-    const imageDuration = 5000;
-
-    // Find appropriate row for image
-    const imageRow =
-      targetRow !== null
-        ? targetRow
-        : this.findBestMediaPosition(imageDuration, dropTime, 'image');
-
-    // Add image resource to store
-    this.addImageResource(imgElement);
-
-    // Create image clip element
-    const imageElement = {
-      id: getUid(),
-      name: file.name,
-      type: 'image',
-      placement: {
-        x: xPos,
-        y: yPos,
-        width: width * scale,
-        height: height * scale,
-        scaleX: scale,
-        scaleY: scale,
-        rotation: 0,
-      },
-      timeFrame: {
-        start: dropTime,
-        end: dropTime + imageDuration,
-      },
-      properties: {
-        src: objectUrl,
-        imageObject: imgElement,
-        effect: {},
-      },
-      row: imageRow,
-    };
-
-    this.editorElements.push(imageElement);
-
-    // Update max time if needed
-    if (dropTime + imageDuration > this.maxTime) {
-      this.setMaxTime(dropTime + imageDuration);
-    }
-
-    // Refresh canvas
-    this.refreshElements();
-  }
-
-  /**
-   * Find best position (row) for new media element
-   * @param {number} duration - Duration of media in ms
-   * @param {number} startTime - Desired start time in ms
-   * @param {string} mediaType - Type of media (video, audio, image)
-   * @returns {number} Row index
-   */
-  findBestMediaPosition(duration, startTime, mediaType) {
-    const existingElements = this.editorElements.filter(el => {
-      // Filter compatible types
-      if (mediaType === 'video' || mediaType === 'image') {
-        return (
-          el.type === 'video' || el.type === 'image' || el.type === 'imageUrl'
-        );
-      } else if (mediaType === 'audio') {
-        return el.type === 'audio';
-      }
-      return false;
-    });
-
-    // Try to find space in existing rows
-    const rowsToCheck = [...new Set(existingElements.map(el => el.row))].sort(
-      (a, b) => a - b
-    );
-
-    for (const row of rowsToCheck) {
-      const rowElements = existingElements.filter(el => el.row === row);
-
-      if (this.hasSpaceInRow(rowElements, startTime, duration)) {
-        return row;
-      }
-    }
-
-    // No space found, create new row
-    const maxRow = rowsToCheck.length > 0 ? Math.max(...rowsToCheck) : -1;
-    return maxRow + 1;
-  }
-
-  /**
-   * Check if row has space for new element
-   * @param {Array} rowElements - Elements in the row
-   * @param {number} startTime - Start time of new element
-   * @param {number} duration - Duration of new element
-   * @returns {boolean} True if space available
-   */
-  hasSpaceInRow(rowElements, startTime, duration) {
-    const endTime = startTime + duration;
-
-    // Check for overlaps
-    for (const element of rowElements) {
-      const elStart = element.timeFrame.start;
-      const elEnd = element.timeFrame.end;
-
-      // Check if new element overlaps with existing element
-      if (!(endTime <= elStart || startTime >= elEnd)) {
-        return false; // Overlap detected
-      }
-    }
-
-    return true; // No overlaps, space available
-  }
-
-  /**
-   * Generate thumbnails for video element
-   */
-  async generateThumbnailsForVideo(videoElement) {
-    const thumbnails = [];
-    const count = Math.max(3, Math.round(videoElement.duration));
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const thumbWidth = Math.max(80, Math.floor(videoElement.videoWidth / 10));
-    const thumbHeight = Math.max(60, Math.floor(videoElement.videoHeight / 10));
-    canvas.width = thumbWidth;
-    canvas.height = thumbHeight;
-
-    for (let i = 0; i < count; i++) {
-      const time = (videoElement.duration * i) / Math.max(count - 1, 1);
-      videoElement.currentTime = time;
-
-      await new Promise(resolve => {
-        videoElement.addEventListener('seeked', resolve, { once: true });
-      });
-
-      ctx.drawImage(videoElement, 0, 0, thumbWidth, thumbHeight);
-      thumbnails.push(canvas.toDataURL('image/jpeg', 0.7));
-    }
-
-    return thumbnails;
-  }
 }
 
 export function isEditorAudioElement(element) {

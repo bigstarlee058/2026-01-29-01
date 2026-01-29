@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { ButtonWithIcon } from 'components/reusableComponents/ButtonWithIcon';
 import ReusablePopup from '../ReusablePopup';
@@ -8,7 +8,6 @@ import PopupPortal from '../PopupPortal/PopupPortal';
 import { removeSilence } from '../../../services/audioApi';
 import { StoreContext } from '../../../mobx';
 import { runInAction } from 'mobx';
-import useUploadProgress from '../../../hooks/useUploadProgress';
 import { validateFile } from '../../../utils/fileValidation';
 import {
   getAcceptAttribute,
@@ -16,7 +15,6 @@ import {
 } from '../../../utils/fileFormatters';
 import toast from 'react-hot-toast';
 import styles from './TimeLineControlPanel.module.scss';
-import MediaUploadButton from '../MediaUploadButton/MediaUploadButton';
 
 const TimeLineControlPanel = ({
   // Control visibility states
@@ -110,8 +108,13 @@ const TimeLineControlPanel = ({
   const [uploadProgress, setUploadProgress] = useState({});
   const [isUploadingFiles, setIsUploadingFiles] = useState(false);
 
+  // Keep file references alive to prevent blob URL garbage collection
+  const fileReferencesRef = useRef(new Map());
+
   const dispatch = useDispatch();
-  const { upload, cancel, isUploading } = useUploadProgress();
+  // DISABLED useUploadProgress - using local blob URLs instead
+  // const { upload, cancel, isUploading } = useUploadProgress();
+  const isUploading = false; // Dummy value since we're not uploading to backend
   const timelineControlsOptionsRef = useRef(null);
   const volumeContainerRef = useRef(null);
   const volumeNumberRef = useRef(null);
@@ -1076,6 +1079,13 @@ const TimeLineControlPanel = ({
   const addFileToTimeline = async (file, uploadedUrl) => {
     const fileType = inferUploadCategory(file);
 
+    console.log('📁 Adding file to timeline:', {
+      fileName: file.name,
+      fileType: fileType,
+      uploadedUrl: uploadedUrl,
+      urlType: uploadedUrl?.startsWith('blob:') ? 'blob URL' : 'other',
+    });
+
     // Create new row at the end - same logic as in TimelineRow drop zones
     const newRow = store.maxRows;
 
@@ -1083,6 +1093,7 @@ const TimeLineControlPanel = ({
     store.shiftRowsDown(newRow);
 
     if (fileType === 'image') {
+      console.log('🖼️  Adding image:', uploadedUrl);
       await store.addImageLocal({
         url: uploadedUrl,
         minUrl: uploadedUrl, // Use same URL for now
@@ -1189,52 +1200,32 @@ const TimeLineControlPanel = ({
 
     for (const fileData of newUploadingFiles) {
       try {
-        const formData = new FormData();
-        formData.append('file', fileData.file);
-        formData.append('name', fileData.name);
-        formData.append('type', inferUploadCategory(fileData.file));
+        // DISABLED - Use local blob URL instead of backend upload (no CORS issues)
+        const uploadedUrl = URL.createObjectURL(fileData.file);
 
-        const response = await upload(formData, {
-          onProgress: pct => {
-            setUploadProgress(prev => ({
-              ...prev,
-              [fileData.id]: {
-                progress: Math.max(
-                  prev[fileData.id]?.progress || 0,
-                  Math.min(100, pct)
-                ),
-              },
-            }));
-          },
-        });
+        // Keep file reference alive to prevent blob URL garbage collection
+        fileReferencesRef.current.set(fileData.id, fileData.file);
 
+        // Simulate progress locally
+        setUploadProgress(prev => ({
+          ...prev,
+          [fileData.id]: { progress: 50 },
+        }));
+
+        // Add file to timeline using local blob URL
+        await addFileToTimeline(fileData.file, uploadedUrl);
+
+        // Complete progress
         setUploadProgress(prev => ({
           ...prev,
           [fileData.id]: { progress: 100 },
         }));
-
-        // Get uploaded file URL from response
-        let uploadedUrl = null;
-        if (response?.data?.file?.url) {
-          uploadedUrl = response.data.file.url;
-        } else if (response?.data?.url) {
-          uploadedUrl = response.data.url;
-        } else {
-          // Fallback to temporary URL if no uploaded URL available
-          uploadedUrl = URL.createObjectURL(fileData.file);
-        }
-
-        // Add file to timeline after successful upload
-        await addFileToTimeline(fileData.file, uploadedUrl);
       } catch (e) {
-        const canceled = e?.canceled;
-        if (!canceled) {
-          console.error('Upload error:', e);
-          toast.error(`Failed to upload ${fileData.name}`);
-        }
+        console.error('Error adding file to timeline:', e);
+        toast.error(`Failed to add ${fileData.name}`);
         setUploadProgress(prev => ({
           ...prev,
-          [fileData.id]: { progress: 100, error: !canceled },
+          [fileData.id]: { progress: 100, error: true },
         }));
       }
     }
@@ -1617,10 +1608,27 @@ const TimeLineControlPanel = ({
             tooltipText="Compact Audio"
           />
         )}
-
-        {/* Upload Media Button - client-side only */}
-        <MediaUploadButton />
-
+        <ButtonWithIcon
+          icon="UploadFileIcon"
+          size="16"
+          accentColor="#FFFFFFB2"
+          activeColor="white"
+          color={
+            isUploadingFiles || isUploading
+              ? 'var(--accent-color)'
+              : '#FFFFFF66'
+          }
+          classNameButton={`${styles.uploadBtn} ${
+            isUploadingFiles || isUploading ? styles.uploading : ''
+          }`}
+          onClick={handleUploadClick}
+          tooltipText={
+            isUploadingFiles || isUploading
+              ? 'Uploading files...'
+              : 'Upload files to timeline'
+          }
+          disabled={isUploadingFiles || isUploading}
+        />
         {checkedStates.some(state => state) && (
           <div className={styles.dividerContainer}>
             <span className={styles.divider}></span>

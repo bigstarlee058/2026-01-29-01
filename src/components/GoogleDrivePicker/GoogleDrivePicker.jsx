@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styles from './GoogleDrivePicker.module.scss';
-import { initializeGoogleDrive, listFiles, downloadFile } from '../../services/googleDrive';
+import {
+  initializeGoogleDrive,
+  listFiles,
+  downloadFile,
+} from '../../services/googleDrive';
 
 const GoogleDrivePicker = ({ onClose, onFileSelect }) => {
   const [files, setFiles] = useState([]);
@@ -25,10 +29,10 @@ const GoogleDrivePicker = ({ onClose, onFileSelect }) => {
     init();
   }, []);
 
-  const handleSearch = async (e) => {
+  const handleSearch = async e => {
     const query = e.target.value;
     setSearchQuery(query);
-    
+
     try {
       const searchResults = await listFiles(`and name contains '${query}'`);
       setFiles(searchResults);
@@ -38,8 +42,9 @@ const GoogleDrivePicker = ({ onClose, onFileSelect }) => {
     }
   };
 
-  const handleFileSelect = async (file) => {
+  const handleFileSelect = async file => {
     try {
+      console.log('Selected file:', file);
       const fileData = await downloadFile(file.id);
       const blob = new Blob([fileData], { type: file.mimeType });
       const fileObject = new File([blob], file.name, { type: file.mimeType });
@@ -65,7 +70,9 @@ const GoogleDrivePicker = ({ onClose, onFileSelect }) => {
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
         <div className={styles.header}>
           <h2>Select from Google Drive</h2>
-          <button className={styles.closeButton} onClick={onClose}>×</button>
+          <button className={styles.closeButton} onClick={onClose}>
+            ×
+          </button>
         </div>
 
         <div className={styles.search}>
@@ -103,4 +110,4 @@ const GoogleDrivePicker = ({ onClose, onFileSelect }) => {
   );
 };
 
-export default GoogleDrivePicker; 
+export default GoogleDrivePicker;

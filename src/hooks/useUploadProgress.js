@@ -55,7 +55,9 @@ export const useUploadProgress = () => {
           error?.message === 'canceled' ||
           error?.code === 'ERR_CANCELED';
 
-        const wrapped = isCanceled ? { canceled: true, error } : { canceled: false, error };
+        const wrapped = isCanceled
+          ? { canceled: true, error }
+          : { canceled: false, error };
         setLastError(wrapped);
         throw wrapped;
       } finally {

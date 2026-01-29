@@ -2697,6 +2697,8 @@ function VideoCreationPage() {
     const handleResize = () => {
       const timelineRnd = document.querySelector('.timeline-rnd');
       if (timelineRnd) {
+        timelineRnd.style.position = 'fixed';
+        timelineRnd.style.bottom = `${timelineHeight}px`;
         timelineRnd.style.transform = `translate(0px, ${
           window.innerHeight - timelineHeight
         }px)`;
@@ -3054,8 +3056,8 @@ function VideoCreationPage() {
                     i.name === 'lyra'
                       ? handleLyraClick
                       : i.name === 'download'
-                      ? handleDownloadClick
-                      : () => handleClick(i.name)
+                        ? handleDownloadClick
+                        : () => handleClick(i.name)
                   }
                   classNameButton={`${styles.header_navigate_btn} ${
                     i.name !== 'download' && activeScreens.includes(i.name)
@@ -3267,8 +3269,8 @@ function VideoCreationPage() {
                   store?.isInitializationInProgress
                     ? 'Loading timeline....'
                     : isInitializing.current && !isInitialized
-                    ? 'Loading story data....'
-                    : 'Loading timeline....'
+                      ? 'Loading story data....'
+                      : 'Loading timeline....'
                 }
               />
             </Rnd>

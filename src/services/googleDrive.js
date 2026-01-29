@@ -1,7 +1,9 @@
 // Google Drive API configuration
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
+const DISCOVERY_DOCS = [
+  'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
+];
 const SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
 
 let tokenClient;
@@ -54,7 +56,7 @@ export const getAuthToken = () => {
       return;
     }
 
-    tokenClient.callback = (resp) => {
+    tokenClient.callback = resp => {
       if (resp.error) {
         reject(resp);
         return;
@@ -87,16 +89,17 @@ export const listFiles = async (query = '') => {
 };
 
 // Download file from Google Drive
-export const downloadFile = async (fileId) => {
+export const downloadFile = async fileId => {
   try {
+    console.log('Downloading file with ID:', fileId);
     await getAuthToken();
     const response = await gapi.client.drive.files.get({
       fileId: fileId,
-      alt: 'media'
+      alt: 'media',
     });
     return response.body;
   } catch (error) {
     console.error('Error downloading file:', error);
     throw error;
   }
-}; 
+};

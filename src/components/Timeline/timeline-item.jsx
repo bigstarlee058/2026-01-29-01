@@ -114,8 +114,9 @@ const drawAudioWaveform = async (
     if (window.audioBufferCache.has(audioUrl)) {
       audioBuffer = window.audioBufferCache.get(audioUrl);
     } else {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
+      const audioContext = new (
+        window.AudioContext || window.webkitAudioContext
+      )();
       const response = await fetch(audioUrl);
       const arrayBuffer = await response.arrayBuffer();
       audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
@@ -268,7 +269,7 @@ const DraggableElement = ({
         element: element, // Pass the full element for ghost system
         initialClickOffset: initialClickOffset, // Store for later use
       };
-      
+
       return dragItem;
     },
     canDrag: () => true,
@@ -421,8 +422,8 @@ const DraggableElement = ({
             // Remove all animations for this element (like handleNoneClick in TransitionPanel)
             const animationsToRemove = store.animations.filter(
               anim =>
-                (anim.targetId === element.id || 
-                 (anim.targetIds && anim.targetIds.includes(element.id))) && 
+                (anim.targetId === element.id ||
+                  (anim.targetIds && anim.targetIds.includes(element.id))) &&
                 anim.type !== 'glTransition'
             );
             animationsToRemove.forEach(anim => {
@@ -431,9 +432,10 @@ const DraggableElement = ({
 
             // Remove animation elements from timeline
             const animationElements = store.editorElements.filter(
-              el => el.type === 'animation' && 
-                   (el.targetId === element.id || 
-                    (el.targetIds && el.targetIds.includes(element.id)))
+              el =>
+                el.type === 'animation' &&
+                (el.targetId === element.id ||
+                  (el.targetIds && el.targetIds.includes(element.id)))
             );
             animationElements.forEach(animEl => {
               store.removeEditorElement(animEl.id);
@@ -608,10 +610,7 @@ const DraggableElement = ({
       draggable={true}
       style={{
         // Reduce pointer events during gallery/file drag to allow InterRowDropZone to work
-        pointerEvents:
-          store.ghostState.isFileDragging
-            ? 'none'
-            : 'auto',
+        pointerEvents: store.ghostState.isFileDragging ? 'none' : 'auto',
       }}
       onDragStart={() => setIsDragging(true)}
       onDragEnd={() => {
@@ -877,15 +876,15 @@ const TimelineItem = observer(
       ? item.type === 'image' || item.type === 'imageUrl'
         ? styles.selectedImageBackground
         : item.type === 'transition'
-        ? styles.selectedTransitionBackground
-        : styles.selectedBackground
+          ? styles.selectedTransitionBackground
+          : styles.selectedBackground
       : item.type === 'image' || item.type === 'imageUrl'
-      ? styles.unselectedImageBackground
-      : item.type === 'text'
-      ? styles.unselectedTextBackground
-      : item.type === 'transition'
-      ? styles.unselectedTransitionBackground
-      : styles.unselectedBackground;
+        ? styles.unselectedImageBackground
+        : item.type === 'text'
+          ? styles.unselectedTextBackground
+          : item.type === 'transition'
+            ? styles.unselectedTransitionBackground
+            : styles.unselectedBackground;
 
     const handleDirectClick = e => {
       // Skip if this is a context menu event
@@ -1150,7 +1149,10 @@ const TimelineItem = observer(
                 className={styles.imageContainer}
                 style={{
                   backgroundImage: `url(${
-                    item.properties?.minUrl || item.properties?.src || ''
+                    item.properties?.minUrl ||
+                    item.properties?.src ||
+                    item.properties?.imageUrl ||
+                    ''
                   })`,
                   backgroundSize:
                     (item.properties?.width || 0) <
@@ -1180,7 +1182,9 @@ const TimelineItem = observer(
                     x: e.clientX, // Use cursor X position
                     y: fixedYPosition, // Fixed Y position
                   });
-                  setTooltipContent(item.properties?.src);
+                  setTooltipContent(
+                    item.properties?.src || item.properties?.imageUrl
+                  );
 
                   // Set a delay for showing the tooltip (300ms)
                   showTooltipTimeoutRef.current = setTimeout(() => {

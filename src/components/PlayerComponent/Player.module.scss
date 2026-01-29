@@ -302,13 +302,6 @@
   width: 100%;
   transition: all 0.1s ease;
 
-  &.timeline-drop-active {
-    .timelineDragOverlay {
-      opacity: 1;
-      pointer-events: all;
-    }
-  }
-
   :global(.react-resizable-handle) {
     position: absolute;
     top: 0px;
@@ -356,44 +349,6 @@
 
     backdrop-filter: blur(5px);
   }
-}
-
-.timelineDragOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.timelineDragOverlayContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 24px;
-  border: 2px dashed rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.timelineDragOverlayIcon {
-  font-size: 48px;
-}
-
-.timelineDragOverlayText {
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
 }
 
 .timelineContent {
@@ -1218,9 +1173,7 @@
 .list_container {
   background-color: #11252f;
   border-radius: 8px;
-  box-shadow:
-    8px 8px 15px 0px #00000040,
-    -8px 8px 15px 0px #ffffff0a inset;
+  box-shadow: 8px 8px 15px 0px #00000040, -8px 8px 15px 0px #ffffff0a inset;
   backdrop-filter: blur(300px);
   z-index: 99999;
   overflow: hidden;
@@ -1638,9 +1591,7 @@
   height: 68px;
   border-radius: 8px;
   cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .animationTitle {
@@ -2539,24 +2490,14 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .renderingProgress {
@@ -2622,12 +2563,12 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-
+  
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
   }
-
+  
   &:active {
     transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -2766,13 +2707,9 @@
   width: 100%;
   flex: 1;
 
-  &:hover {
-    opacity: 0.95;
-  }
+  &:hover { opacity: 0.95; }
 
-  &:active {
-    opacity: 0.9;
-  }
+  &:active { opacity: 0.9; }
 }
 
 .frameLabelContainer {
@@ -3031,8 +2968,7 @@
     padding-top: 0;
     padding-bottom: 0;
     pointer-events: none;
-    transition:
-      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.05s,
       max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);

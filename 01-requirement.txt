@@ -1,4 +1,3 @@
-
 Overview 
 
 VIDEFY.ai is an all-in-one AI video creation platform that takes a user from idea to finished video in one place: story and storyboard, visuals generation, voiceover, subtitles, editing, review, and export. 
