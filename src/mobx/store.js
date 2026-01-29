@@ -3591,8 +3591,8 @@ export class Store {
       Array.isArray(animation.targetIds) && animation.targetIds.length > 0
         ? animation.targetIds
         : animation.targetId
-        ? [animation.targetId]
-        : [];
+          ? [animation.targetId]
+          : [];
 
     const targetElements = this.editorElements.filter(
       el => targetIds.includes(el.id) && el.type !== 'animation'
@@ -6722,8 +6722,8 @@ export class Store {
           effectDirection === 'in'
             ? 'In'
             : effectDirection === 'out'
-            ? 'Out'
-            : 'Effect'
+              ? 'Out'
+              : 'Effect'
         }`;
       } else if (animation.type.endsWith('In')) {
         displayName = `${capitalizedType} In`;
@@ -9497,8 +9497,9 @@ export class Store {
           if (audioContext) {
             await audioContext.close();
           }
-          audioContext = new (window.AudioContext ||
-            window.webkitAudioContext)();
+          audioContext = new (
+            window.AudioContext || window.webkitAudioContext
+          )();
           const destination = audioContext.createMediaStreamDestination();
           const gainNode = audioContext.createGain();
           gainNode.gain.value = 1.0;
@@ -13804,31 +13805,6 @@ export class Store {
 
     this.refreshElements?.();
   });
-}
-
-export function isEditorAudioElement(element) {
-  return element.type === 'audio';
-}
-
-export function isEditorVideoElement(element) {
-  return element.type === 'video';
-}
-
-export function isEditorImageElement(element) {
-  return element.type === 'image' || element.type === 'imageUrl';
-}
-
-export function isEditorVisualElement(element) {
-  return isEditorImageElement(element) || isEditorVideoElement(element);
-}
-
-export function canHaveAnimations(element) {
-  return isEditorVisualElement(element);
-}
-
-export function canHaveTransitions(element) {
-  return isEditorVisualElement(element);
-}
 
   /**
    * Add media from local file to timeline
@@ -13839,16 +13815,34 @@ export function canHaveTransitions(element) {
    */
   async addMediaToTimeline(preparedMedia, dropTime = 0, targetRow = null) {
     const { file, objectUrl, category, metadata, name } = preparedMedia;
-    
+
     try {
       if (category === 'Video') {
-        await this.addVideoFromFile(file, objectUrl, metadata, dropTime, targetRow);
+        await this.addVideoFromFile(
+          file,
+          objectUrl,
+          metadata,
+          dropTime,
+          targetRow
+        );
       } else if (category === 'Audio') {
-        await this.addAudioFromFile(file, objectUrl, metadata, dropTime, targetRow);
+        await this.addAudioFromFile(
+          file,
+          objectUrl,
+          metadata,
+          dropTime,
+          targetRow
+        );
       } else if (category === 'Image' || category === 'Animation') {
-        await this.addImageFromFile(file, objectUrl, metadata, dropTime, targetRow);
+        await this.addImageFromFile(
+          file,
+          objectUrl,
+          metadata,
+          dropTime,
+          targetRow
+        );
       }
-      
+
       // Save to history for undo/redo
       if (window.dispatchSaveTimelineState && !this.isUndoRedoOperation) {
         window.dispatchSaveTimelineState(this);
@@ -13862,9 +13856,15 @@ export function canHaveTransitions(element) {
   /**
    * Add video file to timeline with synchronized audio track
    */
-  async addVideoFromFile(file, objectUrl, metadata, dropTime = 0, targetRow = null) {
+  async addVideoFromFile(
+    file,
+    objectUrl,
+    metadata,
+    dropTime = 0,
+    targetRow = null
+  ) {
     const { duration, width, height, hasAudio } = metadata;
-    
+
     // Create video element
     const videoElement = document.createElement('video');
     videoElement.src = objectUrl;
@@ -13872,32 +13872,35 @@ export function canHaveTransitions(element) {
     videoElement.playsInline = true;
     videoElement.muted = false;
     videoElement.crossOrigin = 'anonymous';
-    
+
     const videoId = `video-${Math.random().toString(36).substr(2, 9)}`;
     videoElement.id = videoId;
-    
+
     // Wait for video to be ready
     await new Promise((resolve, reject) => {
       videoElement.onloadedmetadata = resolve;
       videoElement.onerror = reject;
     });
-    
+
     // Generate thumbnails for timeline
     const thumbnails = await this.generateThumbnailsForVideo(videoElement);
-    
+
     // Calculate canvas positioning
     const canvasWidth = this.canvas?.width || 1920;
     const canvasHeight = this.canvas?.height || 1080;
     const scale = Math.min(canvasWidth / width, canvasHeight / height);
     const xPos = (canvasWidth - width * scale) / 2;
     const yPos = (canvasHeight - height * scale) / 2;
-    
+
     // Find appropriate row for video
-    const videoRow = targetRow !== null ? targetRow : this.findBestMediaPosition(duration, dropTime, 'video');
-    
+    const videoRow =
+      targetRow !== null
+        ? targetRow
+        : this.findBestMediaPosition(duration, dropTime, 'video');
+
     // Add video resource to store
     this.addVideoResource(videoElement);
-    
+
     // Create video clip element
     const videoClipElement = {
       id: getUid(),
@@ -13925,13 +13928,13 @@ export function canHaveTransitions(element) {
       },
       row: videoRow,
     };
-    
+
     this.editorElements.push(videoClipElement);
-    
+
     // If video has audio, create synchronized audio track
     if (hasAudio) {
       const audioRow = this.findBestMediaPosition(duration, dropTime, 'audio');
-      
+
       const audioClipElement = {
         id: getUid(),
         name: `${file.name} (audio)`,
@@ -13954,15 +13957,15 @@ export function canHaveTransitions(element) {
         },
         row: audioRow,
       };
-      
+
       this.editorElements.push(audioClipElement);
     }
-    
+
     // Update max time if needed
     if (dropTime + duration > this.maxTime) {
       this.setMaxTime(dropTime + duration);
     }
-    
+
     // Refresh canvas
     this.refreshElements();
   }
@@ -13970,29 +13973,38 @@ export function canHaveTransitions(element) {
   /**
    * Add audio file to timeline
    */
-  async addAudioFromFile(file, objectUrl, metadata, dropTime = 0, targetRow = null) {
+  async addAudioFromFile(
+    file,
+    objectUrl,
+    metadata,
+    dropTime = 0,
+    targetRow = null
+  ) {
     const { duration } = metadata;
-    
+
     // Create audio element
     const audioElement = new Audio();
     audioElement.src = objectUrl;
     audioElement.preload = 'auto';
-    
+
     const audioId = `audio-${Math.random().toString(36).substr(2, 9)}`;
     audioElement.id = audioId;
-    
+
     // Wait for audio to be ready
     await new Promise((resolve, reject) => {
       audioElement.onloadedmetadata = resolve;
       audioElement.onerror = reject;
     });
-    
+
     // Add audio resource to store
     this.addAudioResource(audioElement);
-    
+
     // Find appropriate row for audio
-    const audioRow = targetRow !== null ? targetRow : this.findBestMediaPosition(duration, dropTime, 'audio');
-    
+    const audioRow =
+      targetRow !== null
+        ? targetRow
+        : this.findBestMediaPosition(duration, dropTime, 'audio');
+
     // Create audio clip element
     const audioClipElement = {
       id: getUid(),
@@ -14016,14 +14028,14 @@ export function canHaveTransitions(element) {
       },
       row: audioRow,
     };
-    
+
     this.editorElements.push(audioClipElement);
-    
+
     // Update max time if needed
     if (dropTime + duration > this.maxTime) {
       this.setMaxTime(dropTime + duration);
     }
-    
+
     // Refresh elements
     this.refreshElements();
   }
@@ -14031,36 +14043,45 @@ export function canHaveTransitions(element) {
   /**
    * Add image file to timeline
    */
-  async addImageFromFile(file, objectUrl, metadata, dropTime = 0, targetRow = null) {
+  async addImageFromFile(
+    file,
+    objectUrl,
+    metadata,
+    dropTime = 0,
+    targetRow = null
+  ) {
     const { width, height } = metadata;
-    
+
     // Create image element
     const imgElement = new Image();
     imgElement.src = objectUrl;
     imgElement.crossOrigin = 'anonymous';
-    
+
     // Wait for image to load
     await new Promise((resolve, reject) => {
       imgElement.onload = resolve;
       imgElement.onerror = reject;
     });
-    
+
     // Calculate canvas positioning
     const canvasWidth = this.canvas?.width || 1920;
     const canvasHeight = this.canvas?.height || 1080;
     const scale = Math.min(canvasWidth / width, canvasHeight / height);
     const xPos = (canvasWidth - width * scale) / 2;
     const yPos = (canvasHeight - height * scale) / 2;
-    
+
     // Default duration for images (5 seconds)
     const imageDuration = 5000;
-    
+
     // Find appropriate row for image
-    const imageRow = targetRow !== null ? targetRow : this.findBestMediaPosition(imageDuration, dropTime, 'image');
-    
+    const imageRow =
+      targetRow !== null
+        ? targetRow
+        : this.findBestMediaPosition(imageDuration, dropTime, 'image');
+
     // Add image resource to store
     this.addImageResource(imgElement);
-    
+
     // Create image clip element
     const imageElement = {
       id: getUid(),
@@ -14086,14 +14107,14 @@ export function canHaveTransitions(element) {
       },
       row: imageRow,
     };
-    
+
     this.editorElements.push(imageElement);
-    
+
     // Update max time if needed
     if (dropTime + imageDuration > this.maxTime) {
       this.setMaxTime(dropTime + imageDuration);
     }
-    
+
     // Refresh canvas
     this.refreshElements();
   }
@@ -14109,24 +14130,28 @@ export function canHaveTransitions(element) {
     const existingElements = this.editorElements.filter(el => {
       // Filter compatible types
       if (mediaType === 'video' || mediaType === 'image') {
-        return el.type === 'video' || el.type === 'image' || el.type === 'imageUrl';
+        return (
+          el.type === 'video' || el.type === 'image' || el.type === 'imageUrl'
+        );
       } else if (mediaType === 'audio') {
         return el.type === 'audio';
       }
       return false;
     });
-    
+
     // Try to find space in existing rows
-    const rowsToCheck = [...new Set(existingElements.map(el => el.row))].sort((a, b) => a - b);
-    
+    const rowsToCheck = [...new Set(existingElements.map(el => el.row))].sort(
+      (a, b) => a - b
+    );
+
     for (const row of rowsToCheck) {
       const rowElements = existingElements.filter(el => el.row === row);
-      
+
       if (this.hasSpaceInRow(rowElements, startTime, duration)) {
         return row;
       }
     }
-    
+
     // No space found, create new row
     const maxRow = rowsToCheck.length > 0 ? Math.max(...rowsToCheck) : -1;
     return maxRow + 1;
@@ -14141,18 +14166,18 @@ export function canHaveTransitions(element) {
    */
   hasSpaceInRow(rowElements, startTime, duration) {
     const endTime = startTime + duration;
-    
+
     // Check for overlaps
     for (const element of rowElements) {
       const elStart = element.timeFrame.start;
       const elEnd = element.timeFrame.end;
-      
+
       // Check if new element overlaps with existing element
       if (!(endTime <= elStart || startTime >= elEnd)) {
         return false; // Overlap detected
       }
     }
-    
+
     return true; // No overlaps, space available
   }
 
@@ -14162,25 +14187,50 @@ export function canHaveTransitions(element) {
   async generateThumbnailsForVideo(videoElement) {
     const thumbnails = [];
     const count = Math.max(3, Math.round(videoElement.duration));
-    
+
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const thumbWidth = Math.max(80, Math.floor(videoElement.videoWidth / 10));
     const thumbHeight = Math.max(60, Math.floor(videoElement.videoHeight / 10));
     canvas.width = thumbWidth;
     canvas.height = thumbHeight;
-    
+
     for (let i = 0; i < count; i++) {
       const time = (videoElement.duration * i) / Math.max(count - 1, 1);
       videoElement.currentTime = time;
-      
+
       await new Promise(resolve => {
         videoElement.addEventListener('seeked', resolve, { once: true });
       });
-      
+
       ctx.drawImage(videoElement, 0, 0, thumbWidth, thumbHeight);
       thumbnails.push(canvas.toDataURL('image/jpeg', 0.7));
     }
-    
+
     return thumbnails;
   }
+}
+
+export function isEditorAudioElement(element) {
+  return element.type === 'audio';
+}
+
+export function isEditorVideoElement(element) {
+  return element.type === 'video';
+}
+
+export function isEditorImageElement(element) {
+  return element.type === 'image' || element.type === 'imageUrl';
+}
+
+export function isEditorVisualElement(element) {
+  return isEditorImageElement(element) || isEditorVideoElement(element);
+}
+
+export function canHaveAnimations(element) {
+  return isEditorVisualElement(element);
+}
+
+export function canHaveTransitions(element) {
+  return isEditorVisualElement(element);
+}

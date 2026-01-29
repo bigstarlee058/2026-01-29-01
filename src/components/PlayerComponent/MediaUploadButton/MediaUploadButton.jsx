@@ -19,7 +19,7 @@ const MediaUploadButton = observer(({ disabled = false }) => {
   /**
    * Handle file selection from input
    */
-  const handleFileSelect = async (event) => {
+  const handleFileSelect = async event => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
 
@@ -34,7 +34,7 @@ const MediaUploadButton = observer(({ disabled = false }) => {
   /**
    * Process selected files
    */
-  const processFiles = async (files) => {
+  const processFiles = async files => {
     setIsUploading(true);
 
     try {

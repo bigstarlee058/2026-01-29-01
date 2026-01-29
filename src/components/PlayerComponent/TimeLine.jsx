@@ -704,10 +704,10 @@ export const TimeLine = observer(
     /**
      * Handle file drag enter
      */
-    const handleDragEnter = useCallback((e) => {
+    const handleDragEnter = useCallback(e => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       // Check if dragging files
       if (e.dataTransfer.types && e.dataTransfer.types.includes('Files')) {
         setDragCounter(prev => prev + 1);
@@ -718,10 +718,10 @@ export const TimeLine = observer(
     /**
      * Handle file drag over
      */
-    const handleDragOver = useCallback((e) => {
+    const handleDragOver = useCallback(e => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       if (e.dataTransfer) {
         e.dataTransfer.dropEffect = 'copy';
       }
@@ -730,10 +730,10 @@ export const TimeLine = observer(
     /**
      * Handle file drag leave
      */
-    const handleDragLeave = useCallback((e) => {
+    const handleDragLeave = useCallback(e => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       setDragCounter(prev => {
         const newCount = prev - 1;
         if (newCount === 0) {
@@ -746,54 +746,63 @@ export const TimeLine = observer(
     /**
      * Handle file drop
      */
-    const handleDrop = useCallback(async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      setIsDraggingFile(false);
-      setDragCounter(0);
-      
-      const files = e.dataTransfer?.files;
-      if (!files || files.length === 0) return;
-      
-      try {
-        // Calculate drop position in timeline
-        const timelineRect = timelineContentRef.current?.getBoundingClientRect();
-        if (!timelineRect) return;
-        
-        const dropX = e.clientX - timelineRect.left + (timelineContentRef.current?.scrollLeft || 0);
-        const pixelsPerMs = currentScale / 1000; // Adjust based on zoom scale
-        const dropTime = Math.max(0, dropX / pixelsPerMs);
-        
-        // Prepare and process files
-        const preparedMediaList = await prepareMediaFiles(files);
-        
-        if (preparedMediaList.length === 0) {
-          toast.error('No valid media files to add');
-          return;
-        }
-        
-        // Add each media file to timeline
-        for (const preparedMedia of preparedMediaList) {
-          try {
-            await runInAction(async () => {
-              await store.addMediaToTimeline(preparedMedia, dropTime);
-            });
-            
-            toast.success(`Added ${preparedMedia.name} to timeline`);
-          } catch (error) {
-            console.error(`Failed to add ${preparedMedia.name}:`, error);
-            toast.error(`Failed to add ${preparedMedia.name}: ${error.message}`);
+    const handleDrop = useCallback(
+      async e => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        setIsDraggingFile(false);
+        setDragCounter(0);
+
+        const files = e.dataTransfer?.files;
+        if (!files || files.length === 0) return;
+
+        try {
+          // Calculate drop position in timeline
+          const timelineRect =
+            timelineContentRef.current?.getBoundingClientRect();
+          if (!timelineRect) return;
+
+          const dropX =
+            e.clientX -
+            timelineRect.left +
+            (timelineContentRef.current?.scrollLeft || 0);
+          const pixelsPerMs = currentScale / 1000; // Adjust based on zoom scale
+          const dropTime = Math.max(0, dropX / pixelsPerMs);
+
+          // Prepare and process files
+          const preparedMediaList = await prepareMediaFiles(files);
+
+          if (preparedMediaList.length === 0) {
+            toast.error('No valid media files to add');
+            return;
           }
+
+          // Add each media file to timeline
+          for (const preparedMedia of preparedMediaList) {
+            try {
+              await runInAction(async () => {
+                await store.addMediaToTimeline(preparedMedia, dropTime);
+              });
+
+              toast.success(`Added ${preparedMedia.name} to timeline`);
+            } catch (error) {
+              console.error(`Failed to add ${preparedMedia.name}:`, error);
+              toast.error(
+                `Failed to add ${preparedMedia.name}: ${error.message}`
+              );
+            }
+          }
+
+          // Refresh timeline display
+          store.refreshElements?.();
+        } catch (error) {
+          console.error('Failed to process dropped files:', error);
+          toast.error(`Failed to process files: ${error.message}`);
         }
-        
-        // Refresh timeline display
-        store.refreshElements?.();
-      } catch (error) {
-        console.error('Failed to process dropped files:', error);
-        toast.error(`Failed to process files: ${error.message}`);
-      }
-    }, [store, currentScale, timelineContentRef]);
+      },
+      [store, currentScale, timelineContentRef]
+    );
 
     // Effect to sync preserved selection with store selection, but prevent clearing during preview
     useEffect(() => {
@@ -1547,8 +1556,8 @@ export const TimeLine = observer(
                 store.playing
                   ? 'PauseIcon'
                   : store.currentTimeInMs >= store.lastElementEnd - 15
-                  ? 'RestartIcon'
-                  : 'PlayIcon'
+                    ? 'RestartIcon'
+                    : 'PlayIcon'
               }
               onClick={() => {
                 handlePlaybackClick();
