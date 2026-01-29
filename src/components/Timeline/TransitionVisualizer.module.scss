@@ -1,0 +1,295 @@
+@import '../../Variables.scss';
+
+.transitionLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.transitionVisualizer {
+  position: absolute;
+  top: 25%;
+  transform: translateY(-50%);
+  height: 16px;
+  backdrop-filter: blur(10px);
+  border: 2px solid #3AFCEA;
+  border-radius: 4px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  pointer-events: all;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  min-width: 40px; // Reduced minimum width to better match actual transition duration
+  overflow: hidden;
+  will-change: transform, left, width; // Optimize for GPU acceleration
+
+  &:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+  }
+
+  &.dragging {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    z-index: 30;
+    opacity: 0.9;
+    transition: none; // Disable transition during drag for better performance
+  }
+
+  &.resizing {
+    transform: translateY(-50%) scale(1.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    z-index: 25;
+    transition: none; // Disable transition during resize for better performance
+
+    .resizeHandle {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  &.playing {
+    animation: none; // Disable appear animation during playback
+    transition: none; // Disable all transitions during playback
+    cursor: default; // Change cursor to indicate non-interactive state
+    pointer-events: none; // Disable all mouse interactions during playback
+    
+    &:hover {
+      transform: translateY(-50%); // Disable hover scale during playback
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); // Keep original shadow
+    }
+  }
+}
+
+.transitionIcon {
+  color: #3AFCEA;
+  margin-right: 4px;
+  flex-shrink: 0;
+
+  svg {
+    display: block;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  }
+}
+
+.transitionLabel {
+  color: white;
+  font-size: 8px;
+  font-weight: 400;
+  font-family: 'General Sans', sans-serif;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  margin-right: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.transitionDuration {
+  color: white;
+  font-family: 'General Sans', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 0 4px;
+  border-radius: 8px;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.resizeHandle {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 8px;
+  cursor: ew-resize;
+  background: transparent;
+  opacity: 0;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+
+  &:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  &.resizeLeft {
+    left: -4px;
+    border-left: 2px solid #fff;
+    border-radius: 4px 0 0 4px;
+
+    &:hover {
+      border-left-color: #4ecdc4;
+    }
+  }
+
+  &.resizeRight {
+    right: -4px;
+    border-right: 2px solid #fff;
+    border-radius: 0 4px 4px 0;
+
+    &:hover {
+      border-right-color: #4ecdc4;
+    }
+  }
+}
+
+.deleteButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background: #ff4757;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: #ff3838;
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.transitionTypeSelector {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2f3542;
+  color: #fff;
+  border: 1px solid #57606f;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 100;
+  min-width: 100px;
+
+  &:focus {
+    outline: none;
+    border-color: #4ecdc4;
+    box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.2);
+  }
+}
+
+.transitionVisualizer:hover {
+  .deleteButton {
+    opacity: 1;
+  }
+
+  .transitionTypeSelector {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .resizeHandle {
+    opacity: 0.7;
+  }
+}
+
+// Transition gap styles
+.transitionGap {
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 9999999999999999999999999999 !important;
+  background-color: #4ecdc4;
+
+  &.hovered {
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.addTransitionButton {
+  position: absolute;
+  bottom: -5px;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #4ecdc4;
+  background-color: #4ecdc4;
+  border-radius: 50%;
+  color: #000000;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    color: #000000;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Show gap buttons only on row hover
+.transitionLayer:hover .transitionGap {
+  opacity: 1;
+}
+
+.transitionGap:hover {
+  opacity: 1 !important;
+}
+
+// Animation for newly created transitions
+@keyframes transitionAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.transitionVisualizer {
+  animation: transitionAppear 0.3s ease-out;
+}

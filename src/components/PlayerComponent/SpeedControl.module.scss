@@ -1,0 +1,111 @@
+.speedControl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  height: 20px;
+  transition: all 0.3s ease-in-out;
+  width: 20px;
+  padding: 0 27px 0 29px;
+
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: 1;
+  }
+
+  &:hover {
+    width: 140px;
+    box-shadow: var(--accent-box-shadow);
+
+    .speedButton {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .speedDropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-32px);
+      visibility: visible;
+    }
+  }
+}
+
+.speedButton {
+  position: absolute;
+  z-index: 2;
+  width: 40px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  span {
+    font-family: 'GeneralSans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    margin: 0;
+  }
+
+  &:hover {
+    color: var(--accent-color);
+  }
+}
+
+.speedDropdown {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  z-index: 2;
+  left: 45px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.speedOption {
+  width: 24px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #fff;
+  font-family: 'GeneralSans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  white-space: nowrap;
+  transition: all 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+
+  &:hover {
+    color: var(--accent-color);
+    opacity: 1;
+  }
+
+  &.selected {
+    opacity: 1;
+    color: var(--accent-color);
+  }
+}

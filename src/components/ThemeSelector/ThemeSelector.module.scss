@@ -1,0 +1,37 @@
+@import '../../Variables.scss';
+
+.container {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    opacity: 0.8;
+    
+  }
+  &.active {
+    &::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 1px solid var(--active-border-color);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+}
+}

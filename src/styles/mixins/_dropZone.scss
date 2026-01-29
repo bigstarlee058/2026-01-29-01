@@ -1,0 +1,211 @@
+// Unified Drop Zone Mixins and Variables
+// These provide consistent visual feedback across all drop zones
+
+// Drop zone color palette
+$drop-valid-color: rgba(58, 252, 234, 1);      // Cyan accent
+$drop-invalid-color: rgba(239, 68, 68, 1);     // Red warning
+$drop-processing-color: rgba(59, 130, 246, 1); // Blue progress
+
+// Opacity levels for different states
+$drop-bg-opacity: 0.08;
+$drop-border-opacity: 0.3;
+$drop-border-opacity-hover: 0.5;
+$drop-content-opacity: 0.7;
+
+// Animation timings
+$drop-transition-duration: 0.2s;
+$drop-transition-easing: ease-in-out;
+
+// Border styles
+$drop-border-width: 2px;
+$drop-border-style: dashed;
+$drop-border-radius: 8px;
+
+// Base drop zone mixin
+@mixin drop-zone-base {
+  position: relative;
+  transition: all $drop-transition-duration $drop-transition-easing;
+}
+
+// Valid external drop hover state
+@mixin drop-zone-valid {
+  background-color: rgba($drop-valid-color, $drop-bg-opacity);
+  border: $drop-border-width $drop-border-style rgba($drop-valid-color, $drop-border-opacity-hover);
+  
+  // Optional: Add subtle glow effect
+  box-shadow: 0 0 20px rgba($drop-valid-color, 0.1);
+  
+  // Cursor indication
+  cursor: copy;
+}
+
+// Invalid external drop hover state
+@mixin drop-zone-invalid {
+  background-color: rgba($drop-invalid-color, $drop-bg-opacity);
+  border: $drop-border-width $drop-border-style rgba($drop-invalid-color, $drop-border-opacity-hover);
+  
+  // Subtle warning glow
+  box-shadow: 0 0 20px rgba($drop-invalid-color, 0.1);
+  
+  // Cursor indication
+  cursor: not-allowed;
+}
+
+// Content scaling effect for drop hover
+@mixin drop-zone-content-scale {
+  > * {
+    opacity: $drop-content-opacity;
+    transform: scale(0.95);
+    transition: all $drop-transition-duration $drop-transition-easing;
+  }
+}
+
+// Processing/uploading state
+@mixin drop-zone-processing {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba($drop-processing-color, 0.8) 50%,
+      transparent 100%
+    );
+    animation: progress-slide 1.5s infinite;
+    border-radius: 0 0 $drop-border-radius $drop-border-radius;
+  }
+}
+
+// Progress animation
+@keyframes progress-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Overlay for drop zones (Canvas, full-screen drops)
+@mixin drop-zone-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity $drop-transition-duration $drop-transition-easing;
+  z-index: 10;
+  
+  &.active {
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
+// Text hint for drop zones
+@mixin drop-zone-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity $drop-transition-duration $drop-transition-easing;
+  
+  &.visible {
+    opacity: 1;
+  }
+}
+
+// Storyboard-specific scene container drop states
+@mixin scene-drop-hover {
+  // Valid image/video drop
+  &.imageDropHover {
+    @include drop-zone-valid;
+    @include drop-zone-content-scale;
+  }
+  
+  // Invalid file drop
+  &.invalidDropHover {
+    @include drop-zone-invalid;
+    @include drop-zone-content-scale;
+  }
+  
+  // General drop support
+  &.dropHover {
+    background-color: rgba($drop-valid-color, $drop-bg-opacity * 0.5);
+  }
+}
+
+// Canvas drop zone styles
+@mixin canvas-drop-zone {
+  @include drop-zone-base;
+  
+  &.dragOver {
+    &.valid {
+      @include drop-zone-valid;
+      border-radius: $drop-border-radius;
+    }
+    
+    &.invalid {
+      @include drop-zone-invalid;
+      border-radius: $drop-border-radius;
+    }
+  }
+  
+  &.processing {
+    @include drop-zone-processing;
+  }
+}
+
+// Timeline drop zone styles
+@mixin timeline-drop-zone {
+  @include drop-zone-base;
+  
+  &.dropHover {
+    outline: 2px solid rgba($drop-valid-color, 0.5);
+    outline-offset: -2px;
+    background-color: rgba($drop-valid-color, $drop-bg-opacity * 0.5);
+  }
+  
+  &.invalidDrop {
+    outline-color: rgba($drop-invalid-color, 0.5);
+    background-color: rgba($drop-invalid-color, $drop-bg-opacity * 0.5);
+  }
+}
+
+// Accessibility focus styles
+@mixin drop-zone-focus {
+  &:focus-visible {
+    outline: 2px solid $drop-valid-color;
+    outline-offset: 2px;
+  }
+}
+
+// Responsive adjustments
+@mixin drop-zone-mobile {
+  @media (max-width: 768px) {
+    $drop-border-width: 1px;
+    
+    .drop-hint {
+      font-size: 12px;
+      padding: 8px 16px;
+    }
+  }
+}

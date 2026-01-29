@@ -1,0 +1,158 @@
+@import '../../Variables.scss';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(8, 24, 35, 0.95);
+  backdrop-filter: blur(24px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.title {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.closeButton {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: #ffffff66;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff99;
+  }
+}
+
+.content {
+  padding: 16px 24px 20px;
+  text-align: center;
+}
+
+.iconContainer {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.message {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff99;
+  margin: 0;
+}
+
+.footer {
+  display: flex;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.secondaryButton {
+  flex: 1;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  border-radius: 8px;
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #ffffff99;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.primaryButton {
+  flex: 1;
+  height: 44px;
+  border: none;
+  background: #ff4444;
+  border-radius: 8px;
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #cc0000;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}

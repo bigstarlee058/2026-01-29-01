@@ -1,0 +1,46 @@
+@import '../../../Variables.scss';
+@mixin textarea {
+  resize: none;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: $input-hover-color;
+  align-items: center;
+  font-weight: 500;
+  line-height: 18.2px;
+  cursor: text;
+}
+
+.title {
+  font-size: 18px;
+  line-height: 22px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  color: $secondary-white-text-color;
+  font-weight: 500;
+}
+.prompt {
+  @include textarea;
+  max-height: 176px;
+  padding-right: 40px;
+}
+.negative_prompt {
+  @include textarea;
+  max-height: 104px;
+}
+.prompt_content {
+  position: relative;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.icon {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  right: 12px;
+  cursor: pointer;
+  .generateBtn {
+    width: 32px;
+    height: 32px;
+    align-items: center;
+  }
+}

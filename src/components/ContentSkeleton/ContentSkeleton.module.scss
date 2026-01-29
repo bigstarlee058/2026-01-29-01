@@ -1,0 +1,38 @@
+@import '../../Variables.scss';
+.container {
+  .title_container {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    height: 27px;
+    width: 100px;
+  }
+
+  .skeleton_item {
+    height: 128px;
+    margin-bottom: 64px;
+    border-radius: 8px;
+    box-shadow: $primary-box-shadow;
+  }
+  .skeleton_scene_box {
+    padding-left: 12px;
+    .skeleton_scene_content {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+      align-items: flex-end;
+      .skeleton_scene_text {
+        width: 236px;
+        height: 50px;
+        border-radius: 8px;
+        box-shadow: $primary-box-shadow;
+      }
+      .skeleton_scene_img {
+        width: 66px;
+        height: 56px;
+        border-radius: 8px;
+        box-shadow: $primary-box-shadow;
+      }
+    }
+  }
+}

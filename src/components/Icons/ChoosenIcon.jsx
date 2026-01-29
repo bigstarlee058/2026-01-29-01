@@ -1,0 +1,32 @@
+import ICON_SIZE from 'components/Icons/IconSize';
+import PropTypes from 'prop-types';
+
+const ChoosenIcon = ({ size = ICON_SIZE.SMALL, color = '#D3F85A' }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8Z"
+        fill={color}
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M11.8298 5.72893C12.0644 5.97478 12.0554 6.36431 11.8095 6.59898L7.29668 10.9067C7.05888 11.1337 6.68466 11.1337 6.44686 10.9067L4.19047 8.75282C3.94463 8.51815 3.93557 8.12862 4.17025 7.88277C4.40492 7.63693 4.79445 7.62787 5.0403 7.86254L6.87177 9.61079L10.9597 5.70869C11.2056 5.47403 11.5951 5.48309 11.8298 5.72893Z"
+        fill="#192C36"
+      />
+    </svg>
+  );
+};
+ChoosenIcon.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  color: PropTypes.string,
+};
+export default ChoosenIcon;

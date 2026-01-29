@@ -1,0 +1,133 @@
+// Time Range Selector styles
+.timeRangeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0px;
+  margin-bottom: 16px;
+}
+
+.timeRangeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h4 {
+    color: #fff;
+    font-family: 'GeneralSans';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 160%; /* 19.2px */
+    letter-spacing: 0.24px;
+  }
+}
+
+.timeRangeSlider {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// Dual Range Slider styles
+.dualRangeSlider {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  cursor: pointer;
+
+  &:hover {
+    .sliderThumbContainer {
+      opacity: 1;
+    }
+  }
+}
+
+.sliderTrack {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #ffffff1f;
+  border-radius: 3px;
+  transform: translateY(-50%);
+}
+
+.sliderRange {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 12px;
+  background: #ffffff08;
+  backdrop-filter: blur(14.4px);
+  border-radius: 2.4px;
+  border: 1px solid var(--accent-color);
+  transition: all 0.2s ease;
+}
+
+.sliderThumbContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  padding: 4px;
+  cursor: ew-resize;
+  transition: all 0.2s ease;
+  opacity: 0;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    cursor: ew-resize;
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+}
+
+.sliderThumb {
+  width: 3px;
+  height: 7.2px;
+  background: var(--accent-color);
+  border-radius: 2px;
+  z-index: 2;
+}
+
+.timeRangeInfo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: #fff;
+  font-family: 'GeneralSans';
+  font-size: 6px;
+  font-weight: 500;
+  line-height: 14.4px; /* 240% */
+  letter-spacing: 0.24px;
+  &.start {
+    left: 6px;
+    top: initial;
+    bottom: 4px;
+  }
+  &.end {
+    right: -10px;
+    left: initial;
+    top: initial;
+    bottom: 4px;
+  }
+}
+
+.rangeInfo {
+  @extend .timeRangeInfo;
+  &.start {
+    left: 4px;
+    bottom: -16px;
+  }
+  &.end {
+    bottom: -16px;
+    right: -7px;
+  }
+}

@@ -1,0 +1,27 @@
+.info-button-tooltip {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 0px 0px !important;
+  border-radius: 8px !important;
+  font-size: 12px;
+  font-weight: 300 !important;
+  line-height: 1.5;
+  width: 280px !important;
+  height: 197px !important;
+  letter-spacing: 0.03em !important;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    border-color: #334155 transparent transparent transparent;
+  }
+}
+
+// Hide tooltip for DragIcon buttons when clicked
+.dragIconButton:active ~ [data-tooltip-id] {
+  display: none !important;
+}

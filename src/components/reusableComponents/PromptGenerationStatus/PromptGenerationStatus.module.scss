@@ -1,0 +1,119 @@
+@import '../../../Variables.scss';
+
+.container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 16px 20px;
+
+  &.inline {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  min-width: 300px;
+
+  .mainText {
+    font-size: 14px;
+  }
+
+  .subText {
+    font-size: 12px;
+  }
+
+  .progress {
+    font-size: 13px;
+  }
+
+  .progressBar {
+    height: 6px;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.text {
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mainText {
+  font-size: 12px;
+  font-weight: 500;
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.4) 25%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.4) 75%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shimmerText 13s linear infinite;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+.subText {
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.progressContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress {
+  font-family: 'Manrope';
+  font-size: 10px !important;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.progressBar {
+  width: 100%;
+  max-height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, $accent-color, $accent-color);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+@keyframes shimmerText {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}

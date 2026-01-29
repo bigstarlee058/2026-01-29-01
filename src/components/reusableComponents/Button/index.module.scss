@@ -1,0 +1,44 @@
+@import '../../../Variables.scss';
+
+.button {
+  width: 100%;
+  height: 48px;
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 12px 24px;
+  background: inherit;
+  color: #fff;
+  font-family: "General Sans Variable", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  
+  &:hover,
+  &:focus {
+    backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--accent-color);
+  }
+  
+  &:active {
+    background: var(--accent-color);
+    color: #11252f;
+  }
+}
+
+.disabled_btn {
+  width: 100%;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 24px;
+  background: inherit;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "General Sans Variable", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  opacity: 0.6;
+  cursor: not-allowed;
+}

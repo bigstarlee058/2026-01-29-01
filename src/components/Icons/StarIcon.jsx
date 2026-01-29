@@ -1,0 +1,291 @@
+import ICON_SIZE from 'components/Icons/IconSize';
+import PropTypes from 'prop-types';
+
+const StarIcon = ({ size = ICON_SIZE.SMALL, color = '#ABB5BA' }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_ii_4982_45241)">
+        <path
+          d="M4.24219 11.0293V13.4535"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M3.03125 12.2422H5.45549"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M10.9102 2.54492V4.96916"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M9.69531 3.75586H12.1196"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4.54688 3.75586C4.54688 4.92737 5.49657 5.87707 6.66809 5.87707"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M6.66809 5.87891C5.49657 5.87891 4.54688 6.8286 4.54688 8.00012"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4.54699 8.00012C4.54699 6.8286 3.5973 5.87891 2.42578 5.87891"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M2.42578 5.87707C3.5973 5.87707 4.54699 4.92737 4.54699 3.75586"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M7.64062 10.2888C9.21214 10.2888 10.4861 9.01487 10.4861 7.44336"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M10.4883 7.44336C10.4883 9.01487 11.7622 10.2888 13.3337 10.2888"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M13.3337 10.2891C11.7622 10.2891 10.4883 11.563 10.4883 13.1345"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M10.49 13.1345C10.49 11.563 9.21605 10.2891 7.64453 10.2891"
+          stroke={color}
+          strokeWidth="0.909091"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <filter
+          id="filter0_ii_4982_45241"
+          x="0.605469"
+          y="0.726562"
+          width="14.5469"
+          height="14.5449"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="0.30303" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.894076 0 0 0 0 0.886558 0 0 0 0 0.881546 0 0 0 1 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="shape"
+            result="effect1_innerShadow_4982_45241"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="-0.606061" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect1_innerShadow_4982_45241"
+            result="effect2_innerShadow_4982_45241"
+          />
+        </filter>
+        <linearGradient
+          id="paint0_linear_4982_45241"
+          x1="4.74219"
+          y1="11.8234"
+          x2="4.74218"
+          y2="13.4535"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_4982_45241"
+          x1="4.24337"
+          y1="12.5698"
+          x2="4.24337"
+          y2="13.2422"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_4982_45241"
+          x1="11.4102"
+          y1="3.33907"
+          x2="11.4102"
+          y2="4.96916"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint3_linear_4982_45241"
+          x1="10.9074"
+          y1="4.08345"
+          x2="10.9074"
+          y2="4.75586"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint4_linear_4982_45241"
+          x1="5.60748"
+          y1="4.45074"
+          x2="5.60748"
+          y2="5.87707"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint5_linear_4982_45241"
+          x1="5.60748"
+          y1="6.57379"
+          x2="5.60748"
+          y2="8.00012"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint6_linear_4982_45241"
+          x1="3.48639"
+          y1="6.57379"
+          x2="3.48639"
+          y2="8.00012"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint7_linear_4982_45241"
+          x1="3.48639"
+          y1="4.45074"
+          x2="3.48639"
+          y2="5.87707"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint8_linear_4982_45241"
+          x1="9.06335"
+          y1="8.37549"
+          x2="9.06335"
+          y2="10.2888"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint9_linear_4982_45241"
+          x1="11.911"
+          y1="8.37549"
+          x2="11.911"
+          y2="10.2888"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint10_linear_4982_45241"
+          x1="11.911"
+          y1="11.2212"
+          x2="11.911"
+          y2="13.1345"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+        <linearGradient
+          id="paint11_linear_4982_45241"
+          x1="9.06726"
+          y1="11.2212"
+          x2="9.06726"
+          y2="13.1345"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#DBDBDB" />
+          <stop offset="1" stopColor="#E4CFBF" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
+StarIcon.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  color: PropTypes.string,
+};
+export default StarIcon;

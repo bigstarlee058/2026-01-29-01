@@ -1,0 +1,13 @@
+@import '../../../Variables.scss';
+.skeleton_item {
+  // min-width: 175px;
+  max-width: 200px;
+  // height: 280px;
+  padding: 8px;
+  border-radius: 16px;
+  background-color: $popUp-background-color;
+  box-shadow: $primary-box-shadow;
+  border: 1px solid transparent;
+  transition: all 500ms ease;
+  box-sizing: border-box;
+}

@@ -1,0 +1,45 @@
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.lottieAnimation {
+  height: 79px;
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  transform: translateY(-50%);
+}
+
+.lottieLoaderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: max-content;
+  min-width: 215px;
+  height: max-content;
+  min-height: 59px;
+  background-color: #0818238f;
+  backdrop-filter: blur(24px);
+  padding: 4px 12px;
+  border-radius: 12px;
+  position: relative;
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0%;
+    padding-left: 50px;
+    font-family: "General Sans Variable", sans-serif;
+line-height: 1.71429;
+color: #fff;
+  }
+}

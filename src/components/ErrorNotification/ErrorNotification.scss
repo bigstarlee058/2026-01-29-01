@@ -1,0 +1,151 @@
+.error-notification {
+  position: fixed;
+  top: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 422px;
+  min-height: 58px;
+  background: rgba(8, 24, 35, 0.4);
+  backdrop-filter: blur(24px);
+  border-radius: 4px;
+  display: flex;
+
+  align-items: center;
+  border-radius: 10px;
+  z-index: 1000;
+  animation: slideInDown 0.3s ease-out;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  padding: 9px 0;
+  
+
+  
+  &__indicator {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 40px;
+    background: var(--accent-color);
+    border-radius: 0 4px 4px 0;
+    flex-shrink: 0;
+  }
+  
+  &__right-indicator {
+    position: absolute;
+    left: 9px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
+    padding-left: 2px;
+    padding-bottom: 3px;
+    flex-shrink: 0;
+  }
+  
+  &__error-icon {
+    width: 30px;
+    height: 25px;
+    
+    svg {
+      width: 30px;
+      height: 25px;
+    }
+  }
+  
+  &__text-container {
+    margin-left: 60px;
+    margin-right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    flex: 1;
+  }
+  
+  &__text {
+    font-family: "Manrope", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-align: flex-start;
+    color: #fff;
+    max-width: 300px;
+  }
+  
+  &__error-text {
+    font-family: "Manrope", sans-serif;
+    font-size: 11px;
+    line-height: 1.63636;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: flex-start;
+    max-width: 300px;
+  }
+  
+  &__close-button {
+    position: absolute;
+    top: 2px;
+    right: 0px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    
+  }
+  
+  &__content {
+    flex: 1;
+    padding: 16px 16px 16px 20px; 
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+// Анімації
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes slideOutUp {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+  }
+}
+
+.error-notification--closing {
+  animation: slideOutUp 0.3s ease-in forwards;
+  pointer-events: none;
+}
+
+.error-notification__close-button {
+  &:hover {
+    // background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+  }
+}

@@ -1,0 +1,292 @@
+// Detail Panel
+.detailPanel {
+  position: absolute;
+  left: 0;
+  z-index: 1000;
+  height: 100%;
+  width: 100%;
+
+  max-width: 355px;
+  min-width: 355px;
+  max-height: 100vh; // Ensure it doesn't exceed viewport height
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden; // Prevent the whole panel from scrolling
+  padding: 13px 1px 60px 20px;
+  backdrop-filter: blur(50px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  &.small {
+    max-width: 319px;
+    min-width: 319px;
+    padding-left: 16px;
+    padding-top: 0px;
+    margin-top: -14px;
+  }
+
+  &.transparent {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+  }
+}
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.detailHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.detailHeaderRight {
+  display: flex;
+  align-items: center;
+}
+
+.applyToAllButton {
+  display: flex;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid var(--Stroke, rgba(255, 255, 255, 0.06));
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'General Sans Variable', sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 10px */
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  &:active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.backButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.detailTitle {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%; /* 22.4px */
+  letter-spacing: 0.32px;
+  text-transform: capitalize;
+}
+
+// Scene Selection Radio Button Group
+.sceneTumbnail {
+  padding: 16px 0;
+  padding-right: 8px;
+}
+
+.sceneSelectionGroup {
+  display: flex;
+  gap: 8px;
+  align-items: start;
+  &.small {
+    width: 100%;
+    padding-right: 12px;
+  }
+}
+
+.sceneOption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    .sceneOptionText {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .sceneRadioCustom {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+.sceneRadio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sceneRadioCustom {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border: 0.8px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    /* Linear Gradient (80% opacity) - from image */
+    background: linear-gradient(135deg, #16d8d8, #207f82);
+    /* Alternative Radial Gradient (50% opacity) - from image */
+    /* background: radial-gradient(circle at center, #3AFCEA, #45ACBA); */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+}
+
+.sceneOption input:checked + .sceneRadioCustom {
+  border-color: #16d8d8;
+  background: transparent;
+
+  &::after {
+    opacity: 1;
+    /* Linear Gradient (80% opacity) - from image */
+    background: linear-gradient(135deg, #16d8d8, #207f82);
+    /* Alternative Radial Gradient (50% opacity) - from image */
+    /* background: radial-gradient(circle at center, #3AFCEA, #45ACBA); */
+  }
+}
+
+.sceneOptionText {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'GeneralSans';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.12px;
+  transition: color 0.2s ease;
+  &.active {
+    color: #fff;
+    font-weight: 500;
+  }
+}
+
+.detailContent {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 16px;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .detailContent {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  }
+
+  :global(.sidebarAnimationResource) {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .animationControls {
+      padding: 12px 16px;
+    }
+  }
+}
+
+// Animation-specific overrides for sidebar in detail panel
+:global(.sidebarAnimationResource) {
+  height: 100%;
+  background: transparent;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .animationControls {
+    padding: 16px 20px;
+  }
+
+  .controlsHeader {
+    margin-bottom: 16px;
+  }
+
+  .previewButton {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #4338ca;
+    }
+  }
+
+  .resetButton {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}

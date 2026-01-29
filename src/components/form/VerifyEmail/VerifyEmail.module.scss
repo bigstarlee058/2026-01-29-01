@@ -1,0 +1,83 @@
+@import '../../../Variables.scss';
+
+.paragraf {
+  font-family: "General Sans Variable", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33333;
+  text-align: center;
+  color: rgba(241, 241, 241, 0.8);
+  width: 235px;
+  margin: 0 auto;
+}
+
+.bottom_container {
+  text-align: center;
+
+  .logIn {
+    display: block;
+    margin-top: 20.21px;
+    font-family: "General Sans Variable", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 346px;
+  margin: 0 auto;
+
+  h1 {
+    margin: 0px;
+  }
+}
+
+.content_text{
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    margin: 0 auto;
+    font-family: "General Sans Variable", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.38583;
+    text-align: center;
+    color: #f1f1f1;
+    margin-bottom: 8px;
+  }
+}
+
+.button_container {
+  margin-top: 27px;
+  display: flex;
+  justify-content: center;
+  
+  button {
+    margin: 0 auto;
+    border: none;
+    background: var(--accent-color);
+    color: #11252f;
+    letter-spacing: 0.01em;
+    font-weight: 600;
+    font-size: 1rem;
+    
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+      color: #11252f;
+      background: var(--accent-color);
+    }
+  }
+}
+

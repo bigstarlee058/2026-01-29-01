@@ -1,0 +1,109 @@
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #FFFFFF14;
+  border-radius: 8px;
+  background: transparent;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.toggleButton {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 12px;
+  border: none;
+  color: #FFFFFF66;
+  font-family: "General Sans Variable", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  border-radius: 0;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  overflow: hidden;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &.first {
+    border-radius: 8px 0 0 8px;
+  }
+
+  &.last {
+    border-radius: 0 8px 8px 0;
+  }
+
+  &:hover:not(.disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    
+    .icon {
+      color: var(--accent-color);
+    }
+    
+    .text {
+      color: var(--accent-color);
+    }
+  }
+
+  &.active {
+    background: rgba(255, 255, 255, 0.08);
+    
+    .icon {
+      color: var(--accent-color);
+    }
+    
+    .text {
+      color: var(--accent-color);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+      transform: none;
+    }
+  }
+
+  &.expanded {
+    gap: 8px;
+  }
+
+  &.collapsed {
+    gap: 0px;
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.text {
+  font-family: "General Sans Variable", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 1;
+  max-width: 120px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.textHidden {
+  opacity: 0;
+  max-width: 0;
+  margin-left: -8px;
+}

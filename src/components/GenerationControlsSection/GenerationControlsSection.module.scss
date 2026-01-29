@@ -1,0 +1,103 @@
+.container {
+  width: 100%;
+}
+
+.controlsRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+
+  @media (max-width: 767px) {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.controlGroup {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.controlGroup_left {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.label {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff66;
+  white-space: nowrap;
+}
+
+.settingsButton {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    svg {
+      fill: #ffffff;
+    }
+  }
+
+  &.active {
+    svg {
+      fill: var(--accent-color);
+    }
+  }
+}
+
+.generateBtn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #ffffff14;
+  transition: all 0.2s ease;
+  min-width: 100px;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #ffffff30;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.generateBtn_active {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: rgba(var(--accent-color-rgb), 0.1);
+  border: 1px solid var(--accent-color);
+  min-width: 100px;
+}
+
+.generateBtnLoader {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.doneIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

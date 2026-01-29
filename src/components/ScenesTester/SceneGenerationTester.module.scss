@@ -1,0 +1,349 @@
+@import '../../Variables.scss';
+
+.promptEditor {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .chevron {
+      transition: transform 0.3s ease;
+
+      &.open {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .content {
+    padding: 20px;
+
+    .scriptInput {
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.2);
+
+      h3 {
+        margin: 0 0 15px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .textarea {
+        width: 100%;
+        min-height: 150px;
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.2);
+        color: rgba(255, 255, 255, 0.9);
+        font-family: monospace;
+        resize: vertical;
+        margin-bottom: 10px;
+
+        &:focus {
+          outline: none;
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+      }
+
+      .scriptStats {
+        display: flex;
+        gap: 20px;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 12px;
+      }
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .step {
+        padding: 20px;
+        transition: opacity 0.3s ease;
+
+        &.active {
+          opacity: 1;
+        }
+
+        h3 {
+          margin: 0 0 15px;
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.8);
+        }
+      }
+    }
+  }
+
+  .promptField {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      color: rgba(255, 255, 255, 0.9);
+      font-family: monospace;
+      resize: vertical;
+
+      &:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  .actionButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: max-content;
+      height: 30px;
+      padding: 8px 16px;
+      border: 1px solid var(--accent-color);
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+  }
+
+  .testResults {
+    margin-top: 20px;
+
+    .resultsHeader {
+      cursor: pointer;
+      padding: 10px 0;
+      margin-bottom: 10px;
+
+      h4 {
+        margin: 0;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .missedWords {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: rgba(255, 0, 0, 0.1);
+      border-radius: 4px;
+
+      .missedWordsHeader {
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .missedWord {
+        display: inline-block;
+        margin: 2px;
+        padding: 2px 6px;
+        background: rgba(255, 0, 0, 0.2);
+        border-radius: 3px;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+
+  .scenesList {
+    margin-top: 15px;
+
+    .scene {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease;
+
+      .sceneNumber {
+        display: block;
+        font-size: 12px;
+
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      p {
+        margin: 5px 0;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+
+    .breakdownScene {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .characters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease;
+
+      .sceneNumber {
+        display: block;
+        font-size: 14px;
+
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      p {
+        margin: 5px 0;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+
+  .characterDetails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+
+    p {
+      margin: 5px 0;
+      font-size: 13px;
+      color: rgb(255, 255, 255);
+
+      strong {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.processingIndicator {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.resetButton {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    &.testButton {
+      background: #4caf50;
+      color: white;
+
+      &:hover {
+        background: #45a049;
+      }
+
+      &.testing {
+        background: #666;
+        cursor: not-allowed;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  color: var(--primary-white-text-color);
+  z-index: 1000;
+}
+
+strong {
+  color: rgba(255, 255, 255, 0.801) !important;
+}
+
+p {
+  display: flex;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.644);
+}

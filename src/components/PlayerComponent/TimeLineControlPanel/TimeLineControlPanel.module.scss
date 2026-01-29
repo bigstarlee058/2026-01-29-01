@@ -1,0 +1,765 @@
+@import '../../../Variables.scss';
+
+.timelineControls {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  padding-right: 40px;
+  height: 32px;
+  width: 100%;
+  position: relative;
+
+  .dropZone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 2px dashed transparent;
+    transition: all 0.2s ease;
+    pointer-events: auto;
+    z-index: 1;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .timelineControlsOptions {
+    display: flex;
+    align-items: center;
+    height: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+
+    border-radius: 4px;
+    position: relative;
+    z-index: 10;
+
+    &.reducedGap {
+      .threeDotsButton {
+        margin-left: 2px;
+      }
+    }
+
+    .threeDotsButton {
+      margin-left: -10px;
+    }
+
+    // Dragging state
+    &.dragging {
+      background-color: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .timelineControlsItem {
+    display: flex;
+    align-items: center;
+  }
+
+  .dragIcon {
+    cursor: grab;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      scale: 1.2;
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .playbackControls {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-52%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 5;
+
+    .playbackControlsItem {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .playButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 19px;
+      height: 19px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+    }
+
+    .timeText {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 10px;
+      font-weight: 400;
+    }
+  }
+
+  .cutButton {
+    rotate: 270deg;
+  }
+}
+
+.settingsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  border: none;
+  margin-left: -4px;
+  position: relative;
+}
+
+.settingsContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.volumeControlNew {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 160px;
+  max-width: 112px;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+
+  // Styles when audio element is selected
+  &.audioElementSelected {
+    .scaleButton {
+      color: var(--accent-color) !important;
+      svg {
+        fill: var(--accent-color) !important;
+      }
+    }
+
+    .volumeRange {
+      &::before {
+        background-image: linear-gradient(
+          90deg,
+          var(--accent-color-opacity-20) 0 2px,
+          transparent 2px
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          90deg,
+          var(--accent-color) 0 2px,
+          transparent 2px
+        );
+      }
+    }
+
+    .scalePercentage {
+      color: var(--accent-color);
+    }
+  }
+
+  &:hover {
+    .scaleButton {
+      color: #ffffff !important;
+      svg {
+        fill: #ffffff !important;
+      }
+    }
+
+    .volumeRange {
+      &::before {
+        background-image: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.4) 0 2px,
+          transparent 2px
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          90deg,
+          #ffffffb2 0 2px,
+          transparent 2px
+        );
+      }
+    }
+
+    .scalePercentage {
+      color: #ffffff;
+    }
+
+    // Override audio element styles on hover
+    &.audioElementSelected {
+      .scaleButton {
+        color: #ffffff !important;
+        svg {
+          fill: #ffffff !important;
+        }
+      }
+
+      .volumeRange {
+        &::before {
+          background-image: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.4) 0 2px,
+            transparent 2px
+          );
+        }
+
+        &::after {
+          background-image: linear-gradient(
+            90deg,
+            #ffffffb2 0 2px,
+            transparent 2px
+          );
+        }
+      }
+
+      .scalePercentage {
+        color: #ffffff;
+      }
+    }
+  }
+
+  .scaleRangeInputBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-shadow: none;
+    outline: none;
+    border: none;
+  }
+
+  .volumeRange {
+    position: relative;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 56px;
+    height: 20px;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    transition: all 0.3s ease-in-out;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 5px;
+      transform: translateY(-50%);
+      background-image: linear-gradient(
+        90deg,
+        #ffffff33 0 2px,
+        transparent 2px
+      );
+      background-size: 5.6px 100%;
+      background-repeat: repeat-x;
+      pointer-events: none;
+      border-radius: 0;
+      background-color: transparent;
+      transition: background-image 0.2s ease;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      height: 5px;
+      width: var(--range-progress, 0%);
+      background-image: linear-gradient(
+        90deg,
+        #ffffff66 0 2px,
+        transparent 2px
+      );
+      background-size: 5.6px 100%;
+      background-repeat: repeat-x;
+      pointer-events: none;
+      border-radius: 0;
+      transition: all 0.2s ease-in-out;
+    }
+
+    // Audio element selected styles
+    &.audioElementSelected {
+      &::before {
+        background-image: linear-gradient(
+          90deg,
+          var(--accent-color-opacity-20) 0 2px,
+          transparent 2px
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          90deg,
+          var(--accent-color) 0 2px,
+          transparent 2px
+        );
+      }
+    }
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 0;
+      height: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+  }
+
+  // Clicked state styles
+  &.clicked {
+    .volumeRange {
+      &::before {
+        background-image: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.6) 0 2px,
+          transparent 2px
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          90deg,
+          #ffffff 0 2px,
+          transparent 2px
+        );
+      }
+    }
+
+    .scalePercentage {
+      color: #ffffff;
+    }
+  }
+
+  .percentSign {
+    color: #ffffff;
+    font-size: 12px;
+    margin-left: 2px;
+  }
+}
+
+.scaleButton {
+  padding: 7px;
+}
+
+.scaleRangeInputBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-shadow: none;
+  outline: none;
+  border: none;
+}
+
+.volumeRange {
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 56px;
+  height: 20px;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  transition: all 0.3s ease-in-out;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 5px;
+    transform: translateY(-50%);
+    background-image: linear-gradient(90deg, #ffffff33 0 2px, transparent 2px);
+    background-size: 5.6px 100%;
+    background-repeat: repeat-x;
+    pointer-events: none;
+    border-radius: 0;
+    background-color: transparent;
+    transition: background-image 0.2s ease;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 5px;
+    width: var(--range-progress, 0%);
+    transform: translateY(-50%);
+    background-image: linear-gradient(90deg, #ffffff66 0 2px, transparent 2px);
+    background-size: 5.6px 100%;
+    background-repeat: repeat-x;
+    pointer-events: none;
+    border-radius: 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0;
+    height: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+}
+
+.scalePercentage {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  position: relative;
+  top: 8%;
+  outline: none;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  text-align: right;
+  color: #9fa6a9;
+  width: max-content;
+  transition: color 0.2s ease;
+
+  // Audio element selected styles
+  &.audioElementSelected {
+    color: var(--accent-color);
+  }
+
+  /* Hide spinners for Firefox */
+  -moz-appearance: textfield;
+
+  /* Hide spinners for Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.resetButton {
+  color: #ffffff99;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  padding: 8px;
+}
+
+.speedContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  height: 20px;
+  transition: all 0.3s ease-in-out;
+  width: 30px;
+  margin-left: -5px;
+}
+
+.speedButton {
+  height: max-content;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+.undoRedoBtnSet {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+}
+
+.undoRedoBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  background-color: transparent;
+  border-radius: 48px;
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.scaleIcon {
+  transform: scaleX(-1);
+}
+
+.cutButtonSet {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: 2px;
+}
+
+.cutButton {
+  rotate: 270deg;
+  padding: 8px;
+}
+
+.active {
+  // Active state for cut button
+}
+
+.compactAudioBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.removeSilenceBtn {
+  margin-left: -2px;
+  transition: all 0.2s ease;
+
+  &.processing {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  &.active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.dividerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  padding-left: 0px;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #ffffff1a;
+  margin-left: 0px;
+}
+
+.zoomControl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: none;
+  margin-left: -8px;
+
+  .zoomButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    transition: background-color 0.2s;
+    &:active {
+      svg {
+        fill: #ffffff;
+      }
+    }
+  }
+
+  .zoomRange {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 82px;
+    height: 24px;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 2px;
+      height: 8px;
+      background: #ffffff66;
+      cursor: pointer;
+      margin-top: -3.2px;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s ease-in-out;
+    }
+
+    &::-moz-range-thumb {
+      width: 1px;
+      height: 9px;
+      border-radius: 2px;
+      background: #ffffff66;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+      transition: background 0.2s ease-in-out;
+    }
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 2px;
+      cursor: pointer;
+      background: linear-gradient(
+        90deg,
+        #ffffff66 var(--range-progress, 0%),
+        #ffffff33 0
+      );
+      border-radius: 1px;
+      transition: background 0.2s ease-in-out;
+    }
+
+    &::-moz-range-track {
+      width: 100%;
+      height: 2px;
+      cursor: pointer;
+      background: linear-gradient(
+        90deg,
+        #ffffff66 var(--range-progress, 0%),
+        #ffffff33 0
+      );
+      border-radius: 1px;
+      transition: background 0.2s ease-in-out;
+    }
+  }
+
+  // Hover state styles
+  &.hovered {
+    .zoomRange {
+      &::-webkit-slider-runnable-track {
+        background: linear-gradient(
+          90deg,
+          #ffffffb2 var(--range-progress, 0%),
+          #ffffff33 0
+        );
+      }
+
+      &::-moz-range-track {
+        background: linear-gradient(
+          90deg,
+          #ffffffb2 var(--range-progress, 0%),
+          #ffffff33 0
+        );
+      }
+    }
+  }
+
+  // Clicked state styles
+  &.clicked {
+    .zoomRange {
+      &::-webkit-slider-thumb {
+        background: #ffffff;
+      }
+
+      &::-moz-range-thumb {
+        background: #ffffff;
+      }
+
+      &::-webkit-slider-runnable-track {
+        background: linear-gradient(
+          90deg,
+          #ffffff var(--range-progress, 0%),
+          #ffffff33 0
+        );
+      }
+
+      &::-moz-range-track {
+        background: linear-gradient(
+          90deg,
+          #ffffff var(--range-progress, 0%),
+          #ffffff33 0
+        );
+      }
+    }
+  }
+}
+
+.threeDotsButton {
+  transform: rotate(90deg);
+  align-items: center;
+  padding: 8px;
+}
+
+.transitionsButton {
+  padding: 4px;
+}
+
+.uploadBtn {
+  margin-left: 4px;
+  margin-right: 4px;
+}

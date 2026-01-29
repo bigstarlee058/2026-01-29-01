@@ -1,0 +1,256 @@
+@import '../../../Variables.scss';
+
+.item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+  .input {
+    font-family: "General Sans Variable", sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.71429;
+    color: #fff;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 13px 16px;
+    caret-color: var(--accent-color);
+    transition: border-color 0.3s ease;
+    box-shadow: 7px 7px 13px 0 rgba(0, 0, 0, 0.25), inset -7px 7px 13px 0 rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.02);
+    
+    clip-path: polygon(
+      0 0,                    
+      12px 0,                 
+      12px 1px,               
+      calc(12px + 80px) 1px,  
+      calc(12px + 80px) 0,   
+      100% 0,                 
+      100% 100%,              
+      0 100%                 
+    );
+    
+    &:hover, &:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+    
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 11px;
+      font-family: "General Sans Variable", sans-serif;
+    }
+
+    // Prevent autocomplete styling
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.02) inset !important;
+      -webkit-text-fill-color: #fff !important;
+      transition: background-color 5000s ease-in-out 0s;
+      background-color: rgba(255, 255, 255, 0.02) !important;
+    }
+  }
+  .input_empty {
+    border: 1px solid #e20539;
+    font-family: "General Sans Variable", sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.71429;
+    color: #fff;
+    position: relative;
+    border-radius: 8px;
+    background-color: transparent;
+    padding: 13px 16px;
+    caret-color: var(--accent-color);
+    transition: border-color 0.3s ease;
+    
+    clip-path: polygon(
+      0 0,                    
+      12px 0,                 
+      12px 1px,              
+      calc(12px + 80px) 1px,  
+      calc(12px + 80px) 0,    
+      100% 0,                
+      100% 100%,              
+      0 100%                  
+    );
+    
+    &:hover, &:focus {
+      border-color: #e20539;
+      outline: none;
+    }
+    
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 11px;
+      font-family: "General Sans Variable", sans-serif;
+    }
+
+    // Prevent autocomplete styling for error state
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+      -webkit-text-fill-color: #fff !important;
+      transition: background-color 5000s ease-in-out 0s;
+      background-color: transparent !important;
+    }
+  }
+  .input_label {
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    font-family: "General Sans Variable", sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.71429;
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+    z-index: 20;
+    padding: 0 4px;
+    transition: color 0.3s ease;
+  }
+  
+  .input_label_error {
+    color: #e20539 !important;
+  }
+  
+  input:hover + .input_label,
+  input:focus + .input_label {
+    color: var(--accent-color);
+  }
+  
+  .input_empty ~ .input_label_error,
+  .input_empty + .input_label_error,
+  :root .input_label_error {
+    color: #e20539 !important;
+  }
+  
+  .input_empty + .input_label {
+    color: #e20539;
+  }
+  
+  .errorMessage {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    color: #e20539;
+    margin-top: 6px;
+  }
+
+  .error_container {
+    min-height: 0px;
+    flex: 1;
+  }
+  
+  .show_hide {
+  position: absolute;
+  top: 13px;
+  right: 12px;
+  cursor: pointer;
+  z-index: 2;
+  
+  &:hover svg path,
+  &:hover svg circle,
+  &:active svg path,
+  &:active svg circle {
+    // fill: #f1f1f1;
+    stroke: #f1f1f1;
+  }
+  }
+
+  .bottom_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .forgot_container {
+    text-align: right;
+    margin-left: 10px;
+  }
+  
+  .forgot {
+    font-family: "General Sans Variable", sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 2.02045;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: transparent;
+    white-space: nowrap;
+    
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+    &:active {
+      text-decoration: underline;
+      color: $primary-white-text-color;
+    }
+  }
+}
+.inputForm{
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  ul{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.password_input {
+  clip-path: polygon(
+    0 0,                    
+    12px 0,                 
+    12px 1px,               
+    calc(12px + 62px) 1px,  
+    calc(12px + 62px) 0,    
+    100% 0,                 
+    100% 100%,              
+    0 100%                 
+  ) !important; 
+}
+
+.inputs_section {
+  display: flex;
+  flex-direction: column;
+}
+
+.button_container {
+  display: flex;
+  flex-direction: column;
+}
+
+  .inputList_container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .signup_link {
+    margin-top: 20px;
+    text-align: center;
+    font-family: "General Sans Variable", sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    
+    a {
+      margin-left: 6px;
+      color: var(--accent-color);
+      cursor: pointer;
+      font-weight: 500;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }

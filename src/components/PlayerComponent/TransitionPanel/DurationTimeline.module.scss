@@ -1,0 +1,414 @@
+@import '../../../Variables.scss';
+
+.durationTimeline {
+  padding: 5px;
+  background: rgba(22, 208, 209, 0.02);
+  height: 56px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  position: relative;
+
+  .timelineHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .totalTime {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .timelineContainer {
+    position: relative;
+    width: 100%;
+    .timelineTrack {
+      height: 20px;
+      background: transparent;
+      border-radius: 10px;
+      position: relative;
+      overflow: visible;
+
+      .timelineBackground {
+        width: 100%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 1px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .maxSizeIndicator {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 2px;
+        background: #ffffff1f;
+        border-radius: 2px;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .animationBlock {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8px;
+        min-width: 50px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(10px);
+        border-radius: 2.4px;
+        border: 1.2px solid $accent-color;
+        background: #d25efd14;
+        backdrop-filter: blur(24);
+        z-index: 100;
+
+        width: 60px;
+        height: 12px;
+        flex-shrink: 0;
+
+        &:hover {
+          box-shadow: 0 0 2px var(--accent-color);
+        }
+
+        &.animationAtMaxSize {
+          border: 1px solid #ef4444;
+          box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.3);
+
+          .resizeHandle {
+            background: #ef4444;
+            opacity: 0.8;
+
+            &:hover {
+              background: #dc2626;
+            }
+          }
+        }
+
+        &.dragging {
+          opacity: 0.8;
+          transform: translateY(-50%) scale(1.05);
+          z-index: 100;
+          box-shadow: 0 4px 16px rgba(79, 70, 229, 0.6);
+          cursor: grabbing;
+        }
+
+        &.animationEffect {
+          cursor: grab;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+
+          &:hover {
+            cursor: grab;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+          }
+        }
+
+        .animationInfo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          flex: 1;
+          min-width: 0;
+
+          .animationIcon {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+            color: white;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .animationName {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            color: #fff;
+            font-size: 6px;
+            font-weight: 500;
+            line-height: 14.4px; /* 240% */
+            letter-spacing: 0.24px;
+          }
+        }
+
+        .startTime {
+          position: absolute;
+          left: 0px;
+          bottom: -16px;
+          transform: translateY(-50%);
+          font-size: 8px;
+          color: rgba(255, 255, 255, 0.8);
+          font-weight: 500;
+          z-index: 5;
+          pointer-events: none;
+        }
+
+        .endTime {
+          position: absolute;
+          right: 0px;
+          bottom: -16px;
+          transform: translateY(-50%);
+          font-size: 8px;
+          color: rgba(255, 255, 255, 0.8);
+          font-weight: 500;
+          z-index: 5;
+          pointer-events: none;
+        }
+
+        .tooltip {
+          position: fixed;
+          top: -40px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #0818238f;
+          backdrop-filter: blur(24px);
+          border-radius: 6px;
+          padding: 6px;
+          z-index: 10000;
+          width: max-content;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .tooltipContent {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .tooltipTitle {
+          font-size: 11px;
+          font-weight: 500;
+          color: white;
+          text-align: center;
+          margin-bottom: 4px;
+        }
+
+        .tooltipActions {
+          display: flex;
+          gap: 6px;
+          justify-content: center;
+        }
+
+        .tooltipEditButton,
+        .tooltipDeleteButton {
+          width: 20px;
+          height: 20px;
+          border-radius: 3px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+          }
+        }
+
+        .tooltipDeleteButton:hover {
+          background: rgba(239, 68, 68, 0.8);
+        }
+
+        .resizeHandle {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 1.2px;
+          height: 7.2px;
+          background: transparent; // Changed to transparent
+          cursor: ew-resize;
+          opacity: 0;
+          transition: all 0.2s;
+          z-index: 10;
+          padding: 8px 4px; // Added padding to increase clickable area
+          margin: 0 -4px; // Compensate for padding to maintain position
+
+          // Visual indicator using pseudo-element
+          &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1.2px;
+            height: 7.2px;
+            background: var(--accent-color);
+            transition: all 0.2s;
+          }
+
+          &:hover {
+            opacity: 1;
+
+            &::before {
+              background: var(--accent-color);
+            }
+          }
+
+          &.resizeHandleRight {
+            right: -2px;
+          }
+
+          &.resizeHandleLeft {
+            left: -2px;
+          }
+
+          .resizeIndicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6px;
+            color: white;
+            opacity: 0.8;
+            pointer-events: none;
+          }
+        }
+
+        &:hover .resizeHandle {
+          opacity: 0.7;
+        }
+
+        &.animationEffect:hover .resizeHandle {
+          opacity: 0.9;
+        }
+
+        &:hover .animationIcon {
+          opacity: 1;
+        }
+
+        &.animationEffect .animationIcon {
+          opacity: 1;
+        }
+
+        &.animationEffect .resizeHandle {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .timeMarkers {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 8px;
+      font-weight: 400;
+      line-height: 12px; /* 150% */
+      letter-spacing: 0.32px;
+    }
+
+    .animationLegend {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      justify-content: center;
+
+      .legendItem {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.7);
+
+        .legendColor {
+          width: 8px;
+          height: 8px;
+          background: #4f46e5;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}
+
+.tooltip {
+  position: fixed;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0818238f;
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 4px 12px;
+  z-index: 10000;
+  width: max-content;
+}
+
+.tooltipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tooltipTitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.tooltipActions {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.tooltipButton {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+}
+
+.plusButton {
+  width: 12.5px;
+  height: 12.5px;
+  background: transparent;
+  border-radius: 50%;
+  border: 1px solid #ababab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}

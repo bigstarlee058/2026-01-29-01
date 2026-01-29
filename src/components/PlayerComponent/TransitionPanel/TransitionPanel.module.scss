@@ -1,0 +1,1626 @@
+@import '../../../Variables.scss';
+
+// Container for transition panel and detail panel side by side
+.transitionPanelContainer {
+  display: flex;
+  height: 100%;
+  gap: 6px;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+// TransitionPanel - New Design
+.transitionPanel {
+  position: relative;
+  width: 100% !important;
+  height: 100%;
+  border-radius: 16px;
+  padding: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; // Allow panel to shrink below content size
+  max-width: none; // Remove any max-width constraints
+
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  &.preview {
+    max-height: 455px;
+    margin-bottom: 16px;
+  }
+
+  // Hide transition panel when detail panel is open
+  &.hiddenForDetail {
+    display: none;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Main Panel Header
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 16px;
+  padding-top: 6px;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 22.4px */
+  letter-spacing: 0.32px;
+  text-transform: capitalize;
+  gap: 10px;
+}
+
+.transitionPanel[data-active-tab='active'] .header {
+  padding: 14px 18px;
+  padding-bottom: 0px;
+}
+
+.headerText {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: 0.32px;
+  text-transform: capitalize;
+}
+
+.headerToggle {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 12px;
+}
+
+.toggleButton {
+  display: flex;
+  padding: 2px 9px;
+  background: transparent;
+  border: none;
+  color: #6a6d74;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &.toggleActive {
+    color: $accent-color;
+
+    &:hover {
+      color: var(--accent-color);
+    }
+  }
+}
+
+.contentWraper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+// Main Content Layout
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  // border: 1px solid rgba(2255, 255, 255, 0.06);
+  border-right: none;
+  border-bottom: none;
+  // border-radius: 12px 0 0 0;
+  width: 100%;
+  flex: 1;
+  &.preview {
+    overflow: hidden;
+    padding: 11px 10px;
+    padding-right: 4px;
+
+    .content {
+      overflow: hidden;
+      flex: 1;
+      min-height: 0; // Important for flex containers
+    }
+  }
+
+  &:has(.activeTransitionsList) {
+    border: none;
+    gap: 12px;
+    padding-left: 16px;
+
+  }
+}
+
+.mainContentHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.applyLabel {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabsWrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  scroll-behavior: smooth; // Add smooth scrolling
+
+  // When there are no tabs (transitions mode), just justify to the right
+  &:not(:has(.tabs)) {
+    justify-content: flex-end;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    height: 0.1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    height: 0.1px;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    background: transparent;
+    height: 0.1px;
+  }
+}
+// Tabs
+.tabs {
+  display: inline-flex;
+  gap: 2px;
+  flex: 1;
+  min-width: 0; // Allow tabs to shrink if needed to make room for Apply to All button
+}
+
+.tab {
+  display: flex;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  font-family: 'General Sans Variable', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 80%; /* 10px */
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+
+  flex-shrink: 0;
+  &:hover,
+  &:focus {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &.tabActive {
+    color: var(--accent-color);
+    &:hover,
+    &:focus {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+}
+
+.tabActive {
+  color: var(--accent-color);
+  &:hover,
+  &:focus {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+// Search
+.searchContainer {
+  position: relative;
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activeTabButton {
+  padding: 5px 10px;
+
+  font-family: 'General Sans Variable', sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 166.667% */
+  letter-spacing: 0.03em;
+  color: #ffffff88;
+
+  border-radius: 16px;
+  border: 1px solid #ffffff14;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  background: none;
+  border: none;
+  cursor: default;
+}
+
+.transitionPanel[data-active-tab='active'] .searchIcon {
+  left: 15px;
+}
+
+.searchInput {
+  display: flex;
+  width: 100%;
+  padding: 1px 12px;
+  padding-left: 26px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0);
+  border: 1px solid #ffffff14;
+  box-shadow: none;
+  &:hover,
+  &:focus {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  color: #ffffff66;
+  font-family: 'General Sans Variable', sans-serif;
+  letter-spacing: 0.03em;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 166.667% */
+
+  &::placeholder {
+    font-family: 'General Sans Variable', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: 0.03em;
+    color: #ffffff66;
+  }
+}
+
+.transitionPanel[data-active-tab='active'] .searchInput {
+  padding-left: 30px;
+}
+
+.quickFilterButtons {
+  display: flex;
+  gap: 4px;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.quickFilterButton {
+  width: auto;
+  display: flex;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 10px */
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+
+  span {
+    white-space: nowrap;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--accent-color);
+  }
+
+  &:active {
+    color: var(--accent-color);
+  }
+}
+
+.quickFilterButtonActive {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--accent-color) !important;
+}
+
+.transitionNameContainer {
+  padding: 0 2px;
+  padding-top: 17px;
+  padding-left: 2px;
+  padding-right: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transitionNameContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.transitionNameBox {
+  width: 12px;
+  height: 12px;
+  border: 0.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &:active {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 1);
+  }
+}
+
+.transitionNameText {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.transitionTimeContent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 33px;
+}
+
+.transitionTimeText {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.transitionTimeContent svg {
+  width: 13px;
+  height: 13px;
+
+  path {
+    fill: rgba(255, 255, 255, 0.6);
+    fill-opacity: 0.3;
+  }
+}
+
+.leftSideTabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sideFilters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex: 1 0 0;
+  padding: 8px 0px;
+  margin-top: -20px;
+}
+
+.sideFilter {
+  color: #ffffff99;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0.1px;
+  padding: 4px 7px;
+  border-radius: 4px;
+
+  &.sideFilterActive {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--accent-color);
+    .sideFilterName {
+      color: var(--accent-color);
+    }
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+// Content Layout
+.content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // Ensure proper overflow in preview mode
+  &.preview {
+    overflow: hidden;
+    min-height: 0; // Important for flex containers
+  }
+}
+
+.contentWithSideFilters {
+  margin-left: 0;
+}
+
+// Animations Grid
+.animationsGrid {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  align-content: start;
+  
+  // Override for transitions mode with grouped categories (but not for filters)
+  &[data-panel-mode="transitions"]:not([data-active-tab="filters"]) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    grid-template-columns: none;
+  }
+  
+  // Force grid layout for filters tab regardless of panel mode
+  &[data-active-tab="filters"] {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 9px !important;
+    flex-direction: initial !important;
+  }
+  &.preview {
+    gap: 7px;
+    // Ensure scroll works properly in preview mode
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-height: 368px !important;
+  }
+
+  &.hasTopShadow {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 15px,
+      black 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 15px,
+      black 100%
+    );
+  }
+
+  &.hasBottomShadow {
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black calc(100% - 15px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black calc(100% - 15px),
+      transparent 100%
+    );
+  }
+
+  &.hasTopShadow.hasBottomShadow {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 15px,
+      black calc(100% - 15px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 15px,
+      black calc(100% - 15px),
+      transparent 100%
+    );
+  }
+
+  // List layout for active transitions
+  &.activeTransitionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    grid-template-columns: none;
+  }
+}
+
+// Active Transitions Styles
+.animationCardActiveTransition {
+  min-height: auto;
+  width: 100%;
+  aspect-ratio: unset; // Remove aspect ratio for active transitions
+}
+
+// Додаткові стилі для контенту активних транзицій
+.activeTransitionContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  flex: 1;
+  padding-right: 4px;
+}
+
+// Стилі для інформації про транзицію
+.activeTransitionInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+// Стилі для іконки транзиції
+.activeTransitionIcon {
+  background: rgba(79, 70, 229, 0.15);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+
+  .activeTransitionPreviewImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+}
+
+// Стилі для деталей транзиції
+.activeTransitionDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  padding: 2px 0;
+}
+
+.activeTransitionName {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.activeTransitionScene {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.3;
+  font-family: 'General Sans Variable', sans-serif;
+  letter-spacing: 0.01em;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.2s ease;
+  }
+}
+
+.activeTransitionTiming {
+  // font-family: "General Sans Variable", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 4px 8px;
+  // background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  // border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  span {
+    // font-family: "General Sans Variable", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.66667;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.8);
+    padding-top: 4px;
+  }
+
+  // &:hover {
+  //   background: rgba(255, 255, 255, 0.08);
+  //   border-color: rgba(255, 255, 255, 0.2);
+  //   transition: all 0.2s ease;
+  // }
+}
+
+.activeTransitionActions {
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Стилі для іконки при наведенні
+.activeTransitionHoverIcon {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+// Animation Cards
+.animationCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover {
+    .animationName {
+      color: var(--accent-color);
+    }
+  }
+
+  &.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+  }
+}
+
+.animationPreview {
+  position: relative;
+  width: 104px;
+  height: 87px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  overflow: hidden;
+
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.preview {
+    width: 93.85px;
+    height: 77.85px;
+  }
+  // Removed active border styles - using badge instead
+
+  &.noneAnimation {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+  }
+
+  &.active.noneAnimation {
+    border: 1px solid var(--accent-color);
+  }
+}
+
+.previewImage {
+  width: 104px;
+  height: 87px;
+  object-fit: cover;
+  border-radius: 8px;
+  &.preview {
+    width: 79.85px;
+    height: 79.85px;
+  }
+}
+
+.animationIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px; // Reduce padding
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  opacity: 0;
+}
+
+.animationInfo {
+  text-align: center;
+}
+
+.animationName {
+  display: block;
+  font-weight: 500;
+  color: white;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 120%; /* 12px */
+  letter-spacing: 0.03em;
+  &:hover {
+    color: var(--accent-color);
+  }
+  // Removed active styles - using badge instead
+}
+
+.animationCategory {
+  display: block;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 110%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+// Styles for grouped transitions - VERTICAL LIST OF CATEGORIES
+.transitionGroup {
+  margin-bottom: 16px;
+  width: 100%;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.categoryHeader {
+  margin-bottom: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.categoryTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.categoryTransitions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  padding: 8px 0;
+  align-content: start;
+}
+
+
+
+// Animation count badge
+.animationBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: var(--accent-color);
+  color: #000;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 8px;
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  pointer-events: none;
+  
+  // Hide badge when count is 0
+  &.hidden {
+    display: none;
+  }
+}
+
+// Gradient overlay for active animations - removed, using badge instead
+
+// Action buttons container for active animations
+.actionButtons {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+// Play button for active animations
+.playButton {
+  position: relative;
+}
+
+.playButtonIcon {
+  border-radius: 4px;
+  padding: 2px;
+  fill: #3afcea;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+
+// Edit button for active animations
+.editButton {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  padding: 2px;
+  background-color: #61616180;
+}
+
+.editButtonIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  stroke: #dfdfdf;
+  width: 9px;
+  height: 9px;
+}
+
+// Apply to all switch for active animations
+.applyToAllSwitch {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.switchContainer {
+  display: flex;
+  flex-direction: column;
+
+  cursor: pointer;
+  user-select: none;
+  font-size: 10px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.switchInput {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.switchSlider {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  transition: background-color 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  &:before {
+    content: '';
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    left: 2px;
+    top: 1.1px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+}
+
+.switchInput:checked + .switchSlider {
+  background-color: rgba(var(--accent-color-rgb), 0.3);
+  border-color: var(--accent-color);
+
+  &:before {
+    transform: translateX(9px);
+    background-color: var(--accent-color);
+  }
+}
+
+.switchLabel {
+  font-size: 9px;
+  font-weight: 500;
+  white-space: nowrap;
+  min-width: 32px;
+  text-align: center;
+}
+
+// Removed activeIndicator - using badge instead
+
+// Detail Panel
+.detailPanel {
+  height: 100%;
+  width: 100%;
+  max-height: 100vh; // Ensure it doesn't exceed viewport height
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; // Prevent the whole panel from scrolling
+  padding: 13px 1px 60px 20px;
+}
+
+// Detail Panel Sidebar - for side-by-side view
+.detailPanelSidebar {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.detailTitle {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%; /* 22.4px */
+  letter-spacing: 0.32px;
+  text-transform: capitalize;
+}
+
+// Scene Selection Radio Button Group
+.sceneTumbnail {
+  padding: 16px 0;
+  padding-right: 8px;
+}
+
+.sceneSelectionGroup {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sceneOption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.sceneRadio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sceneRadioCustom {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border: 0.8px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    /* Linear Gradient (80% opacity) - from image */
+    background: linear-gradient(135deg, #16d8d8, #207f82);
+    /* Alternative Radial Gradient (50% opacity) - from image */
+    /* background: radial-gradient(circle at center, #3AFCEA, #45ACBA); */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+}
+
+.sceneOption input:checked + .sceneRadioCustom {
+  border-color: #16d8d8;
+  background: transparent;
+
+  &::after {
+    opacity: 1;
+    /* Linear Gradient (80% opacity) - from image */
+    background: linear-gradient(135deg, #16d8d8, #207f82);
+    /* Alternative Radial Gradient (50% opacity) - from image */
+    /* background: radial-gradient(circle at center, #3AFCEA, #45ACBA); */
+  }
+}
+
+.sceneOptionText {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'GeneralSans';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: 0.12px;
+  transition: color 0.2s ease;
+  &.active {
+    color: #fff;
+    font-weight: 500;
+  }
+}
+
+.detailContent {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 20px;
+}
+
+// Preview Frames Styles (for AnimationPreviewFrames component)
+.previewFramesContainer {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.previewFrame {
+  position: relative;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.activeFrame {
+  border-color: rgba(79, 70, 229, 0.6);
+  background: rgba(79, 70, 229, 0.1);
+}
+
+.previewCanvas {
+  width: 100%;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.frameLabel {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.pencilIcon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.previewFrame:hover .pencilIcon {
+  opacity: 1;
+}
+
+.infoButtonContainer {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+
+.infoIcon {
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .transitionPanel {
+    max-width: 100%; // Full width on mobile
+  }
+
+  .sideFilters {
+    flex-direction: row;
+    width: auto;
+    height: 50px;
+    padding: 8px 16px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      height: 2px;
+    }
+  }
+
+  .animationsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    padding: 0 16px 16px;
+  }
+
+  .header {
+    padding: 14px 16px;
+  }
+
+  .tabs {
+    padding: 0 16px;
+  }
+
+  .tab {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .animationName {
+    font-size: 10px;
+  }
+
+  .animationCategory {
+    font-size: 8px;
+  }
+
+  .activeTransitionContent {
+    gap: 8px;
+    min-height: 44px;
+  }
+
+  .activeTransitionInfo {
+    gap: 8px;
+  }
+
+  .activeTransitionName {
+    font-size: 12px;
+  }
+
+  .activeTransitionScene {
+    font-size: 10px;
+  }
+
+  .activeTransitionTiming {
+    font-size: 10px;
+    // padding: 3px 6px;
+  }
+
+  // Detail panel mobile styles
+  .detailContent {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  }
+
+  :global(.sidebarAnimationResource) {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .animationControls {
+      padding: 12px 16px;
+    }
+  }
+}
+
+// Animation-specific overrides for sidebar in detail panel
+:global(.sidebarAnimationResource) {
+  height: 100%;
+  background: transparent;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .animationControls {
+    padding: 16px 20px;
+  }
+
+  .controlsHeader {
+    margin-bottom: 16px;
+  }
+
+  .previewButton {
+    background: #4f46e5;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #4338ca;
+    }
+  }
+
+  .resetButton {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.durationTimelineContainer {
+  margin-right: 12px;
+}
+
+.activeTransitionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  &.active {
+    background: rgba(58, 252, 234, 0.04);
+    border-radius: 8px;
+  }
+}
+
+.activeTransitionWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding: 0px 12px;
+  padding-left: 3px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+
+    .activeTransitionActions {
+      opacity: 1;
+    }
+
+    .activeTransitionHoverIcon {
+      opacity: 1;
+    }
+  }
+
+  &.hoverActive {
+    background: rgba(255, 255, 255, 0.08);
+
+    .activeTransitionActions {
+      opacity: 1;
+    }
+
+    .activeTransitionHoverIcon {
+      opacity: 1;
+    }
+  }
+}
+
+.activeTransitionCheckbox {
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  background: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &:active {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &.checked {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+
+    &::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 1px;
+    }
+  }
+}
+
+.actionPanel {
+  position: absolute;
+  right: -120px;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  border-radius: 12px;
+  padding: 8px 0px;
+  width: 165px;
+  min-height: 112px;
+  backdrop-filter: blur(24px);
+  background: rgba(8, 24, 35, 0.56);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.actionButton {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.66667;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  border-radius: 4px;
+
+  svg {
+    fill: white !important;
+    fill-opacity: 0.4 !important;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.9);
+
+    svg {
+      opacity: 0.9;
+      fill-opacity: 0.9 !important;
+    }
+  }
+
+  &:active {
+    background: rgba(255, 255, 255, 0.03);
+  }
+}
+
+.actionPanelPortalFixed .actionButton:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.actionPanelPortal {
+  position: fixed;
+  transform: translateY(-50%);
+  z-index: 10000;
+  border-radius: 12px;
+  padding: 8px 0;
+  width: 165px;
+  min-height: 112px;
+  backdrop-filter: blur(24px);
+  background: rgba(8, 24, 35, 0.56);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+// Apply to All Button Styles
+.applyToAllContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 8px;
+}
+
+.applyToAllButton {
+  display: flex;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid var(--Stroke, rgba(255, 255, 255, 0.06));
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'General Sans Variable', sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%; /* 10px */
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--accent-color);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.applyToAllButtonDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// Empty State Styles
+.emptyState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.emptyStateText {
+  font-family: 'General Sans Variable', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.durationTimelineContainer {
+  margin-right: 12px;
+  &.preview {
+    max-height: 455px;
+  }
+}

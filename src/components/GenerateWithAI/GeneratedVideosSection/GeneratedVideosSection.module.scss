@@ -1,0 +1,552 @@
+@import '../../../Variables.scss';
+
+.container {
+  width: 100%;
+  padding: 16px 0;
+}
+
+.maxHeight {
+  // Remove overflow from container since it's now handled by masonryScrollContainer
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 0 4px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.count {
+  font-size: 14px;
+  color: #ffffff80;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.videosContainer {
+  width: 100%;
+  min-height: 100px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.masonryScrollContainer {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+}
+
+.masonryGrid {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.masonryColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+// Video item styles similar to VideoItem
+.img_item {
+  position: relative;
+  border-radius: 1px;
+  border: 1px solid transparent;
+  transition: all 500ms ease;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+// Animation classes
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.card_container {
+  width: 100%;
+  height: auto;
+  min-height: 80px;
+
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    .videoOverlay {
+      opacity: 1;
+    }
+  }
+}
+
+.mediaContainer {
+  width: 100%;
+  position: relative;
+
+  overflow: hidden;
+}
+
+.card {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+
+  transition: opacity 0.3s ease-in-out;
+  display: block;
+  will-change: opacity;
+  min-height: 150px;
+}
+
+.videoPlaceholder {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff80;
+  font-size: 14px;
+}
+
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 36.09%),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 60.93%,
+      rgba(0, 0, 0, 0.3) 80.47%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+  pointer-events: none; // Allow mouse events to pass through to video
+}
+
+.videoInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 4;
+}
+
+.status {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.selectedIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.checkmark {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+// Skeleton wrapper
+.skeleton_wrapper {
+  width: 100%;
+  height: 200px;
+  position: relative;
+
+  overflow: hidden;
+}
+
+.emptyState {
+  width: 100%;
+  text-align: center;
+  padding: 40px 20px;
+  color: #ffffff80;
+}
+
+.emptyState p {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+.emptySubtext {
+  font-size: 14px !important;
+  color: #ffffff60 !important;
+}
+
+// Video Controls Styles - Updated for header
+.generationTypeSelector {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.typeButton {
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  color: #ffffff80;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.active {
+    background: var(--accent-color);
+    color: white;
+  }
+
+  &:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+}
+
+.lengthSelector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lengthLabel {
+  font-size: 12px;
+  color: #ffffff80;
+  font-weight: 500;
+}
+
+.lengthSelect {
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  min-width: 90px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-color);
+  }
+
+  option {
+    background: #1a1a1a;
+    color: white;
+  }
+}
+
+// Image Selection Styles
+.imageSelectionSection {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0; // Prevent shrinking in flex container
+}
+
+.imageSelectionHeader {
+  margin-bottom: 16px;
+}
+
+.selectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.selectionSubtext {
+  font-size: 13px;
+  color: #ffffff60;
+  margin: 0;
+}
+
+.imageSelectionContainer {
+  margin-bottom: 16px;
+}
+
+.selectedImagesRow {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.imageSlot {
+  flex: 1;
+  min-height: 90px;
+}
+
+.uploadSection {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 8px;
+}
+
+.slotLabel {
+  display: block;
+  font-size: 13px;
+  color: #ffffff80;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.selectedImageContainer {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  height: 70px;
+}
+
+.selectedImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.removeImageButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 0, 0, 0.7);
+  }
+}
+
+.imageSlotPlaceholder {
+  width: 100%;
+  height: 70px;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  color: #ffffff40;
+  font-size: 12px;
+  text-align: center;
+}
+
+.availableImagesSection {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+}
+
+.availableImagesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.availableImagesTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.showMoreButton {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(var(--accent-color-rgb), 0.1);
+  }
+}
+
+.availableImagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 4px;
+  max-height: 110px;
+  overflow-y: auto;
+
+  /* Custom scrollbar for available images */
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+.availableImageItem {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+  }
+
+  &.selectedAvailableImage {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.3);
+  }
+}
+
+.availableImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.imageSelectedIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--accent-color-rgb), 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.checkmarkIcon {
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.imageLabel {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.uploadButton {
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  border-radius: 4px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.2s ease !important;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Performance optimizations
+.img_item,
+.card_container,
+.videoOverlay {
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}

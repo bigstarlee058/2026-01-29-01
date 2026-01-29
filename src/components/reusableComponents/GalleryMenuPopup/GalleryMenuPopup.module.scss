@@ -1,0 +1,68 @@
+.menu_icon_hover {
+  max-width: 20px;
+  position: relative;
+  font-size: 22px;
+  color: transparent;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+
+  svg {
+    transform: rotate(90deg);
+  }
+}
+
+.menu_popup {
+  background-color: #081823;
+  border-radius: 12px;
+  width: max-content;
+  height: max-content;
+  padding: 8px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(24px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  position: relative;
+
+  // Safe zone to prevent menu from closing when moving cursor
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    pointer-events: auto;
+    z-index: -1;
+  }
+}
+
+.menu_option {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #ffffff99;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover,
+  &:focus {
+    background-color: #3afcea0a;
+  }
+}
+
+.menuIcon {
+  svg {
+    transform: rotate(0deg) !important;
+  }
+}

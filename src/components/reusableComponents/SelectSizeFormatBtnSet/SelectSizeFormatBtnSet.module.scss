@@ -1,0 +1,15 @@
+@import '../../../Variables.scss';
+
+.select_size_btnSet {
+  display: flex;
+  gap: 16px;
+}
+
+.select_button {
+@include dropdown_button
+}
+
+.dropdown_item {
+  @include dropdown_item
+  
+}

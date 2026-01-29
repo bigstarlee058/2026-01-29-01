@@ -1,0 +1,17 @@
+@import '../../../Variables.scss';
+
+.btn_gpt{
+  background-color:$primary-bg-color;
+  opacity: 60%;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  box-shadow: $primary-box-shadow;
+  &:hover{
+    background-color: $primary-button-color;
+    opacity: 90%;
+  }
+}
+icon_gpt{
+  
+}

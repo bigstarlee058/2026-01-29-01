@@ -1,0 +1,53 @@
+@import '../../Variables.scss';
+
+.container {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  margin-bottom: 56px;
+}
+
+.welcome_logo {
+  width: 136px;
+  height: 100px;
+  margin-left: -2px;
+}
+
+.text_area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-left: 31px;
+  margin-top: -2px;
+  font-family: $primary-font;
+  color: $primary-white-text-color;
+  .greeting {
+    position: relative;
+    top: 5.2px;
+
+    font-style: italic;
+    font-size: 40px;
+    margin-right: 16px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  p {
+    color: $secondary-grey-text-color;
+  }
+
+  .greeting_name {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: 0%;
+
+    img {
+      margin-left: 4px;
+    }
+  }
+}
+.welcome_stars {
+  width: 40px;
+  height: 40px;
+}

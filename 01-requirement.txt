@@ -1,0 +1,57 @@
+Overview 
+
+VIDEFY.ai is an all-in-one AI video creation platform that takes a user from idea to finished video in one place: story and storyboard, visuals generation, voiceover, subtitles, editing, review, and export. 
+We’re building a product that removes the chaos of tool-hopping and turns a messy 8-hour workflow into something closer to minutes. That requires strong engineering taste: clean architecture, performance thinking, reliability, and great UX through code. 
+This exercise is how we find top engineers. You’ll tackle several complex problems similar to what we solve in Videfy, and it’s a chance to show strong judgment: correct solutions, clean code, and clear tradeoffs. If you enjoy working through complexity and 
+ambiguity and turning it into something simple and reliable, you’ll do well here. 
+What to do 
+Select 2 items from the list below, implement them, and submit your solution. 
+Challenge Items 
+1) Add media to the timeline (Drag & Drop + Upload) 
+Support adding image, video, and audio files from the local computer to the timeline 
+using: 
+● Drag & Drop onto the timeline
+● Upload button on the timeline toolbar 
+Acceptance criteria 
+● Support common file types for image/video/audio (reasonable defaults). 
+● When adding a video file: 
+○ Create a video clip on a video track and an audio clip on an audio track. 
+○ Both clips must start at the same time and stay aligned. 
+○ If the video has no audio, only create the video clip. 
+● If upload fails or a file type is unsupported, show a clear error message. 
+2) Remove Silence (timeline button) 
+Add a Remove Silence action on the timeline. 
+Acceptance criteria 
+● Applies to the selected audio clip. 
+● Removes leading and trailing silence. 
+● Does not modify other clips on the timeline. 
+● Handles edge cases (no silence, very short clip, silence-only clip) without crashing. 
+● Should be undoable if an undo system exists. 
+3) Cut (Split) a timeline item 
+Enable cutting a timeline item by clicking the Cut button and then clicking a timeline item. 
+Acceptance criteria 
+● Split the item into two clips at the cut position. 
+● Works for video, audio, and image clips (use reasonable behavior for images). 
+● Both resulting clips must preserve correct timing and durations. 
+● Cutting must not break the rest of the timeline layout. 
+4) Canvas item selection + move 
+Allow selecting an item on the canvas and moving it by selecting the item and dragging it off the canvas and back onto the canvas. 
+Acceptance criteria 
+● Item can be selected and clearly shows a selection state. 
+● Dragging updates position smoothly. 
+● After drop, keep the item within canvas bounds (clamp or snap back). 
+● No crashes on fast drag, repeated moves, or edge-case positions. 
+
+Data & State 
+You will need to determine a solution to store/manage the data/state for: 
+● adding media (drag/drop + upload) 
+● remove silence 
+● cut 
+● canvas selection 
+● canvas movement 
+Submission 
+1. Fork the repository: 
+https://github.com/LivesPro/video-app-candidate-assessment 
+2. Implement 2 items from the list above. 
+3. Open a pull request with your changes. 
+4. Send us the pull request link.

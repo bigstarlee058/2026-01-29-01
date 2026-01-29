@@ -1,0 +1,201 @@
+@import '../../Variables.scss';
+
+.icons_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 23.5px;
+  align-items: center;
+  width: 30px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  right: -1%;
+  transform: translateY(-50%);
+}
+
+.plus_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.other_actions_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 17.5px;
+  flex: 1;
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  transform: translateY(-57%);
+  &.reduced_height {
+    height: 139.5px;
+  }
+}
+.other_actions_container_short {
+  @extend .other_actions_container;
+  gap: 12.5px;
+  transform: translateY(-30%);
+}
+
+// Outside variant styles (for use outside of images)
+.outside_container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+.outside_button {
+  width: 30px;
+  height: 100%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 0%;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  padding-left: 2px;
+}
+
+.rotated_icon {
+  transform: scaleY(-1);
+}
+
+.icon {
+  width: 30px;
+  height: max-content;
+  padding: 0px 8px;
+  border-radius: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 500ms ease-in-out;
+  display: flex;
+  gap: 5.8px;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 0px;
+  letter-spacing: 0.02em;
+  color: #b4c3c7;
+  position: relative;
+  top: 8px;
+
+  &.selected {
+    background-color: var(--accent-color);
+  }
+}
+.delete_icon {
+  margin-top: -2px;
+}
+
+.three_dots_icon {
+  margin-top: 0px;
+  transform: rotate(90deg);
+}
+
+:global(.react-tooltip) {
+  z-index: 100000 !important;
+  font-size: 12px !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  background-color: #131a25 !important;
+  color: white !important;
+  border: 1px solid #ffffff1a !important;
+}
+
+.actionOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.dislike_icon {
+  font-size: 11px;
+}
+
+.delete_icon {
+  margin-top: -5px;
+}
+
+.menu_item .menu_item_button .icon_icon {
+  transform: none !important;
+}
+
+.dropdown_container {
+  width: max-content;
+  min-width: 120px;
+  height: auto;
+  background-color: #081823;
+  backdrop-filter: blur(24px);
+  border-radius: 12px;
+  padding: 8px 0;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.download_icon {
+  margin-top: -2px;
+}
+
+.menu_item {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  color: #ffffff99;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  
+  &:hover,
+  &:focus {
+    background-color: #3afcea0a;
+  }
+}
+
+.menu_item_button {
+  width: auto !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  position: static !important;
+  transform: none !important;
+  top: auto !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  gap: 0 !important;
+}
+
+.menu_item_text {
+  white-space: nowrap;
+  flex: 1;
+}

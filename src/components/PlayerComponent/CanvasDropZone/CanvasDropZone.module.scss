@@ -1,0 +1,168 @@
+@import '../../../styles/mixins/dropZone';
+@import '../../../Variables.scss';
+
+.canvasDropZone {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  
+  // Ensure canvas events work normally
+  canvas {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Drop overlay - minimal and non-intrusive
+.dropOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 2; // Above canvas but below UI controls
+  border-radius: 8px;
+  
+  // Active state (during drag)
+  &.active {
+    opacity: 1;
+    // Still no pointer-events to not block canvas
+    pointer-events: none;
+    
+    // Valid drop state
+    &.valid {
+      border: 2px dashed rgba(58, 252, 234, 0.5);
+      background-color: rgba(58, 252, 234, 0.05);
+      box-shadow: inset 0 0 20px rgba(58, 252, 234, 0.1);
+      
+      // Cursor handled by parent component
+      .dropHint {
+        color: rgba(58, 252, 234, 1);
+        background: rgba(0, 0, 0, 0.9);
+        border-color: rgba(58, 252, 234, 0.3);
+      }
+    }
+    
+    // Invalid drop state
+    &.invalid {
+      border: 2px dashed rgba(239, 68, 68, 0.5);
+      background-color: rgba(239, 68, 68, 0.05);
+      box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1);
+      
+      .dropHint {
+        color: rgba(239, 68, 68, 1);
+        background: rgba(0, 0, 0, 0.9);
+        border-color: rgba(239, 68, 68, 0.3);
+      }
+    }
+  }
+  
+  // Uploading state
+  &.uploading {
+    pointer-events: none;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+  }
+}
+
+// Drop hint text
+.dropHint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  
+  &.visible {
+    opacity: 1;
+  }
+}
+
+// Progress bar for uploads
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+  
+  .progressFill {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(59, 130, 246, 0.8) 0%,
+      rgba(58, 252, 234, 0.8) 100%
+    );
+    transition: width 0.3s ease-out;
+    box-shadow: 0 0 10px rgba(58, 252, 234, 0.5);
+  }
+}
+
+// Hidden file input for accessibility
+.hiddenInput {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Focus styles for keyboard navigation
+.canvasDropZone:focus-within {
+  .dropOverlay {
+    outline: 2px solid rgba(58, 252, 234, 0.5);
+    outline-offset: 2px;
+  }
+}
+
+// Mobile adjustments
+@media (max-width: 768px) {
+  .dropHint {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+  
+  .dropOverlay {
+    &.active {
+      &.valid,
+      &.invalid {
+        border-width: 1px;
+      }
+    }
+  }
+}
+
+// Animation for drop hint appearance
+@keyframes hintFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.dropHint.visible {
+  animation: hintFadeIn 0.2s ease-out forwards;
+}

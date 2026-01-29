@@ -1,0 +1,496 @@
+@import '../../Variables.scss';
+
+.effectLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 8; // Lower than transitions
+  overflow: visible; // Allow resize handles to be visible outside container
+
+  // Show resize handles on hover over the entire layer
+  &:hover {
+    .animationResizeHandleLeft,
+    .animationResizeHandleRight {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .effectVisualizer {
+      outline: 2px solid var(--accent-color);
+      outline-offset: -1px;
+      border: 1px solid var(--accent-color);
+      box-shadow: 0 0 0 1px var(--accent-color),
+        0 4px 12px rgba(var(--accent-color-rgb), 0.3);
+      z-index: 20;
+    }
+  }
+
+  &.selectedItem {
+    z-index: 25; // Bring selected animation to front
+
+    .effectVisualizer {
+      border-color: var(--accent-color);
+      border-width: 2px;
+      z-index: 20;
+    }
+
+    .effectLabel {
+      color: var(--accent-color);
+    }
+
+    .effectIcon svg {
+      fill: var(--accent-color) !important;
+    }
+
+    .resizeHandle {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+.effectVisualizer {
+  position: absolute;
+  height: 100%; // Take full height of the row
+  top: 0; // Align to top of the row
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.063);
+  background-color: #6985ff;
+  border: 1px solid #ffffff0f;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  margin: 1px; // Reduced margin to prevent border clipping
+
+  &.glTransition {
+    background-color: #D188FF;
+  }
+
+  &.draggable {
+    cursor: move;
+  }
+
+  &.resizeOnly {
+    cursor: default;
+
+    &:hover {
+      cursor: default;
+    }
+  }
+  pointer-events: all;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  min-width: 4px;
+  overflow: hidden;
+  max-width: calc(
+    100% - 4px
+  ); // Prevent effects from expanding beyond container (adjusted for reduced margin)
+
+  &:hover {
+    outline: 2px solid var(--accent-color);
+    outline-offset: -1px;
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 0 1px var(--accent-color),
+      0 4px 12px rgba(var(--accent-color-rgb), 0.3);
+    z-index: 20;
+
+    .animationResizeHandleLeft,
+    .animationResizeHandleRight {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  &.dragging {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    z-index: 28;
+    opacity: 0.9;
+  }
+
+  &.resizing {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    z-index: 23;
+
+    .resizeHandle {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .animationResizeHandleLeft,
+    .animationResizeHandleRight {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  &.activeForEditing {
+    .effectIcon svg {
+      fill: #ffffff !important;
+    }
+
+    .effectLabel {
+      color: #ffffff;
+    }
+  }
+
+  &.playing {
+    cursor: default; // Change cursor to indicate non-interactive state
+    pointer-events: none; // Disable all mouse interactions during playback
+
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); // Keep original shadow
+    }
+  }
+}
+
+.effectIcon {
+  margin-left: 4px;
+  flex-shrink: 0;
+
+  svg {
+    stroke-width: 1.5px;
+    display: block;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  }
+}
+
+.effectLabel {
+  margin-left: 4px;
+  text-align: center;
+  color: #0d2b32;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.effectDuration {
+  color: #ffffff99;
+  font-size: 8px;
+  font-weight: 500;
+  padding: 2px 4px;
+  border-radius: 6px;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.resizeHandle {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 8px;
+  cursor: ew-resize;
+  background: transparent;
+  opacity: 0;
+  pointer-events: all;
+  border-radius: 4px;
+
+  // Expand hover area with pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    left: -2px;
+    right: -2px;
+    pointer-events: all;
+  }
+
+  &:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  &.resizeLeft {
+    left: 0px;
+    border-left: 2px solid #fff;
+    border-radius: 4px 0 0 4px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    &::before {
+      left: -4px;
+    }
+  }
+
+  &.resizeRight {
+    right: 0px;
+    border-right: 2px solid #fff;
+    border-radius: 0 4px 4px 0;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    &::before {
+      right: -4px;
+    }
+  }
+}
+
+.deleteButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background: #ff4757;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: #ff3838;
+  }
+
+  &:active {
+    background: #cc2d2d;
+  }
+}
+
+.effectVisualizer:hover {
+  .deleteButton {
+    opacity: 1;
+  }
+
+  .resizeHandle {
+    opacity: 0.7;
+  }
+
+  .animationResizeHandleLeft,
+  .animationResizeHandleRight {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+// Animation resize handles - smaller and more elegant than timeline items
+.animationResizeHandleLeft {
+  position: absolute;
+  width: 12px;
+  height: 100%;
+  z-index: 300;
+  top: calc(50% + 1px);
+  left: 0px;
+  // border: 1.5px solid var(--accent-color);
+  border-radius: 4px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: none;
+  // backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  transform: translateY(-50%);
+  cursor: ew-resize;
+  pointer-events: none;
+
+  &::before {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: 60%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    border-right: 1px solid var(--accent-color);
+    pointer-events: none;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: 60%;
+    top: 50%;
+    left: 7px;
+    transform: translateY(-50%);
+    border-right: 1px solid var(--accent-color);
+    pointer-events: none;
+  }
+}
+
+.animationResizeHandleRight {
+  position: absolute;
+  width: 12px;
+  height: 100%;
+  z-index: 300;
+  top: calc(50% + 1px);
+  right: 0px;
+  // border: 1.5px solid var(--accent-color);
+  border-radius: 4px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: none;
+  // backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  transform: translateY(-50%);
+  cursor: ew-resize;
+  pointer-events: none;
+
+  &::before {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: 60%;
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%);
+    border-left: 1px solid var(--accent-color);
+    pointer-events: none;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: 60%;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    border-left: 1px solid var(--accent-color);
+    pointer-events: none;
+  }
+}
+
+// Effect gap styles
+.effectGap {
+  position: absolute;
+  top: 60%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  opacity: 0;
+
+  z-index: 3;
+
+  &.hovered {
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.addEffectButton {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e67e22;
+  border-radius: 5px;
+  background: rgba(230, 126, 34, 0.1);
+  color: #e67e22;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    background: rgba(230, 126, 34, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    background: rgba(230, 126, 34, 0.3);
+  }
+}
+
+// Show gap buttons only on row hover
+.effectLayer:hover .effectGap {
+  opacity: 0.6;
+}
+
+.effectGap:hover {
+  opacity: 1 !important;
+}
+
+// Animation for newly created effects removed
+
+// Different effect types get different colors (commented out for now)
+// .effectVisualizer {
+//   &[data-effect-type='zoomEffect'] {
+//     &[data-effect-direction='in'] {
+//       background: linear-gradient(135deg, #e67e22, #f39c12);
+//     }
+
+//     &[data-effect-direction='out'] {
+//       background: linear-gradient(135deg, #d35400, #e67e22);
+//     }
+//   }
+
+//   &[data-effect-type='fadeEffect'] {
+//     &[data-effect-direction='in'] {
+//       background: linear-gradient(135deg, #3498db, #2980b9);
+//     }
+
+//     &[data-effect-direction='out'] {
+//       background: linear-gradient(135deg, #2c3e50, #3498db);
+//     }
+//   }
+// }
+
+// Three dots menu button styles
+.effectActions {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  opacity: 0;
+  pointer-events: all;
+
+  // Expand hover area
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: -8px;
+    right: -8px;
+    pointer-events: all;
+  }
+}
+
+.threeDotsButton {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 2px;
+  border-radius: 2px;
+
+}
+
+.effectVisualizer:hover .effectActions {
+  opacity: 1;
+}

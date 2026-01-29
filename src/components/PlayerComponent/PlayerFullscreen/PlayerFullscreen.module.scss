@@ -1,0 +1,78 @@
+@import '../../../Variables.scss';
+
+.fullscreen_container {
+  width: max-content;
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 21.31px;
+}
+
+.playerContainer {
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    .seekPlayerWrapper {
+      opacity: 1;
+    }
+  }
+}
+
+.canvasContainer {
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.canvasElement {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.seekPlayerWrapper {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  padding: 0 20px 20px;
+  opacity: 1;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 21.31px;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--accent-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

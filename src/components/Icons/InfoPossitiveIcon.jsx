@@ -1,0 +1,78 @@
+import ICON_SIZE from 'components/Icons/IconSize';
+import PropTypes from 'prop-types';
+
+const InfoPossitiveIcon = ({
+  size = ICON_SIZE.EXTRA_SMALL,
+  color = '#d3f85a',
+  className,
+}) => {
+  return (
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 35 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill={color}
+        style={{ fill: 'var(--accent-color)' }}
+        d="M34.598 16.587l-2.075 9.131c-0.053 0.245-0.272 0.416-0.517 0.416-0.251 0-0.464-0.171-0.523-0.416l-2.075-9.131c-0.181-0.795 0.005-1.616 0.517-2.251 0.507-0.64 1.264-1.003 2.080-1.003 0.811 0 1.573 0.363 2.080 1.003 0.507 0.635 0.693 1.456 0.512 2.251z"
+      />
+      <path
+        fill={color}
+        style={{ fill: 'var(--accent-color)' }}
+        d="M32.006 30.933c1.178 0 2.133-0.955 2.133-2.133s-0.955-2.133-2.133-2.133c-1.178 0-2.133 0.955-2.133 2.133s0.955 2.133 2.133 2.133z"
+      />
+      <path
+        fill={color}
+        style={{ fill: 'var(--accent-color)' }}
+        d="M30.401 1.063h-27.735c-1.472 0-2.667 1.195-2.667 2.667v20.268c0 1.472 1.195 2.667 2.667 2.667h26.956c0.24-0.267 0.523-0.491 0.837-0.667-0.005-0.011-0.011-0.021-0.016-0.037l-2.075-9.142c-0.256-1.115 0.011-2.267 0.725-3.157 0.704-0.885 1.765-1.397 2.912-1.397 0.363 0 0.72 0.053 1.056 0.149v-0.661c0-0.011 0.005-0.016 0.005-0.021v-8c0-1.472-1.2-2.667-2.667-2.667zM27.020 21.922c-0.197 0.299-0.528 0.475-0.885 0.475-0.213 0-0.416-0.064-0.592-0.181-5.472-3.648-12.544-3.648-18.017 0-0.181 0.123-0.389 0.176-0.592 0.176-0.347 0-0.688-0.165-0.891-0.469-0.155-0.24-0.213-0.523-0.155-0.8 0.053-0.283 0.213-0.523 0.453-0.677 6.192-4.128 14.193-4.128 20.385 0 0.235 0.155 0.395 0.395 0.453 0.677 0.053 0.277 0 0.56-0.16 0.8z"
+      />
+      <path
+        fill={color}
+        style={{ fill: 'var(--accent-color)' }}
+        d="M30.401 1.063h-27.735c-1.472 0-2.667 1.195-2.667 2.667v20.268c0 1.472 1.195 2.667 2.667 2.667h26.956c0.24-0.267 0.523-0.491 0.837-0.667-0.005-0.011-0.011-0.021-0.016-0.037l-2.075-9.142c-0.256-1.115 0.011-2.267 0.725-3.157 0.704-0.885 1.765-1.397 2.912-1.397 0.363 0 0.72 0.053 1.056 0.149v-0.661c0-0.011 0.005-0.016 0.005-0.021v-8c0-1.472-1.2-2.667-2.667-2.667z"
+      />
+      <path
+        fill="none"
+        stroke="#000"
+        style={{ stroke: 'var(--color2, #000)' }}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        strokeMiterlimit="4"
+        strokeWidth="2"
+        d="M9.333 17.333c0.931 1.242 2.139 2.25 3.528 2.944s2.92 1.056 4.472 1.056c1.552 0 3.084-0.361 4.472-1.056s2.596-1.702 3.528-2.944"
+      />
+      <path
+        fill="none"
+        stroke="#111b27"
+        style={{ stroke: 'var(--color3, #111b27)' }}
+        strokeLinejoin="miter"
+        strokeLinecap="round"
+        strokeMiterlimit="4"
+        strokeWidth="1.9665"
+        d="M9.343 11.040c0 0 0.647-2.519 1.916-2.642 1.371-0.133 2.337 2.642 2.337 2.642"
+      />
+      <path
+        fill="none"
+        stroke="#111b27"
+        style={{ stroke: 'var(--color3, #111b27)' }}
+        strokeLinejoin="miter"
+        strokeLinecap="round"
+        strokeMiterlimit="4"
+        strokeWidth="1.9665"
+        d="M24.839 11.040c0 0-0.647-2.519-1.916-2.642-1.371-0.133-2.337 2.642-2.337 2.642"
+      />
+    </svg>
+  );
+};
+
+InfoPossitiveIcon.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  color: PropTypes.string,
+  className: PropTypes.string,
+};
+
+export default InfoPossitiveIcon;

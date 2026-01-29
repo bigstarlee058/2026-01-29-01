@@ -1,0 +1,365 @@
+@import '../../../Variables.scss';
+
+.glassmorphicPage {
+  position: relative;
+  // overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.stain {
+  position: fixed;
+  left: 579px;
+  top: 46.56px;
+  z-index: 0;
+  width: 1106px;
+  height: 579px;
+  transform: translate(0, 0) rotate(40deg);
+  background: var(--main-background-color);
+  opacity: 0.3;
+  filter: blur(190px);
+  border-radius: 50%;
+}
+
+.stainBottom {
+  position: fixed;
+  left: -106px;
+  top: 230px;
+  z-index: 0;
+  width: 1052px;
+  height: 432px;
+  transform: translate(0, 0) rotate(32.53deg);
+  background: var(--main-background-color);
+  opacity: 0.3;
+  filter: blur(190px);
+  border-radius: 50%;
+}
+
+.glassContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  position: relative;
+  border-radius: 16px;
+  z-index: 10;
+  backdrop-filter: blur(24px);
+  border: none;
+  width: 44vw;
+  height: 70vh;
+  // overflow: hidden
+}
+
+.borderEffect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: none;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.borderTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--main-background-color) 10%,
+    rgba(111, 112, 112, 0.139) 50%,
+    rgba(111, 112, 112, 0.139) 40%,
+    rgba(111, 112, 112, 0.139) 60%,
+    rgba(111, 112, 112, 0.139) 100%,
+    var(--main-background-color) 100%
+  );
+}
+
+.borderRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--main-background-color) 0%,
+    rgba(111, 112, 112, 0.139) 0%,
+    rgba(111, 112, 112, 0.139) 40%,
+    rgba(111, 112, 112, 0.139) 50%,
+    rgba(111, 112, 112, 0.139) 10%,
+    var(--main-background-color) 100%
+  );
+}
+
+.borderBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(111, 112, 112, 0.177) 0%,
+    rgba(111, 112, 112, 0.139) 20%,
+    rgba(111, 112, 112, 0.139) 40%,
+    rgba(111, 112, 112, 0.139) 60%,
+    rgba(111, 112, 112, 0.139) 80%,
+    var(--main-background-color) 100%
+  );
+}
+
+.borderLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--main-background-color) 0%,
+    rgba(111, 112, 112, 0.177) 20%,
+    rgba(111, 112, 112, 0.139) 40%,
+    rgba(111, 112, 112, 0.139) 60%,
+    rgba(111, 112, 112, 0.139) 80%,
+    rgba(111, 112, 112, 0.139) 100%
+  );
+}
+
+.cornerTopLeft,
+.cornerTopRight,
+.cornerBottomLeft,
+.cornerBottomRight {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.cornerTopLeft {
+  top: 0;
+  left: 0;
+  border-top: 2px solid var(--main-background-color);
+  border-left: 2px solid var(--main-background-color);
+  border-top-left-radius: 16px;
+}
+
+.cornerTopRight {
+  top: 0;
+  right: 0;
+  border-top: 2px solid rgba(111, 112, 112, 0.139);
+  border-right: 2px solid rgba(111, 112, 112, 0.139);
+  border-top-right-radius: 16px;
+}
+
+.cornerBottomLeft {
+  bottom: 0;
+  left: 0;
+  border-bottom: 2px solid rgba(111, 112, 112, 0.139);
+  border-left: 2px solid rgba(111, 112, 112, 0.139);
+  border-bottom-left-radius: 16px;
+}
+
+.cornerBottomRight {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid var(--main-background-color);
+  border-right: 2px solid var(--main-background-color);
+  border-bottom-right-radius: 16px;
+}
+
+.leftTop {
+  position: absolute;
+  top: -2px;
+  left: 20px;
+  width: 49%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(111, 112, 112, 0.139) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.rightTop {
+  position: absolute;
+  top: -2px;
+  right: 20px;
+  width: 48.8%;
+  height: 2px;
+  background: linear-gradient(
+    to left,
+    var(--main-background-color) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.leftBottom {
+  position: absolute;
+  bottom: -2px;
+  left: 20px;
+  width: 49%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(111, 112, 112, 0.139) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.rightBottom {
+  position: absolute;
+  bottom: -2px;
+  right: 20px;
+  width: 48.8%;
+  height: 2px;
+  background: linear-gradient(
+    to left,
+    var(--main-background-color) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.topleft {
+  position: absolute;
+  left: -2px;
+  bottom: 20px;
+  height: 47.8%;
+  width: 2px;
+  background: linear-gradient(
+    to top,
+    var(--main-background-color) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.bottomleft {
+  position: absolute;
+  left: -2px;
+  top: 20px;
+  height: 47.7%;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(111, 112, 112, 0.139) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.bottomright {
+  position: absolute;
+  left: -2px;
+  bottom: 20px;
+  height: 47.8%;
+  width: 2px;
+  background: linear-gradient(
+    to top,
+    var(--main-background-color) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.rightleft {
+  position: absolute;
+  right: -2px;
+  top: 20px;
+  height: 47.8%;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(111, 112, 112, 0.139) 0%,
+    rgba(111, 112, 112, 0.139) 65%
+  );
+  z-index: 10;
+}
+
+.topright {
+  position: absolute;
+  right: -2px;
+  bottom: 20px;
+  height: 47.7%;
+  width: 2px;
+  background: linear-gradient(
+    to top,
+    var(--main-background-color) 0%,
+    rgba(111, 112, 112, 0.139) 15%
+  );
+  z-index: 10;
+}
+
+.content {
+  width: 100%;
+  max-width: 90vw;
+  height: 100%;
+  gap: 32px;
+  border-radius: 16px;
+  border-width: 2px;
+  padding: 32px;
+  background-color: #060b17;
+}
+
+.content_box {
+  @extend .content;
+  background-color: transparent;
+  backdrop-filter: blur(80px);
+}
+
+.glow_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stain {
+  position: absolute;
+  // background: #3afcea;
+  width: 1358px;
+  height: 711px;
+  top: 57.19px;
+  left: 851.11px;
+  transform: translate(0, 0) rotate(40.78deg);
+  opacity: 0.1;
+}
+
+.stainBottom {
+  position: absolute;
+  // left: -3%;
+  // bottom: -10%;
+  // z-index: 0;
+  // width: 400px;
+  // height: 320px;
+  // transform: translate(0, 0) rotate(32deg);
+  // background: #3afcea;
+  // opacity: 0.22;
+  // filter: blur(90px);
+  // border-radius: 50%;
+
+  width: 1292px;
+  height: 530px;
+  top: 159.76px;
+  left: -93.79px;
+  transform: translate(0, 0) rotate(-32.5deg);
+  border-width: 1.23px;
+}

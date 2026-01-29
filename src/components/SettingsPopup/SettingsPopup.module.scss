@@ -1,0 +1,73 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6.5vh;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.popup {
+  position: relative;
+  background: transparent;
+  max-width: 92.5vw;
+  max-height: 87vh;
+  min-height: 87vh;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 19.654px;
+  background: #060b17;
+  padding: 26px 0px 2px 31px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 28px;
+  right: 22px;
+  padding: 12px;
+  cursor: pointer;
+  z-index: 99999;
+  transition: all 0.3s ease-in-out;
+}
+
+.content {
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.glow_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stain {
+  position: absolute;
+  background: var(--main-background-color);
+  width: 1106px;
+  height: 579px;
+  top: 37.19px;
+  left: 451.11px;
+  transform: translate(0, 0) rotate(-23.419deg);
+  opacity: 0.3;
+  filter: blur(190px);
+  border-radius: 50%;
+  flex-shrink: 0;
+}

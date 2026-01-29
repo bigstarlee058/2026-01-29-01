@@ -1,0 +1,38 @@
+.btn_set {
+  display: flex;
+  align-items: center;
+  pointer-events: all;
+  position: relative;
+  z-index: 3;
+  transition: all 500ms ease-in-out;
+
+  .btn_container {
+    pointer-events: all;
+    border-radius: 50%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    &:hover,
+    &:focus {
+      background-color: #ffffff1a;
+      + .icon {
+        opacity: 1;
+      }
+    }
+
+    &:first-child {
+      margin-left: 0px;
+    }
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+}

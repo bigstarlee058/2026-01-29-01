@@ -1,0 +1,590 @@
+@import '../../../Variables.scss';
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// .overlay {
+//   position: fixed;
+//   display: flex;
+//   top: 0;
+//   left: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: rgba(0, 0, 0, 0.8);
+//   z-index: 9999;
+// }
+
+// .modal_wrap {
+//   width: 100%;
+//   height: max-content;
+//   max-width: calc(70vw - 200px);
+//   display: flex;
+//   gap: 24px;
+//   background-color: $popUp-background-color;
+//   border-radius: 16px;
+//   padding: 32px 18px;
+//   position: relative;
+//   margin: auto;
+// }
+
+.image_wrap {
+  position: relative;
+  width: max-content;
+  height: max-content;
+  z-index: 5;
+
+  &:hover,
+  &:focus {
+    .download_btn {
+      opacity: 1;
+    }
+  }
+}
+
+.regenerate_wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-end;
+  position: relative;
+  overflow: auto;
+  z-index: 5;
+}
+
+.modal_image {
+  max-width: 80vw;
+  max-height: 70vh;
+  border-radius: 16px;
+}
+
+.similarity_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.button_wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+  margin-top: 8px;
+}
+
+.load_icon {
+  animation: rotate 2s linear infinite;
+}
+
+.api_tokens {
+  color: #444444;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.green {
+  color: #3da134;
+}
+
+.yellow {
+  color: #f4b400;
+}
+
+.red {
+  color: #d32f2f;
+}
+
+.switch_btn_left {
+  @include switch_btn;
+  left: -70px;
+}
+
+.switch_btn_right {
+  @include switch_btn;
+  right: -70px;
+  transform: rotate(180deg);
+}
+
+.close_btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background-color: #18464F;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  z-index: 100;
+  transition: scale 0.3s ease-in-out;
+
+  &:hover {
+    scale: 1.1;
+  }
+
+  svg {
+    width: 7px;
+    height: 7px;
+
+    path {
+      stroke: #BABABA;
+      stroke-width: 2px;
+    }
+  }
+}
+
+.range_btn {
+  gap: 10px;
+  padding: 4px 12px;
+  font-size: 14px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  opacity: 0.7;
+  box-shadow: $primary-box-shadow;
+  background-color: #112730;
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+  
+  &.selected {
+    background-color: var(--accent-color);
+    opacity: 1;
+  }
+}
+
+.action_btn {
+  min-width: 136px;
+  text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 8px 16px !important; /* Override any padding */
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.download_btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 28px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 8px;
+  box-shadow: $primary-box-shadow;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.image_box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 5;
+}
+
+.tags_container {
+  padding: 8px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+
+// ================================
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  height: max-content;
+}
+
+.sceneInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sceneTitle {
+  color: $secondary-white-text-color;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 0.03em;
+}
+
+.sceneNumber {
+  color: $secondary-white-text-color;
+}
+
+.sceneDescription {
+  color: $primary-white-text-color;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.03em;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  height: max-content;
+  padding: 0;
+}
+
+.sceneDescriptionEdit {
+  @extend .sceneDescription;
+  background-color: #ffffff0a;
+  min-width: 100px;
+  border-radius: 0px;
+}
+
+.tagsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+}
+
+.editBtn {
+  width: max-content;
+  height: 38px;
+  border-radius: 8px;
+  padding: 8px 18px;
+  background: #ffffff05;
+  color: #ffffffb2;
+  box-shadow: $primary-box-shadow;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  text-wrap: nowrap;
+}
+
+.closeEditBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 32px;
+  padding: 4px;
+  background: #ffffff05;
+  box-shadow: $primary-box-shadow;
+}
+
+// ================================
+
+.overlay {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.modal_wrap {
+  width: 100%;
+  height: max-content;
+  max-width: calc(70vw - 100px);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: #071B25;
+  border-radius: 16px;
+  padding: 22px;
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+}
+
+.glow_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+// Стилизованные углы
+.borderEffect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  pointer-events: none;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.borderTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 430px;
+  height: 2px;
+  background: linear-gradient(to right,
+      #3AFCEA 10%,
+      rgba(111, 112, 112, 0.139) 50%,
+      rgba(111, 112, 112, 0.139) 40%,
+      rgba(111, 112, 112, 0.139) 60%,
+      rgba(111, 112, 112, 0.139) 100%,
+      #3AFCEA 100%);
+}
+
+.borderRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom,
+      #3AFCEA 0%,
+      rgba(111, 112, 112, 0.139) 0%,
+      rgba(111, 112, 112, 0.139) 40%,
+      rgba(111, 112, 112, 0.139) 50%,
+      rgba(111, 112, 112, 0.139) 10%,
+      #3AFCEA 100%);
+}
+
+.borderBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right,
+      rgba(111, 112, 112, 0.177) 0%,
+      rgba(111, 112, 112, 0.139) 20%,
+      rgba(111, 112, 112, 0.139) 40%,
+      rgba(111, 112, 112, 0.139) 60%,
+      rgba(111, 112, 112, 0.139) 80%,
+      #3AFCEA 100%);
+}
+
+.borderLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom,
+      #3AFCEA 0%,
+      rgba(111, 112, 112, 0.177) 20%,
+      rgba(111, 112, 112, 0.139) 40%,
+      rgba(111, 112, 112, 0.139) 60%,
+      rgba(111, 112, 112, 0.139) 80%,
+      rgba(111, 112, 112, 0.139) 100%);
+}
+
+.cornerTopLeft,
+.cornerTopRight,
+.cornerBottomLeft,
+.cornerBottomRight {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 11;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.cornerTopLeft {
+  top: 0;
+  left: 0;
+  border-top: 2px solid #3AFCEA;
+  border-left: 2px solid #3AFCEA;
+  border-top-left-radius: 16px;
+}
+
+.cornerTopRight {
+  top: 0;
+  right: 0;
+  border-top: 2px solid rgba(111, 112, 112, 0.139);
+  border-right: 2px solid rgba(111, 112, 112, 0.139);
+  border-top-right-radius: 16px;
+}
+
+.cornerBottomLeft {
+  bottom: 0;
+  left: 0;
+  border-bottom: 2px solid rgba(111, 112, 112, 0.139);
+  border-left: 2px solid rgba(111, 112, 112, 0.139);
+  border-bottom-left-radius: 16px;
+}
+
+.cornerBottomRight {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid #3AFCEA;
+  border-right: 2px solid #3AFCEA;
+  border-bottom-right-radius: 16px;
+}
+
+.leftTop {
+  position: absolute;
+  top: -2px;
+  left: 20px;
+  width: 49%;
+  height: 2px;
+  background: linear-gradient(to right,
+      rgba(111, 112, 112, 0.139) 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+.rightTop {
+  position: absolute;
+  top: -2px;
+  right: 20px;
+  width: 48.8%;
+  height: 2px;
+  background: linear-gradient(to left,
+      #3AFCEA 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+.leftBottom {
+  position: absolute;
+  bottom: -2px;
+  left: 20px;
+  width: 49%;
+  height: 2px;
+  background: linear-gradient(to right,
+      rgba(111, 112, 112, 0.139) 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+.rightBottom {
+  position: absolute;
+  bottom: -2px;
+  right: 20px;
+  width: 48.8%;
+  height: 2px;
+  background: linear-gradient(to left,
+      #3AFCEA 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+.topleft {
+  position: absolute;
+  left: -2px;
+  bottom: 20px;
+  height: 47.8%;
+  width: 2px;
+  background: linear-gradient(to top,
+      #3AFCEA 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+.bottomleft {
+  position: absolute;
+  left: -2px;
+  top: 20px;
+  height: 47.7%;
+  width: 2px;
+  background: linear-gradient(to bottom,
+      rgba(111, 112, 112, 0.139) 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+.bottomright {
+  position: absolute;
+  left: -2px;
+  bottom: 20px;
+  height: 47.8%;
+  width: 2px;
+  background: linear-gradient(to top,
+      #3AFCEA 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+.rightleft {
+  position: absolute;
+  right: -2px;
+  top: 20px;
+  height: 47.8%;
+  width: 2px;
+  background: linear-gradient(to bottom,
+      rgba(111, 112, 112, 0.139) 0%,
+      rgba(111, 112, 112, 0.139) 65%);
+  z-index: 10;
+}
+
+.topright {
+  position: absolute;
+  right: -2px;
+  bottom: 20px;
+  height: 47.7%;
+  width: 2px;
+  background: linear-gradient(to top,
+      #3AFCEA 0%,
+      rgba(111, 112, 112, 0.139) 15%);
+  z-index: 10;
+}
+
+// Эффекты свечения
+.stain {
+  position: absolute;
+  right: -150px;
+  top: -40px;
+  z-index: 0;
+  width: 420px;
+  height: 350px;
+  transform: translate(0, 0) rotate(13deg);
+  background: #3AFCEA;
+  opacity: 0.18;
+  filter: blur(90px);
+  border-radius: 50%;
+}
+
+.stainBottom {
+  position: absolute;
+  left: -3%;
+  bottom: -10%;
+  z-index: 0;
+  width: 400px;
+  height: 320px;
+  transform: translate(0, 0) rotate(32deg);
+  background: #3AFCEA;
+  opacity: 0.22;
+  filter: blur(90px);
+  border-radius: 50%;
+}
