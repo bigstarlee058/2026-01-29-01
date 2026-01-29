@@ -10,9 +10,13 @@ import { StoreContext } from '../../../mobx';
 import { runInAction } from 'mobx';
 import useUploadProgress from '../../../hooks/useUploadProgress';
 import { validateFile } from '../../../utils/fileValidation';
-import { getAcceptAttribute, formatFileSize } from '../../../utils/fileFormatters';
+import {
+  getAcceptAttribute,
+  formatFileSize,
+} from '../../../utils/fileFormatters';
 import toast from 'react-hot-toast';
 import styles from './TimeLineControlPanel.module.scss';
+import MediaUploadButton from '../MediaUploadButton/MediaUploadButton';
 
 const TimeLineControlPanel = ({
   // Control visibility states
@@ -619,8 +623,8 @@ const TimeLineControlPanel = ({
     backgroundColor: isDragging
       ? ' rgba(255, 255, 255, 0.06)'
       : isOver
-      ? 'rgba(255, 255, 255, 0.06)'
-      : 'transparent',
+        ? 'rgba(255, 255, 255, 0.06)'
+        : 'transparent',
     transition: 'all 0.2s ease',
     pointerEvents: 'auto',
     zIndex: 1,
@@ -1044,7 +1048,7 @@ const TimeLineControlPanel = ({
   };
 
   // Upload functionality
-  const inferUploadCategory = (file) => {
+  const inferUploadCategory = file => {
     const ft = (file.type || '').toLowerCase();
     if (ft.startsWith('image/')) return 'image';
     if (ft.startsWith('video/')) return 'video';
@@ -1071,10 +1075,10 @@ const TimeLineControlPanel = ({
 
   const addFileToTimeline = async (file, uploadedUrl) => {
     const fileType = inferUploadCategory(file);
-    
+
     // Create new row at the end - same logic as in TimelineRow drop zones
     const newRow = store.maxRows;
-    
+
     // Shift rows down to create space for new element
     store.shiftRowsDown(newRow);
 
@@ -1089,7 +1093,7 @@ const TimeLineControlPanel = ({
     } else if (fileType === 'audio') {
       // Get audio duration
       const audio = new Audio();
-      const audioDuration = await new Promise((resolve) => {
+      const audioDuration = await new Promise(resolve => {
         audio.addEventListener('loadedmetadata', () => {
           resolve(audio.duration * 1000); // Convert to milliseconds
         });
@@ -1112,7 +1116,7 @@ const TimeLineControlPanel = ({
     } else if (fileType === 'video') {
       // Get video duration
       const video = document.createElement('video');
-      const videoDuration = await new Promise((resolve) => {
+      const videoDuration = await new Promise(resolve => {
         video.addEventListener('loadedmetadata', () => {
           resolve(video.duration * 1000); // Convert to milliseconds
         });
@@ -1133,12 +1137,12 @@ const TimeLineControlPanel = ({
       });
       toast.success(`Added ${file.name} to timeline`);
     }
-    
+
     // Refresh elements to ensure proper display
     store.refreshElements();
   };
 
-  const processSelectedFiles = async (files) => {
+  const processSelectedFiles = async files => {
     const list = Array.from(files || []);
     if (!list.length) return;
 
@@ -1148,13 +1152,18 @@ const TimeLineControlPanel = ({
     const rejected = [];
     for (const f of list) {
       const res = validateFile(f, 'All');
-      if (res.ok) accepted.push(f); 
+      if (res.ok) accepted.push(f);
       else rejected.push({ file: f, reason: res.reason });
     }
 
     if (rejected.length) {
-      const head = rejected.slice(0,3).map(r=>`${r.file.name} — ${r.reason}`).join(', ');
-      toast.error(`Some files were rejected: ${head}${rejected.length>3?'…':''}`);
+      const head = rejected
+        .slice(0, 3)
+        .map(r => `${r.file.name} — ${r.reason}`)
+        .join(', ');
+      toast.error(
+        `Some files were rejected: ${head}${rejected.length > 3 ? '…' : ''}`
+      );
     }
 
     if (!accepted.length) {
@@ -1189,7 +1198,12 @@ const TimeLineControlPanel = ({
           onProgress: pct => {
             setUploadProgress(prev => ({
               ...prev,
-              [fileData.id]: { progress: Math.max(prev[fileData.id]?.progress || 0, Math.min(100, pct)) },
+              [fileData.id]: {
+                progress: Math.max(
+                  prev[fileData.id]?.progress || 0,
+                  Math.min(100, pct)
+                ),
+              },
             }));
           },
         });
@@ -1212,7 +1226,6 @@ const TimeLineControlPanel = ({
 
         // Add file to timeline after successful upload
         await addFileToTimeline(fileData.file, uploadedUrl);
-        
       } catch (e) {
         const canceled = e?.canceled;
         if (!canceled) {
@@ -1364,12 +1377,12 @@ const TimeLineControlPanel = ({
                   isSelectedElementsAudio
                     ? 'var(--accent-color)' // Accent color when audio selected
                     : isVolumeControlClicked
-                    ? 'white'
-                    : isVolumeControlHovered
-                    ? '#FFFFFFB2'
-                    : isMuted
-                    ? '#FFFFFF66'
-                    : '#FFFFFFB2'
+                      ? 'white'
+                      : isVolumeControlHovered
+                        ? '#FFFFFFB2'
+                        : isMuted
+                          ? '#FFFFFF66'
+                          : '#FFFFFFB2'
                 }
                 opacity={
                   isSelectedElementsAudio ||
@@ -1567,8 +1580,8 @@ const TimeLineControlPanel = ({
                   ? isProcessingSilence
                     ? 'var(--accent-color)'
                     : isRemoveSilenceVisible
-                    ? 'white'
-                    : '#FFFFFF66'
+                      ? 'white'
+                      : '#FFFFFF66'
                   : '#FFFFFF33'
               }
               accentColor="#FFFFFFB2"
@@ -1586,8 +1599,8 @@ const TimeLineControlPanel = ({
                   .length === 0
                   ? 'No audio elements available'
                   : isProcessingSilence
-                  ? 'Processing...'
-                  : 'Remove Silence'
+                    ? 'Processing...'
+                    : 'Remove Silence'
               }
             />
           </span>
@@ -1604,23 +1617,10 @@ const TimeLineControlPanel = ({
             tooltipText="Compact Audio"
           />
         )}
-        <ButtonWithIcon
-          icon="UploadFileIcon"
-          size="16"
-          accentColor="#FFFFFFB2"
-          activeColor="white"
-          color={isUploadingFiles || isUploading ? 'var(--accent-color)' : '#FFFFFF66'}
-          classNameButton={`${styles.uploadBtn} ${
-            isUploadingFiles || isUploading ? styles.uploading : ''
-          }`}
-          onClick={handleUploadClick}
-          tooltipText={
-            isUploadingFiles || isUploading 
-              ? 'Uploading files...' 
-              : 'Upload files to timeline'
-          }
-          disabled={isUploadingFiles || isUploading}
-        />
+
+        {/* Upload Media Button - client-side only */}
+        <MediaUploadButton />
+
         {checkedStates.some(state => state) && (
           <div className={styles.dividerContainer}>
             <span className={styles.divider}></span>

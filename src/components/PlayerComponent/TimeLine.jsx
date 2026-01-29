@@ -19,6 +19,9 @@ import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcuts';
 import Lottie from 'lottie-react';
 import { createPortal } from 'react-dom';
 import videfyAnime from '../../data/videfyAnime.json';
+import { prepareMediaFiles } from '../../utils/mediaUpload';
+import { runInAction } from 'mobx';
+import toast from 'react-hot-toast';
 
 const formatTime = ms => {
   const time = Math.max(0, Math.floor(ms));
@@ -641,6 +644,10 @@ export const TimeLine = observer(
     const timelineControlsRef = useRef(null);
     const timelineControlsOptionsRef = useRef(null); // Add ref for the draggable controls
 
+    // Drag and drop file state
+    const [isDraggingFile, setIsDraggingFile] = useState(false);
+    const [dragCounter, setDragCounter] = useState(0);
+
     // Settings menu checkbox states
     const STORAGE_KEY = 'settingsMenuCheckboxStates';
     const menuOptions = [
@@ -693,6 +700,100 @@ export const TimeLine = observer(
     }, [controlsPosition]);
 
     const store = React.useContext(StoreContext);
+
+    /**
+     * Handle file drag enter
+     */
+    const handleDragEnter = useCallback((e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Check if dragging files
+      if (e.dataTransfer.types && e.dataTransfer.types.includes('Files')) {
+        setDragCounter(prev => prev + 1);
+        setIsDraggingFile(true);
+      }
+    }, []);
+
+    /**
+     * Handle file drag over
+     */
+    const handleDragOver = useCallback((e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = 'copy';
+      }
+    }, []);
+
+    /**
+     * Handle file drag leave
+     */
+    const handleDragLeave = useCallback((e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      setDragCounter(prev => {
+        const newCount = prev - 1;
+        if (newCount === 0) {
+          setIsDraggingFile(false);
+        }
+        return newCount;
+      });
+    }, []);
+
+    /**
+     * Handle file drop
+     */
+    const handleDrop = useCallback(async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      setIsDraggingFile(false);
+      setDragCounter(0);
+      
+      const files = e.dataTransfer?.files;
+      if (!files || files.length === 0) return;
+      
+      try {
+        // Calculate drop position in timeline
+        const timelineRect = timelineContentRef.current?.getBoundingClientRect();
+        if (!timelineRect) return;
+        
+        const dropX = e.clientX - timelineRect.left + (timelineContentRef.current?.scrollLeft || 0);
+        const pixelsPerMs = currentScale / 1000; // Adjust based on zoom scale
+        const dropTime = Math.max(0, dropX / pixelsPerMs);
+        
+        // Prepare and process files
+        const preparedMediaList = await prepareMediaFiles(files);
+        
+        if (preparedMediaList.length === 0) {
+          toast.error('No valid media files to add');
+          return;
+        }
+        
+        // Add each media file to timeline
+        for (const preparedMedia of preparedMediaList) {
+          try {
+            await runInAction(async () => {
+              await store.addMediaToTimeline(preparedMedia, dropTime);
+            });
+            
+            toast.success(`Added ${preparedMedia.name} to timeline`);
+          } catch (error) {
+            console.error(`Failed to add ${preparedMedia.name}:`, error);
+            toast.error(`Failed to add ${preparedMedia.name}: ${error.message}`);
+          }
+        }
+        
+        // Refresh timeline display
+        store.refreshElements?.();
+      } catch (error) {
+        console.error('Failed to process dropped files:', error);
+        toast.error(`Failed to process files: ${error.message}`);
+      }
+    }, [store, currentScale, timelineContentRef]);
 
     // Effect to sync preserved selection with store selection, but prevent clearing during preview
     useEffect(() => {
@@ -1381,12 +1482,28 @@ export const TimeLine = observer(
         ref={wrapperRef}
         className={`${styles.timelineWrap} ${
           isCutMode ? 'timeline-scissors-cursor' : ''
-        }`}
+        } ${isDraggingFile ? 'timeline-drop-active' : ''}`}
         data-timeline
         onClick={handleTimelineClick}
         style={{ minHeight: '183px' }}
         data-interactive={true}
+        onDragEnter={handleDragEnter}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
       >
+        {/* Drag overlay indicator */}
+        {isDraggingFile && (
+          <div className={styles.timelineDragOverlay}>
+            <div className={styles.timelineDragOverlayContent}>
+              <span className={styles.timelineDragOverlayIcon}>📁</span>
+              <span className={styles.timelineDragOverlayText}>
+                Drop files to add to timeline
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* Timeline Loading Overlay via Portal - only during initialization */}
         {store?.isInitializationInProgress === true &&
           (!store?.renderingStatus ||
