@@ -5181,6 +5181,7 @@ export class Store {
 
   addImageLocal({ url, minUrl, startTime = 0, endTime, row = 0 }) {
     return new Promise((resolve, reject) => {
+<<<<<<< HEAD
       if (!url) {
         reject(new Error('No URL provided for image'));
         return;
@@ -5191,16 +5192,28 @@ export class Store {
 
       console.log('Adding image from URL:', url);
 
+=======
+      const imageElement = new Image();
+      imageElement.crossOrigin = 'Anonymous';
+
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
       // Don't add cache busting to blob URLs - they don't support query parameters
       const cacheBustUrl = url.startsWith('blob:')
         ? url
         : url + (url.includes('?') ? '&' : '?') + '_cb=' + Date.now();
 
+<<<<<<< HEAD
       const loadImage = () => {
+=======
+      imageElement.src = cacheBustUrl;
+
+      imageElement.onload = () => {
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
         try {
           fabric.Image.fromURL(
             cacheBustUrl,
             img => {
+<<<<<<< HEAD
               const canvasWidth = this.canvas.getWidth();
               const canvasHeight = this.canvas.getHeight();
 
@@ -5210,6 +5223,18 @@ export class Store {
               );
               const regularLeft = (canvasWidth - img.width * scale) / 2;
               const regularTop = (canvasHeight - img.height * scale) / 2;
+=======
+              const canvasWidth = this.canvas.width;
+              const maxCanvasHeight = this.canvas.height;
+
+              const scale = Math.min(
+                canvasWidth / img.width,
+                maxCanvasHeight / img.height
+              );
+
+              const regularLeft = (canvasWidth - img.width * scale) / 2;
+              const regularTop = (maxCanvasHeight - img.height * scale) / 2;
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
 
               const id = getUid();
               const newElement = {
@@ -5227,6 +5252,7 @@ export class Store {
                 },
                 timeFrame: {
                   start: startTime,
+<<<<<<< HEAD
                   end: endTime || startTime + 5000,
                 },
                 row,
@@ -5237,29 +5263,59 @@ export class Store {
                   src: url,
                   minUrl,
                   effect: { type: 'none' },
+=======
+                  end: endTime || startTime + 5000, // 5 seconds default duration
+                },
+                row,
+                from: 0,
+                isDragging: false,
+                properties: {
+                  src: url,
+                  minUrl: minUrl,
+                  effect: {
+                    type: 'none',
+                  },
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                   width: img.width,
                   height: img.height,
                 },
               };
 
+<<<<<<< HEAD
+=======
+              // Sort elements by row before adding new element
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
               const sortedElements = [...this.editorElements].sort((a, b) => {
                 if (a.type === 'text' && b.type !== 'text') return 1;
                 if (b.type === 'text' && a.type !== 'text') return -1;
                 return b.row - a.row;
               });
 
+<<<<<<< HEAD
               let insertIndex = sortedElements.findIndex(el => el.row <= row);
               if (insertIndex === -1) insertIndex = sortedElements.length;
               sortedElements.splice(insertIndex, 0, newElement);
 
               // Use img directly, no second fabric.Image()
               img.set({
+=======
+              // Find the correct position to insert the new element
+              let insertIndex = sortedElements.findIndex(el => el.row <= row);
+              if (insertIndex === -1) insertIndex = sortedElements.length;
+
+              // Insert the new element at the correct position
+              sortedElements.splice(insertIndex, 0, newElement);
+
+              // Create fabric object
+              const imageObject = new fabric.Image(img.getElement(), {
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                 name: id,
                 left: regularLeft,
                 top: regularTop,
                 scaleX: scale,
                 scaleY: scale,
                 selectable: true,
+<<<<<<< HEAD
                 objectCaching: true,
               });
 
@@ -5269,6 +5325,23 @@ export class Store {
                 this.editorElements = sortedElements;
               });
 
+=======
+                lockUniScaling: true,
+                objectCaching: true,
+              });
+
+              // Add fabric object reference
+              newElement.fabricObject = imageObject;
+
+              // Update elements in a single batch
+              runInAction(() => {
+                this.editorElements = sortedElements;
+                if (!this.isInitializing) {
+                }
+              });
+
+              // Sync with Redux timeline state
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
               if (
                 window.dispatchSaveTimelineState &&
                 !this.isUndoRedoOperation
@@ -5276,6 +5349,7 @@ export class Store {
                 window.dispatchSaveTimelineState(this);
               }
 
+<<<<<<< HEAD
               this.canvas.add(img);
 
               // Let refreshElements handle stacking, or enforce after
@@ -5289,6 +5363,31 @@ export class Store {
               reject(err);
             },
             { crossOrigin: 'anonymous' }
+=======
+              // Add to canvas and set z-index
+              this.canvas.add(imageObject);
+              this.canvas.moveTo(imageObject, insertIndex);
+
+              // Force a refresh to ensure proper z-indexing
+              this.refreshElements();
+
+              // Debug: log element added (helps verify blob/remote URL presence)
+              try {
+                // eslint-disable-next-line no-console
+                console.debug('addImageLocal: added image element', {
+                  id: newElement.id,
+                  row: newElement.row,
+                  src: newElement.properties?.src,
+                  minUrl: newElement.properties?.minUrl,
+                });
+              } catch (e) {}
+
+              resolve();
+            },
+            {
+              crossOrigin: 'Anonymous',
+            }
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
           );
         } catch (error) {
           console.error('Error loading image:', error);
@@ -5296,10 +5395,13 @@ export class Store {
         }
       };
 
+<<<<<<< HEAD
       imageElement.onload = () => {
         loadImage();
       };
 
+=======
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
       imageElement.onerror = error => {
         console.error('Image failed to load from URL:', url, error);
         console.error(
@@ -5308,6 +5410,7 @@ export class Store {
         );
         reject(new Error(`Failed to load image from ${url}`));
       };
+<<<<<<< HEAD
 
       // Set src after event handlers are attached
       imageElement.src = cacheBustUrl;
@@ -5316,6 +5419,8 @@ export class Store {
       if (imageElement.complete && imageElement.naturalWidth > 0) {
         loadImage();
       }
+=======
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
     });
   }
 
@@ -5539,7 +5644,10 @@ export class Store {
 
   updateCanvasImage = async ({ url, minUrl, pointId, id }) => {
     return await new Promise((resolve, reject) => {
+<<<<<<< HEAD
       console.log('Updating canvas image with URL:', url);
+=======
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
       // Find the existing element
       const existingElement = this.editorElements.find(
         el => el.type === 'imageUrl' && (el.id === id || el.pointId === pointId)
@@ -5670,7 +5778,10 @@ export class Store {
       // Load image as blob URL for better CORS handling
       this.loadImageAsBlobUrl(url)
         .then(blobUrl => {
+<<<<<<< HEAD
           console.log('Loaded blob URL for image update:', blobUrl);
+=======
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
           const imageElement = new Image();
           imageElement.crossOrigin = 'Anonymous';
           imageElement.src = blobUrl;
@@ -5860,7 +5971,10 @@ export class Store {
 
   // Helper method to load image as Blob URL with proper CORS
   async loadImageAsBlobUrl(url) {
+<<<<<<< HEAD
     console.log('Loading image as blob URL for CORS:', url);
+=======
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
     try {
       const response = await fetch(url, {
         mode: 'cors',

@@ -488,8 +488,14 @@ const TransitionPanel = observer(
     useEffect(() => {
       const loadTransitions = async () => {
         try {
+<<<<<<< HEAD
           const { transitionsLoadedPromise } =
             await import('../../../utils/gl-transitions');
+=======
+          const { transitionsLoadedPromise } = await import(
+            '../../../utils/gl-transitions'
+          );
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
 
           const { availableTransitions: transitions } =
             await transitionsLoadedPromise;
@@ -864,7 +870,11 @@ const TransitionPanel = observer(
 
           // For each transition type applied to the selected element
           const transitionPromises = [];
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
           selectedElementGLTransitions.forEach(originalTransition => {
             // Apply this transition type to all consecutive pairs in the row
             for (let i = 0; i < elementsInRow.length - 1; i++) {
@@ -900,6 +910,7 @@ const TransitionPanel = observer(
                 );
 
                 // Create transition promise for parallel execution
+<<<<<<< HEAD
                 const transitionPromise = store
                   .addGLTransition(
                     fromElement.id,
@@ -929,6 +940,34 @@ const TransitionPanel = observer(
                     console.error('Error creating GL transition:', error);
                     return null;
                   });
+=======
+                const transitionPromise = store.addGLTransition(
+                  fromElement.id,
+                  toElement.id,
+                  originalTransition.transitionType,
+                  finalDuration
+                ).then(transitionId => {
+                  if (transitionId) {
+                    // Copy custom parameters if they exist in the original transition
+                    if (
+                      originalTransition.properties &&
+                      originalTransition.properties.customParams
+                    ) {
+                      store.updateGLTransitionProperties(transitionId, {
+                        customParams:
+                          originalTransition.properties.customParams,
+                      });
+                    } else {
+                      // Ensure transition is marked as manually adjusted to preserve exact timing/duration
+                      store.updateGLTransitionProperties(transitionId, {});
+                    }
+                  }
+                  return transitionId;
+                }).catch(error => {
+                  console.error('Error creating GL transition:', error);
+                  return null;
+                });
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
 
                 transitionPromises.push(transitionPromise);
               }
@@ -4392,11 +4431,18 @@ const TransitionPanel = observer(
                               <div className={styles.categoryTransitions}>
                                 {group.transitions.map(animation => {
                                   // In transitions mode, use GL Transition Card for all transitions except 'none'
+<<<<<<< HEAD
                                   const CardComponent =
                                     animation.type !== 'none'
                                       ? DraggableGLTransitionCard
                                       : DraggableAnimationCard;
 
+=======
+                                  const CardComponent = animation.type !== 'none' 
+                                    ? DraggableGLTransitionCard 
+                                    : DraggableAnimationCard;
+                                  
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                   return (
                                     <CardComponent
                                       key={animation.id || animation.type}
@@ -4417,6 +4463,7 @@ const TransitionPanel = observer(
                                       }
                                       data-animation-type={animation.type}
                                     >
+<<<<<<< HEAD
                                       {/* Animation card content same as below */}
                                       <>
                                         <div
@@ -4541,18 +4588,118 @@ const TransitionPanel = observer(
                                                           window.dispatchEvent(
                                                             new CustomEvent(
                                                               'openTransitionPanelWithEffect',
+=======
+                                    {/* Animation card content same as below */}
+                                    <>
+                                      <div
+                                        className={`${
+                                          styles.animationPreview
+                                        } ${
+                                          animation.type === 'none'
+                                            ? styles.noneAnimation
+                                            : ''
+                                        } ${isPreview ? styles.preview : ''}`}
+                                      >
+                                        {animation.image && (
+                                          <img
+                                            src={animation.image}
+                                            alt={animation.name}
+                                            className={`${
+                                              styles.previewImage
+                                            } ${
+                                              isPreview ? styles.preview : ''
+                                            }`}
+                                          />
+                                        )}
+                                        {/* Animation count badge */}
+                                        {(() => {
+                                          const count =
+                                            getAnimationCount(animation);
+                                          return count > 0 ? (
+                                            <div
+                                              className={styles.animationBadge}
+                                            >
+                                              {count}
+                                            </div>
+                                          ) : null;
+                                        })()}
+                                        {isAnimationActive(animation) &&
+                                          animation.type !== 'none' && (
+                                            <div
+                                              className={styles.actionButtons}
+                                            >
+                                              <div
+                                                className={styles.editButton}
+                                              >
+                                                <ButtonWithIcon
+                                                  icon="EditSceneIcon"
+                                                  size="9"
+                                                  color="#DFDFDF"
+                                                  accentColor="#DFDFDF"
+                                                  onClick={e => {
+                                                    e.stopPropagation();
+
+                                                    // For GL transitions, use the event-based approach
+                                                    if (
+                                                      animation.isGLTransition
+                                                    ) {
+                                                      const animationToEdit =
+                                                        store.animations.find(
+                                                          a =>
+                                                            a.type ===
+                                                              'glTransition' &&
+                                                            a.transitionType ===
+                                                              animation.type &&
+                                                            (a.fromElementId ===
+                                                              selectedElement?.id ||
+                                                              a.toElementId ===
+                                                                selectedElement?.id)
+                                                        );
+
+                                                      if (animationToEdit) {
+                                                        const fromElement =
+                                                          store.editorElements.find(
+                                                            el =>
+                                                              el.id ===
+                                                                animationToEdit.fromElementId &&
+                                                              el.type !==
+                                                                'animation'
+                                                          );
+                                                        const toElement =
+                                                          store.editorElements.find(
+                                                            el =>
+                                                              el.id ===
+                                                                animationToEdit.toElementId &&
+                                                              el.type !==
+                                                                'animation'
+                                                          );
+
+                                                        if (
+                                                          fromElement &&
+                                                          toElement
+                                                        ) {
+                                                          window.dispatchEvent(
+                                                            new CustomEvent(
+                                                              'openGLTransitionDetail',
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                                               {
                                                                 detail: {
                                                                   animation:
                                                                     animationToEdit,
+<<<<<<< HEAD
                                                                   element:
                                                                     selectedElement,
+=======
+                                                                  fromElement,
+                                                                  toElement,
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                                                 },
                                                               }
                                                             )
                                                           );
                                                         }
                                                       }
+<<<<<<< HEAD
                                                     }}
                                                     classNameButton={
                                                       styles.editButtonIcon
@@ -4572,6 +4719,55 @@ const TransitionPanel = observer(
                                         </div>
                                       </>
                                     </CardComponent>
+=======
+                                                    } else {
+                                                      // For regular animations, use event-based approach
+                                                      const animationToEdit =
+                                                        store.animations.find(
+                                                          a =>
+                                                            a.type ===
+                                                              animation.type &&
+                                                            a.targetId ===
+                                                              selectedElement?.id
+                                                        );
+
+                                                      if (
+                                                        animationToEdit &&
+                                                        selectedElement
+                                                      ) {
+                                                        window.dispatchEvent(
+                                                          new CustomEvent(
+                                                            'openTransitionPanelWithEffect',
+                                                            {
+                                                              detail: {
+                                                                animation:
+                                                                  animationToEdit,
+                                                                element:
+                                                                  selectedElement,
+                                                              },
+                                                            }
+                                                          )
+                                                        );
+                                                      }
+                                                    }
+                                                  }}
+                                                  classNameButton={
+                                                    styles.editButtonIcon
+                                                  }
+                                                />
+                                              </div>
+                                            </div>
+                                          )}
+                                      </div>
+
+                                      <div className={styles.animationInfo}>
+                                        <span className={styles.animationName}>
+                                          {animation.name}
+                                        </span>
+                                      </div>
+                                    </>
+                                  </CardComponent>
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                   );
                                 })}
                               </div>
@@ -4584,12 +4780,19 @@ const TransitionPanel = observer(
                         return animations.length > 0 ? (
                           animations.map(animation => {
                             // Use GL Transition Card for GL transitions in transitions mode, regular card for effects mode
+<<<<<<< HEAD
                             const CardComponent =
                               panelMode === 'transitions' &&
                               animation.type !== 'none'
                                 ? DraggableGLTransitionCard
                                 : DraggableAnimationCard;
 
+=======
+                            const CardComponent = (panelMode === 'transitions' && animation.type !== 'none')
+                              ? DraggableGLTransitionCard 
+                              : DraggableAnimationCard;
+                            
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                             return (
                               <CardComponent
                                 key={animation.id || animation.type}
@@ -4618,6 +4821,7 @@ const TransitionPanel = observer(
                                 }}
                                 data-animation-type={animation.type}
                               >
+<<<<<<< HEAD
                                 {activeTab === 'active' ? (
                                   <ActiveAnimationItem
                                     animation={animation}
@@ -4708,6 +4912,96 @@ const TransitionPanel = observer(
                                           <div className={styles.actionButtons}>
                                             {/* Play button */}
                                             {/* <div className={styles.playButton}>
+=======
+                              {activeTab === 'active' ? (
+                                <ActiveAnimationItem
+                                  animation={animation}
+                                  onEditAnimation={handleEditAnimation}
+                                  // Removed scene selection props
+                                  selectedAnimation={selectedAnimation}
+                                  setSelectedAnimation={setSelectedAnimation}
+                                  setIsActiveAnimationDetailsOpen={
+                                    setIsActiveAnimationDetailsOpen
+                                  }
+                                  isActiveAnimationDetailsOpen={
+                                    isActiveAnimationDetailsOpen
+                                  }
+                                  onCheckboxChange={newSelectedCheckboxes => {
+                                    setSelectedCheckboxes(
+                                      newSelectedCheckboxes
+                                    );
+
+                                    const activeAnimations =
+                                      getFilteredActiveAnimations();
+                                    const allAnimationIds =
+                                      activeAnimations.map(
+                                        anim => anim.id || anim.type
+                                      );
+
+                                    if (newSelectedCheckboxes.size === 0) {
+                                      setIsTransitionNameCollapsed(false);
+                                      setIsTransitionNameIndeterminate(false);
+                                    } else if (
+                                      newSelectedCheckboxes.size ===
+                                      allAnimationIds.length
+                                    ) {
+                                      setIsTransitionNameCollapsed(true);
+                                      setIsTransitionNameIndeterminate(false);
+                                    } else {
+                                      setIsTransitionNameCollapsed(false);
+                                      setIsTransitionNameIndeterminate(true);
+                                    }
+                                  }}
+                                  selectedCheckboxes={selectedCheckboxes}
+                                  onTransitionNameStateChange={(
+                                    collapsed,
+                                    indeterminate
+                                  ) => {
+                                    setIsTransitionNameCollapsed(collapsed);
+                                    setIsTransitionNameIndeterminate(
+                                      indeterminate
+                                    );
+                                  }}
+                                />
+                              ) : (
+                                <>
+                                  <div
+                                    className={`${styles.animationPreview} ${
+                                      animation.type === 'none'
+                                        ? styles.noneAnimation
+                                        : ''
+                                    } ${isPreview ? styles.preview : ''}`}
+                                  >
+                                    {animation.image && (
+                                      <img
+                                        src={animation.image}
+                                        alt={animation.name}
+                                        className={`${styles.previewImage} ${
+                                          isPreview ? styles.preview : ''
+                                        }`}
+                                      />
+                                    )}
+                                    {/* Animation count badge */}
+                                    {(() => {
+                                      const count =
+                                        getAnimationCount(animation);
+                                      return count > 0 ? (
+                                        <div className={styles.animationBadge}>
+                                          {count}
+                                        </div>
+                                      ) : null;
+                                    })()}
+
+                                    {/* Action buttons for active animations and applied filters */}
+                                    {((isAnimationActive(animation) &&
+                                      activeTab !== 'filters') ||
+                                      (activeTab === 'filters' &&
+                                        isAnimationActive(animation))) &&
+                                      animation.type !== 'none' && (
+                                        <div className={styles.actionButtons}>
+                                          {/* Play button */}
+                                          {/* <div className={styles.playButton}>
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                             <ButtonWithIcon
                                               icon="PlayIcon"
                                               size="12"
@@ -4724,6 +5018,7 @@ const TransitionPanel = observer(
                                               }
                                             />
                                           </div> */}
+<<<<<<< HEAD
                                             {/* Edit button */}
                                             <div className={styles.editButton}>
                                               <ButtonWithIcon
@@ -4848,18 +5143,86 @@ const TransitionPanel = observer(
                                                       window.dispatchEvent(
                                                         new CustomEvent(
                                                           'openTransitionPanelWithEffect',
+=======
+                                          {/* Edit button */}
+                                          <div className={styles.editButton}>
+                                            <ButtonWithIcon
+                                              icon="EditSceneIcon"
+                                              size="9"
+                                              color="#DFDFDF"
+                                              accentColor="#DFDFDF"
+                                              onClick={e => {
+                                                e.stopPropagation();
+
+                                                // Handle filter edit click
+                                                if (activeTab === 'filters') {
+                                                  handleFilterEditClick(
+                                                    animation,
+                                                    e
+                                                  );
+                                                  return;
+                                                }
+
+                                                // Use the same event-based approach as the first edit button
+
+                                                if (animation.isGLTransition) {
+                                                  const animationToEdit =
+                                                    store.animations.find(
+                                                      a =>
+                                                        a.type ===
+                                                          'glTransition' &&
+                                                        a.transitionType ===
+                                                          animation.type &&
+                                                        (a.fromElementId ===
+                                                          selectedElement?.id ||
+                                                          a.toElementId ===
+                                                            selectedElement?.id)
+                                                    );
+
+                                                  if (animationToEdit) {
+                                                    const fromElement =
+                                                      store.editorElements.find(
+                                                        el =>
+                                                          el.id ===
+                                                            animationToEdit.fromElementId &&
+                                                          el.type !==
+                                                            'animation'
+                                                      );
+                                                    const toElement =
+                                                      store.editorElements.find(
+                                                        el =>
+                                                          el.id ===
+                                                            animationToEdit.toElementId &&
+                                                          el.type !==
+                                                            'animation'
+                                                      );
+
+                                                    if (
+                                                      fromElement &&
+                                                      toElement
+                                                    ) {
+                                                      window.dispatchEvent(
+                                                        new CustomEvent(
+                                                          'openGLTransitionDetail',
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                                           {
                                                             detail: {
                                                               animation:
                                                                 animationToEdit,
+<<<<<<< HEAD
                                                               element:
                                                                 selectedElement,
+=======
+                                                              fromElement,
+                                                              toElement,
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                                             },
                                                           }
                                                         )
                                                       );
                                                     }
                                                   }
+<<<<<<< HEAD
                                                 }}
                                                 classNameButton={
                                                   styles.editButtonIcon
@@ -4871,6 +5234,81 @@ const TransitionPanel = observer(
                                         )}
                                       {/* Active indicator (checkmark) */}
                                       {/* {isAnimationActive(animation) && (
+=======
+                                                } else {
+                                                  // For regular animations, use event-based approach
+                                                  let animationToEdit = null;
+
+                                                  if (animation.unifiedType) {
+                                                    // For unified effects (zoomIn -> zoomEffect)
+                                                    const animationVariant =
+                                                      animation.type.includes(
+                                                        'In'
+                                                      )
+                                                        ? 'in'
+                                                        : animation.type.includes(
+                                                              'Out'
+                                                            )
+                                                          ? 'out'
+                                                          : 'effect';
+
+                                                    animationToEdit =
+                                                      store.animations.find(
+                                                        a =>
+                                                          a.type ===
+                                                            animation.unifiedType &&
+                                                          a.targetId ===
+                                                            selectedElement?.id &&
+                                                          (a.effectVariant ===
+                                                            animationVariant ||
+                                                            determineEffectVariant(
+                                                              a
+                                                            ) ===
+                                                              animationVariant)
+                                                      );
+                                                  } else {
+                                                    // For traditional animations
+                                                    animationToEdit =
+                                                      store.animations.find(
+                                                        a =>
+                                                          a.type ===
+                                                            animation.type &&
+                                                          a.targetId ===
+                                                            selectedElement?.id
+                                                      );
+                                                  }
+
+                                                  if (
+                                                    animationToEdit &&
+                                                    selectedElement
+                                                  ) {
+                                                    window.dispatchEvent(
+                                                      new CustomEvent(
+                                                        'openTransitionPanelWithEffect',
+                                                        {
+                                                          detail: {
+                                                            animation:
+                                                              animationToEdit,
+                                                            element:
+                                                              selectedElement,
+                                                          },
+                                                        }
+                                                      )
+                                                    );
+                                                  }
+                                                }
+                                              }}
+                                              classNameButton={
+                                                styles.editButtonIcon
+                                              }
+                                            />
+                                          </div>
+                                          {/* Apply to all switch */}
+                                        </div>
+                                      )}
+                                    {/* Active indicator (checkmark) */}
+                                    {/* {isAnimationActive(animation) && (
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                                       <div className={styles.activeIndicator}>
                                         <ButtonWithIcon
                                           icon="CheckedIcon"
@@ -4879,6 +5317,7 @@ const TransitionPanel = observer(
                                         />
                                       </div>
                                     )} */}
+<<<<<<< HEAD
                                     </div>
 
                                     <div className={styles.animationInfo}>
@@ -4889,6 +5328,18 @@ const TransitionPanel = observer(
                                   </>
                                 )}
                               </CardComponent>
+=======
+                                  </div>
+
+                                  <div className={styles.animationInfo}>
+                                    <span className={styles.animationName}>
+                                      {animation.name}
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                            </CardComponent>
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
                             );
                           })
                         ) : (

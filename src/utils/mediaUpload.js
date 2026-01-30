@@ -167,6 +167,7 @@ export const createBlobUrl = file => {
 };
 
 /**
+<<<<<<< HEAD
  * Get image dimensions from file
  * @param {string} url - Image URL or blob URL
  * @returns {Promise<{width: number, height: number}>}
@@ -207,6 +208,12 @@ const getVideoDimensions = url => {
  * @param {File} file - File to process
  * @param {number} startTime - Start time in timeline (ms)
  * @returns {Promise<Object>} Processed media data matching server structure
+=======
+ * Process media file for timeline
+ * @param {File} file - File to process
+ * @param {number} startTime - Start time in timeline (ms)
+ * @returns {Promise<Object>} Processed media data
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
  */
 export const processMediaFile = async (file, startTime = 0) => {
   const validation = validateMediaFile(file);
@@ -215,15 +222,23 @@ export const processMediaFile = async (file, startTime = 0) => {
   }
 
   const blobUrl = createBlobUrl(file);
+<<<<<<< HEAD
   const fileId = `local-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   let duration = 0;
   let linkedAudioClipId = null;
   let dimensions = { width: 1920, height: 1080 };
+=======
+  let duration = 0;
+  let linkedAudioClipId = null;
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
 
   try {
     if (validation.category === 'video') {
       duration = await getMediaDuration(blobUrl);
+<<<<<<< HEAD
       dimensions = await getVideoDimensions(blobUrl);
+=======
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
       const hasAudio = await hasAudioTrack(blobUrl);
 
       if (hasAudio) {
@@ -235,10 +250,16 @@ export const processMediaFile = async (file, startTime = 0) => {
     } else if (validation.category === 'image') {
       // Default duration for images: 3 seconds
       duration = 3000;
+<<<<<<< HEAD
       dimensions = await getImageDimensions(blobUrl);
     }
   } catch (error) {
     console.warn('Error getting media metadata:', error);
+=======
+    }
+  } catch (error) {
+    console.warn('Error getting media duration:', error);
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
     // Fallback durations if detection fails
     if (validation.category === 'image') {
       duration = 3000;
@@ -247,9 +268,13 @@ export const processMediaFile = async (file, startTime = 0) => {
     }
   }
 
+<<<<<<< HEAD
   // Return server-compatible structure
   const baseStructure = {
     // Legacy properties for backward compatibility
+=======
+  return {
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
     type: validation.category,
     source: blobUrl,
     fileName: file.name,
@@ -257,6 +282,7 @@ export const processMediaFile = async (file, startTime = 0) => {
     duration,
     linkedAudioClipId,
     fileSize: file.size,
+<<<<<<< HEAD
 
     // Server-compatible properties (common for all media types)
     _id: fileId,
@@ -294,4 +320,7 @@ export const processMediaFile = async (file, startTime = 0) => {
       status: 'DONE', // Images use uppercase status
     };
   }
+=======
+  };
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
 };

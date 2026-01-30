@@ -187,7 +187,10 @@ export const TimelineUploadButton = ({ onUploadStart, onUploadComplete }) => {
   };
 
   const handleInputChange = e => {
+<<<<<<< HEAD
     console.log('File input changed:', e.target.files);
+=======
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
     handleFileSelect(e.target.files);
   };
 
@@ -252,6 +255,7 @@ export const TimelineUploadButton = ({ onUploadStart, onUploadComplete }) => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <>
       <input
         ref={fileInputRef}
@@ -262,6 +266,16 @@ export const TimelineUploadButton = ({ onUploadStart, onUploadComplete }) => {
         style={{ display: 'none' }}
       />
     </>
+=======
+    <input
+      ref={fileInputRef}
+      type="file"
+      multiple
+      accept={getAcceptAttribute('All')}
+      onChange={handleInputChange}
+      style={{ display: 'none' }}
+    />
+>>>>>>> 7715cc9566cef3b2faf7a729bdc1810214191d7a
   );
 };
 
