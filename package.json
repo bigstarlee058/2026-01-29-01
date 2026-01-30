@@ -87,8 +87,8 @@
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "cross-env REACT_APP_GIT_HASH=`git rev-parse --short HEAD` react-scripts build",
+    "start": "node api.js && react-scripts start",
+    "build": "node api.js && cross-env REACT_APP_GIT_HASH=`git rev-parse --short HEAD` react-scripts build",
     "test": "npx playwright test",
     "test:ci": "npx playwright test --reporter=json,html",
     "test:report": "npx playwright show-report",
